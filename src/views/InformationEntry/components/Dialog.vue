@@ -2,7 +2,7 @@
     <el-dialog v-model="dialogVisible" :title="title" width="20%" :before-close="handleClose">
         <el-card class="card" shadow="never">
             <br>
-            <UploadFile :dialogType="dialogType" :url="url"></UploadFile>
+            <UploadFile :success="success" :dialogType="dialogType" :url="url"></UploadFile>
             <el-button>示例模板</el-button>
             <br><br><br>
             <el-card style="width:100%" shadow="hover">
@@ -21,12 +21,6 @@
                 </div>
             </el-card>
         </el-card>
-        <!-- <template #footer>
-            <span class="dialog-footer">
-                <el-button @click="handleEditT">取消</el-button>
-                <el-button type="primary" @click="handleEditT">确定</el-button>
-            </span>
-        </template> -->
     </el-dialog>
 </template>
 <script lang="ts" setup>
@@ -39,7 +33,8 @@ type Props = {
     handleEditT: Function,
     dialogType: number,
     url: string,
-    title: string
+    title: string,
+    success: Function
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()

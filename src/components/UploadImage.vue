@@ -1,9 +1,12 @@
 <template>
     <div class="box">
-        <div class="img">
+        <div v-if="url != ''" class="img">
             <MyImg :imgUrl="url"></MyImg>
         </div>
-        <el-upload class="img-btn" action="#" :show-file-list="false" :before-upload="beforeUpload"
+        <div v-if="url == ''" class="img_hidd">
+
+        </div>
+        <el-upload class="img_btn" action="#" :show-file-list="false" :before-upload="beforeUpload"
             :http-request="upload">
             <div class="upload">
                 <el-icon>
@@ -52,7 +55,7 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     border-radius: 6px;
 }
 
-.img-btn {
+.img_btn {
     width: 0;
     height: 0;
 }
@@ -65,6 +68,10 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     height: 80px;
     margin-right: 20px;
     text-align: center;
+}
+
+.img_hidd {
+    height: 80px;
 }
 
 .upload:hover {

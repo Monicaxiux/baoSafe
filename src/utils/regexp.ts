@@ -85,3 +85,46 @@ export const isUserAuth = (i) => {
     }
     return res
 }
+
+// 验证项目名称
+export const validateProject = (rule: any, value: any, callback: any) => {
+    if (value === '') {
+        callback(new Error('请输入项目名称！'))
+    } else {
+        callback();
+    }
+}
+// 验证项目编码
+export const validateProjectNumber = (rule: any, value: any, callback: any) => {
+    if (value === '') {
+        callback(new Error('请输入项目编码！'))
+    } else {
+        callback();
+    }
+}
+// 验证项目性质
+export const validateProjectCharacteristic = (rule: any, value: any, callback: any) => {
+    if (value === '') {
+        callback(new Error('请输入项目性质！'))
+    } else {
+        callback();
+    }
+}
+// 验证协力单位
+export const validateAssistCompany = (rule: any, value: any, callback: any) => {
+    if (value === '') {
+        callback(new Error('请输入协力单位！'))
+    } else {
+        callback();
+    }
+}
+// 验证项目周期
+export const validateProjectCycle = (rule: any, value: any, callback: any) => {
+    console.log(value);
+
+    if (value === '' || null) {
+        callback(new Error('请选择项目周期！'))
+    } else {
+        callback();
+    }
+}

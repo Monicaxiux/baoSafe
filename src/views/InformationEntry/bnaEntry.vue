@@ -4,7 +4,7 @@
     <!-- <Pagination :hide="hide" :pagesize="eilnfo.parameter.limit" :total="dataCount"
         :currentpage="eilnfo.parameter.pageNum" :options="eilnfo" :render="selectUserList">
     </Pagination> -->
-    <Dialog :dialogVisible="dialogVisible" :title="title" :dialogType="dialogType" :url="url"
+    <Dialog :success="success" :dialogVisible="dialogVisible" :title="title" :dialogType="dialogType" :url="url"
         :handleEditT="handleEditT"></Dialog>
 </template>
 <script lang="ts" setup>
@@ -12,6 +12,7 @@ import Search from './components/Search.vue'
 import Dialog from './components/Dialog.vue'
 import { ElMessageBox } from 'element-plus'
 import Table from './components/Table.vue'//员工表格
+import { ElNotification } from 'element-plus'
 import Pagination from '@/components/Pagination.vue'//分页组件
 import { ref, reactive } from "vue";
 import { piniaData } from '@/store';//引入pinia状态管理
@@ -64,6 +65,14 @@ const handleEdit = () => {
 
 }
 const handleEditT = () => {
+    dialogVisible.value = false
+}
+//文件导入成功
+const success = () => {
+    ElNotification({
+        message: '导入成功！',
+        type: 'warning',
+    })
     dialogVisible.value = false
 }
 </script>

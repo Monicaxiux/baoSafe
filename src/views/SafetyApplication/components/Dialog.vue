@@ -1,6 +1,6 @@
 <template>
-    <el-dialog v-model="dialogVisible" :title="title" :width="dialogType == 1 ? 1400 : 380" :before-close="handleClose">
-        <div v-if="dialogType == 1" shadow="never">
+    <el-dialog v-model="dialogVisible" :title="title" :width="dialogType == 2 ? 1100 : 380" :before-close="handleClose">
+        <div v-if="dialogType == 2" shadow="never">
             <Search :userType="userType" :searchType="2" :select="selectUserList" :submitStatus="true"
                 :buttonStatus="true" :data="eilnfo" :departmentSelect="departmentSelect"></Search>
             <Table :userType="userType" :tableType="false" :tableData="tableData" :loading="loading" :handleDelete="[]"
@@ -10,9 +10,9 @@
                 :currentpage="eilnfo.parameter.pageNum" :options="eilnfo" :render="selectUserList">
             </Pagination>
         </div>
-        <el-card v-if="dialogType == 2" class="card" shadow="never">
+        <el-card v-if="dialogType == 1" class="card" shadow="never">
             <br>
-            <UploadFile :dialogType="dialogType" :url="url"></UploadFile>
+            <UploadFile :success="success" :dialogType="dialogType" :url="url"></UploadFile>
             <el-button>示例模板</el-button>
             <br><br><br>
             <el-card style="width:100%" shadow="hover">
@@ -26,12 +26,13 @@
                 </div>
             </el-card>
         </el-card>
-        <template v-if="dialogType != 2" #footer>
+        <template v-if="dialogType != 1" #footer>
             <span class="dialog-footer">
-                <el-button @click="handleEditT">取消</el-button>
+                <el-button @click="handleClose">取消</el-button>
                 <el-button type="primary" @click="handleEditT(multiple)">确定</el-button>
             </span>
         </template>
+
     </el-dialog>
 </template>
 <script lang="ts" setup>
@@ -51,8 +52,10 @@ type Props = {
     handleClose: Function,
     url: string,
     title: string,
-    userType: boolean
+    userType: boolean,
+    success: Function
 }
+
 //是否展示分页
 const hide = ref(false);
 //总页数

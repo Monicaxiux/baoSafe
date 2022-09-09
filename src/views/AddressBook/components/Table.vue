@@ -32,7 +32,6 @@
                 <el-table-column prop="enterFactoryYear" label="进厂年" width="100" />
                 <el-table-column prop="enterFactoryMonth" label="进厂月" width="100" />
                 <el-table-column prop="manageArea" label="所在区域" width="100" />
-
             </template>
             <el-table-column label="特种作业证">
                 <el-table-column prop="licenseList[0].licenseNumber" label="证书编号" width="200" />

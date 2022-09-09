@@ -7,8 +7,9 @@
     <Pagination :hide="hide" :pagesize="eilnfo.parameter.limit" :total="dataCount"
         :currentpage="eilnfo.parameter.pageNum" :options="eilnfo" :render="selectUserList">
     </Pagination>
-    <Dialog :uploadUserPic="uploadUserPic" :uploadIcPic="uploadIcPic" :userInfo="userInfo" :userType="userType"
-        :dialogVisible="dialogVisible" :dialogType="dialogType" :handleEditT="handleEditT">
+    <Dialog :licenseEdit="licenseEdit" :licenseDelete="licenseDelete" :uploadUserPic="uploadUserPic"
+        :uploadIcPic="uploadIcPic" :userInfo="userInfo" :userType="userType" :dialogVisible="dialogVisible"
+        :dialogType="dialogType" :handleEditT="handleEditT">
     </Dialog>
 </template>
 <script setup lang="ts">
@@ -112,5 +113,13 @@ const uploadIcPic = (f) => {
     getBase64(f.file).then((res: any) => {
         userInfo.value.icPic = res
     });
+}
+
+const licenseDelete = () => {
+
+}
+
+const licenseEdit = () => {
+
 }
 </script>

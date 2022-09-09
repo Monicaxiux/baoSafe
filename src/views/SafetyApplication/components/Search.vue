@@ -21,7 +21,7 @@
                 <el-icon>
                     <Delete />
                 </el-icon>
-                移除
+                全部移除
             </el-button>
             <el-button @click="select(4)" :disabled="submitStatus" type="primary">
                 <el-icon>

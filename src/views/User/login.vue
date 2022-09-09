@@ -64,16 +64,15 @@
 import { ref, onMounted, reactive, toRefs } from 'vue'//引入vue中各种方法
 import { LoginUser, EiInfo } from '@/types'//引入参数规范类型
 import { login } from '@/api/user';//引入api方法
-import { useRouter } from "vue-router";//引入路由
-import { piniaData } from '@/store';//引入pinia状态管理
 import { ElNotification } from 'element-plus'
 import { validateUser, validatePassWord } from '@/utils/regexp';//引入验规则证
+import { useRouter } from "vue-router";//引入路由
+import { piniaData } from '@/store';//引入pinia状态管理
+//pinia状态管理
+const store = piniaData();
 const idA = ref(false)
 const switStatus = ref(false)
 const Status = ref('')
-
-//pinia状态管理
-const store = piniaData();
 //路由
 const router = useRouter();
 //按钮加载效果

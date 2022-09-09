@@ -39,3 +39,38 @@ export const selectUpData = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+//创建项目前导入人员信息
+export const beforeProjectUser = ((eilnfo: any) => {
+    return request({
+        url: '/assist/import/user/before/create/project',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+//查询导入项目中的人员
+export const getProjectUser = ((eilnfo: any) => {
+    return request({
+        url: '/assist/query/import/user',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+//删除导入项目中的人员
+export const deleteProjectUser = ((eilnfo: any) => {
+    return request({
+        url: '/assist/delete/import/user',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+//创建项目
+export const createProject = ((eilnfo: any) => {
+    return request({
+        url: '/assist/create/project',
+        method: 'post',
+        data: eilnfo
+    })
+})

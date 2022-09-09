@@ -5,108 +5,224 @@
         <el-step title="步骤3：提交申报" />
     </el-steps>
     <br>
-
     <el-card>
         <div class="box">
             <div class="left">
                 <el-card shadow="hover">
                     <h1>项目信息</h1>
-                    <Project :handleAdd="handleAdd"></Project>
+                    <Project :change="change" :form="form"></Project>
                 </el-card>
             </div>
             <div class="right">
                 <el-card shadow="hover">
                     <Search :searchType="1" :select="select" :userType="true" :submitStatus="submitStatus"
                         :buttonStatus="buttonStatus" :data="[]" :departmentSelect="[]"></Search>
-                    <Table :userType="true" :loading="false" :tableType="true" :tableData="tableData"
+                    <Table :userType="true" :loading="loading" :tableType="true" :tableData="tableData"
                         :handleDelete="handleDelete" :handleChange="handleChange">
                     </Table>
+                    <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfox.parameter.pageNum"
+                        :options="eilnfox" :render="getProjectUsers">
+                    </Pagination>
                 </el-card>
             </div>
         </div>
     </el-card>
-
-    <Dialog :userType="true" :handleEditT="handleEditT" :title="title" :dialogType="dialogType" :url="url"
-        :dialogVisible="dialogVisible" :departmentSelect="departmentSelect" :handleClose="handleClose"></Dialog>
+    <Dialog :success="success" :userType="true" :handleEditT="handleEditT" :title="title" :dialogType="dialogType"
+        :url="url" :dialogVisible="dialogVisible" :departmentSelect="departmentSelect" :handleClose="handleClose">
+    </Dialog>
 </template>
 <script lang="ts" setup>
 import Search from './components/Search.vue'
 import Table from './components/Table.vue'
 import { ElMessageBox } from 'element-plus'
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, reactive } from "vue";
 import Dialog from './components/Dialog.vue'
 import Project from './components/Project.vue';
+import { project, EiInfo } from '@/types'
+import Pagination from '@/components/Pagination.vue'//分页组件
+import { piniaData } from '@/store';//引入pinia状态管理
+import { beforeProjectUser, getProjectUser, deleteProjectUser, createProject } from '@/api/user'
+import { ElNotification } from 'element-plus'
+
+//pinia状态管理
+const store = piniaData();
+const form = reactive(new project)
+const loading = ref(false)
 const departmentSelect = ref([])
 const tableData: any = ref([])
 const dialogVisible = ref(false)
 const dialogType = ref(1)
 const buttonStatus = ref(true)
 const submitStatus = ref(true)
-const url = ref('')
+const url = ref(`/assist/read/excel?userOnly=1&uploadUserId=${store.userInfo.id}`)
 const title = ref('')
 const multiple: any = ref([])//多选选中内容
-onMounted(() => {
+const params = reactive({
+    pageNum: 1
 })
+const dataCount = ref(0);
+//是否展示分页
+const hide = ref(false);
+//eilnfo格式参数
+const eilnfox = reactive(new EiInfo);
+//将分页搜索参数赋予eilnfo的parameter模块
+eilnfox.parameter = params
+onMounted(() => {
+    getProjectUsers(eilnfox)
+})
+//文件导入成功
+const success = () => {
+    ElNotification({
+        message: '导入成功！',
+        type: 'success',
+    })
+    dialogVisible.value = false
+    getProjectUsers(eilnfox)
+}
 // 监听表格数据来开启提交按钮
-watch(tableData.value, (newValue, oldValue) => {
-    console.log(newValue);
-    submitStatus.value = newValue.length != 0 ? false : true
+watch(dataCount, (newValue, oldValue) => {
+    submitStatus.value = newValue != 0 ? false : true
+    buttonStatus.value = newValue != 0 ? false : true
 })
 // 移除按钮事件
-const handleDelete = (i: any) => {
+const handleDelete = (i: any, row: any) => {
     ElMessageBox.confirm('确定移除选中项?')
         .then(() => {
-            tableData.value.splice(i, 1);
+            console.log(row.id);
+            let eiInfo = new EiInfo
+            eiInfo.parameter = {
+                deleteUserId: row.id,
+                deleteAll: 0
+            }
+            eiInfo.userInfo = {
+                id: store.userInfo.id
+            }
+            deleteProjectUser(eiInfo).then((res) => {
+                console.log(res);
+                getProjectUsers(eilnfox)
+            })
         }).catch(() => { })
-}
-const handleAdd = () => {
-
 }
 // 多选框选中事件
 const handleChange = (val: any) => {
     multiple.value = val
-    buttonStatus.value = multiple.value.length != 0 ? false : true
+}
+// 项目周期选择
+const change = (val) => {
+    if (!val) {
+        form.workCycleStart = ""
+        form.workCycleEnd = ""
+    } else {
+        form.workCycleStart = val[0]
+        form.workCycleEnd = val[1]
+    }
 }
 // 表格移除事件
 const select = (i: any) => {
     switch (i) {
         case 1:
             dialogVisible.value = true
-            dialogType.value = 1
+            dialogType.value = 2
             title.value = '选择安全教育人员'
             break;
         case 2:
             dialogVisible.value = true
-            dialogType.value = 2
+            dialogType.value = 1
             title.value = '模板导入安全教育人员'
             break;
         case 3:
-            ElMessageBox.confirm('确定移除选中项?')
+            ElMessageBox.confirm('确定全部移除?')
                 .then(() => {
-                    var ids = multiple.value.map(item => item.id);
-                    ids.map(Number).forEach(item => {
-                        for (let i = tableData.value.length - 1; i >= 0; i--) {
-                            if (tableData.value[i].id == item) {
-                                tableData.value.splice(i, 1);
-                            }
-                        }
-                    });
+                    let eiInfo = new EiInfo
+                    eiInfo.parameter = {
+                        deleteUserId: 0,
+                        deleteAll: 1
+                    }
+                    eiInfo.userInfo = {
+                        id: store.userInfo.id
+                    }
+                    deleteProjectUser(eiInfo).then((res) => {
+                        console.log(res);
+                        getProjectUsers(eilnfox)
+                    })
                 }).catch(() => { })
             break;
         case 4:
-            ElMessageBox.confirm('确定提交名单?')
-                .then(() => {
-
-                }).catch(() => { })
+            if (!isForm(form)) {
+                ElNotification({
+                    message: '请将项目信息填写完整！',
+                    type: 'warning',
+                })
+            } else {
+                ElMessageBox.confirm('确定提交项目申报?')
+                    .then(() => {
+                        let eiInfo = new EiInfo
+                        eiInfo.parameter = form
+                        eiInfo.userInfo = {
+                            id: store.userInfo.id
+                        }
+                        createProject(eiInfo).then((res) => {
+                            ElNotification({
+                                message: '项目创建成功',
+                                type: 'success',
+                            })
+                            getProjectUsers(eilnfox)
+                            // 清空表单
+                            for (let i in form) { form[i] = '' }
+                        })
+                    }).catch(() => { })
+            }
             break;
     }
 }
+// 表单验证
+const isForm = (obj) => {
+    for (let key in obj) {
+        if (!obj[key]) {
+            return false
+        }
+    }
+    return true
+};
 // 确认添加人员
 const handleEditT = (val: any) => {
-    for (let i = 0; i < val.length; i++) {
-        tableData.value.push(val[i])
+    if (val.length != 0) {
+        let ids = val.map(item => item.id);
+        let eiInfo = new EiInfo
+        eiInfo.parameter = {
+            userId: ids
+        }
+        eiInfo.userInfo = {
+            id: store.userInfo.id
+        }
+        beforeProjectUser(eiInfo).then((res) => {
+            console.log(res);
+            eiInfo.parameter = {
+                pageNum: 1
+            }
+            getProjectUsers(eilnfox)
+        })
     }
+
     dialogVisible.value = false
+}
+// 查询已选择或已导入的人员
+const getProjectUsers = (eilnfox: any) => {
+    loading.value = true
+    eilnfox.userInfo = {
+        id: store.userInfo.id
+    }
+    getProjectUser(eilnfox).then((res: any) => {
+        setTimeout(() => {
+            loading.value = false
+            //将用户信息列表数据传入子组件
+            tableData.value = res.result.result == undefined ? [] : res.result.result
+            // 分页总页数
+            dataCount.value = res.result.dataCount == undefined ? 0 : res.result.dataCount
+            // 如果只有一页则不展示分页
+            hide.value = dataCount.value < 11 ? false : true
+        }, 500)
+    })
 }
 // 关闭Dialog
 const handleClose = () => {
@@ -121,16 +237,24 @@ const handleClose = () => {
 </script>
 <style scoped >
 .left {
-    width: 28%;
+    width: 22%;
 }
 
 .right {
-    width: 70%;
+    width: 75%;
     float: right;
 }
 
 .box {
     justify-content: space-between;
     display: flex;
+}
+
+:deep(.el-step.is-simple:not(:last-of-type) .el-step__title) {
+    width: 100% !important;
+}
+
+:deep(.el-step.is-simple .el-step__title) {
+    font-size: 14px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <el-upload v-model:file-list="fileList" class="upload-demo" :action="proUrl + url" :on-remove="handleRemove"
-        :limit="1" :before-upload="beforeUpload" :on-success="success">
+    <el-upload v-model:file-list="fileList" name="excelFile" class="upload-demo" :action="proUrl + url"
+        :on-remove="handleRemove" :limit="1" :before-upload="beforeUpload" :on-success="success">
         <el-button type="primary">点击上传</el-button>
     </el-upload>
 </template>
@@ -12,7 +12,8 @@ import type { UploadProps, UploadUserFile } from 'element-plus'
 // 定义Props默认数据类型
 type Props = {
     dialogType: number
-    url: string
+    url: string,
+    success: Function
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
@@ -29,10 +30,6 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     } else {
         return isXlsx(file)
     }
-}
-
-const success: UploadProps['onSuccess'] = () => {
-
 }
 </script>
 <style scoped>

@@ -76,4 +76,5 @@ export class project {
     safetyEducationCharge: string = ""
     workCycleEnd: string = ""
     workCycleStart: string = ""
+    time: any = ""
 }

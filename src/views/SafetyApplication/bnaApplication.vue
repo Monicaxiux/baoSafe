@@ -4,8 +4,8 @@
     <Table :userType="false" :loading="false" :tableType="true" :tableData="tableData" :handleDelete="handleDelete"
         :handleChange="handleChange">
     </Table>
-    <Dialog :userType="false" :handleEditT="handleEditT" :title="title" :dialogType="dialogType" :url="url"
-        :dialogVisible="dialogVisible" :departmentSelect="departmentSelect" :handleClose="handleClose">
+    <Dialog :success="success" :userType="false" :handleEditT="handleEditT" :title="title" :dialogType="dialogType"
+        :url="url" :dialogVisible="dialogVisible" :departmentSelect="departmentSelect" :handleClose="handleClose">
     </Dialog>
 </template>
 <script lang="ts" setup>
@@ -30,6 +30,9 @@ onMounted(() => {
         departmentSelect.value = res.result.departmentSelect
     })
 })
+const success = () => {
+    console.log('上传成功');
+}
 // 监听表格数据来开启提交按钮
 watch(tableData.value, (newValue, oldValue) => {
     console.log(newValue);
@@ -52,12 +55,12 @@ const select = (i: any) => {
     switch (i) {
         case 1:
             dialogVisible.value = true
-            dialogType.value = 1
+            dialogType.value = 2
             title.value = '选择安全教育人员'
             break;
         case 2:
             dialogVisible.value = true
-            dialogType.value = 2
+            dialogType.value = 1
             title.value = '模板导入安全教育人员'
             break;
         case 3:
@@ -81,6 +84,8 @@ const select = (i: any) => {
             break;
     }
 }
+
+
 // 确认添加人员
 const handleEditT = (val: any) => {
     for (let i = 0; i < val.length; i++) {
