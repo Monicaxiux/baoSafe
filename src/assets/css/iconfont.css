@@ -1,0 +1,79 @@
+@font-face {
+  font-family: "iconfont";
+  /* Project id 3513477 */
+  src: url('//at.alicdn.com/t/c/font_3513477_m98l4fuoqs.woff2?t=1662107826727') format('woff2'),
+    url('//at.alicdn.com/t/c/font_3513477_m98l4fuoqs.woff?t=1662107826727') format('woff'),
+    url('//at.alicdn.com/t/c/font_3513477_m98l4fuoqs.ttf?t=1662107826727') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-iconfonticon02:before {
+  content: "\e600";
+}
+
+.icon-guanbiquanping:before {
+  content: "\e603";
+}
+
+.icon-quanping:before {
+  content: "\e6c3";
+}
+
+.icon-moban:before {
+  content: "\e69e";
+}
+
+.icon-zhengshu-copy:before {
+  content: "\e640";
+}
+
+.icon-shuoming:before {
+  content: "\e628";
+}
+
+.icon-tianshenpi:before {
+  content: "\eb67";
+}
+
+.icon-anquan:before {
+  content: "\ec4d";
+}
+
+.icon-shenqing:before {
+  content: "\e665";
+}
+
+.icon-daibanshixiang:before {
+  content: "\e602";
+}
+
+.icon-fenghuangxiangmutubiao_dengjichu:before {
+  content: "\e66f";
+}
+
+.icon-telephone:before {
+  content: "\e6a2";
+}
+
+.icon-document-copy:before {
+  content: "\ed4f";
+}
+
+.icon-zidianguanli:before {
+  content: "\e612";
+}
+
+.icon-tuichudenglu:before {
+  content: "\e62f";
+}
+
+.icon-caidan:before {
+  content: "\e790";
+}

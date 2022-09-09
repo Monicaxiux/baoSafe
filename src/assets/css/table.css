@@ -1,0 +1,30 @@
+:deep(.cell:empty::before) {
+    content: "- -";
+    color: gray;
+}
+
+:deep(.el-table thead) {
+    color: #323232;
+}
+
+:deep(.el-table .cell) {
+    text-align: center;
+}
+
+@media screen and (max-width: 1500px) {
+    .tablex {
+        max-height: 60vh;
+        height: 60vh;
+        width: 100%;
+        overflow-y: auto;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .tablex {
+        max-height: 70vh;
+        height: 70vh;
+        overflow-y: auto;
+        width: 100%;
+    }
+}

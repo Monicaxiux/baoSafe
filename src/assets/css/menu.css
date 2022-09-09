@@ -1,0 +1,92 @@
+* {
+    moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+span {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.mb-2 {
+    margin: 0 30px 0 10px;
+    font-size: 22px;
+    color: white;
+}
+
+
+.i {
+    font-size: 18px;
+    margin-right: 8px;
+    color: #ebebeb;
+}
+
+i:hover {
+    font-size: 22px;
+    transition: 0.5s;
+}
+
+
+span:hover {
+    font-size: 16px;
+    transition: 0.5s;
+}
+
+.i2 {
+    font-size: 25px;
+    color: #409EFF !important;
+    margin: 20px auto;
+}
+
+.box_plus {
+    width: 100%;
+    line-height: 0px;
+    color: #BFCBD9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+}
+
+:deep(.el-sub-menu__title) {
+    color: #BFCBD9;
+}
+
+.i-plus {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.el-menu {
+    border: none;
+    background-color: #2b3a4c;
+    color: white;
+}
+
+
+.el-menu-item:hover {
+    outline: 0;
+    font-size: 15px;
+    transition: 0.3s;
+    background: #1b2836;
+}
+
+.el-menu-item.is-active {
+    color: #409EFF;
+    font-size: 15px;
+    background-color: #1b2836;
+}
+
+:deep(.el-sub-menu__title:hover) {
+    background-color: #1b2836 !important;
+}
+
+.el-menu-item {
+    color: #BFCBD9;
+    background-color: #1f2d3d;
+}
