@@ -78,3 +78,13 @@ export class project {
     workCycleStart: string = ""
     time: any = ""
 }
+
+// 审批前查询
+export class selectApproval {
+    projectNumber: string = ""
+    projectName: string = ""
+    safeLevel: number = 1
+    manageArea2: number = 0
+    manageArea3: number = 0
+    pageNum: number = 1
+}

@@ -87,7 +87,7 @@ const menus = ref([
                 name: '年度安全教育审批'
             },
             {
-                path: '/q',
+                path: '/project',
                 name: '项目过期查询'
             },
         ]
@@ -106,7 +106,7 @@ const menus = ref([
                 name: '证书查询'
             },
             {
-                path: '/',
+                path: '/license',
                 name: '证书过期查询'
             },
         ]

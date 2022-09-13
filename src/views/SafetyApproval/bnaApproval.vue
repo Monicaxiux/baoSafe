@@ -1,6 +1,7 @@
 <template>
     <Search :select="selectUserList" :data="eilnfo" :userType="false" :departmentSelect="departmentSelect"></Search>
-    <Table :getQrCode="getQrCode" :approval="approval" :loading="loading" :tableData="tableData"></Table>
+    <Table :userType="false" :getQrCode="getQrCode" :approval="approval" :loading="loading" :tableData="tableData">
+    </Table>
 </template>
 <script lang="ts" setup>
 import Table from './components/Table.vue'//员工表格
@@ -48,5 +49,4 @@ const getQrCode = () => {
 }
 </script>
 <style scoped>
-
 </style>

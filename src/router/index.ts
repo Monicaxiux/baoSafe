@@ -80,6 +80,16 @@ const routes: Array<RouteRecordRaw> = [
 				path: '/manager',
 				name: 'manager',
 				component: () => import('../views/Manager/manager.vue'),
+			},
+			{
+				path: '/license',
+				name: 'license',
+				component: () => import('../views/Expiration/license.vue'),
+			},
+			{
+				path: '/project',
+				name: 'project',
+				component: () => import('../views/Expiration/project.vue'),
 			}
 		]
 	},

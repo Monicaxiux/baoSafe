@@ -74,3 +74,21 @@ export const createProject = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+
+//年度审批前查询人员
+export const selectSafety = ((eilnfo: any) => {
+    return request({
+        url: '/assist/safety/status',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+//安全资质查询
+export const selectSafetylicense = ((eilnfo: any) => {
+    return request({
+        url: '/assist/query/project/user/safe/license',
+        method: 'post',
+        data: eilnfo
+    })
+})

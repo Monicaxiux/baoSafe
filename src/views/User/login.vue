@@ -28,10 +28,7 @@
         <br>
         <div>
           <!-- 外部负责人注册 -->
-
           <!-- 内部员工注册 -->
-
-
         </div>
       </div>
       <div class="overlay-container">
@@ -106,8 +103,15 @@ const logins = () => {
           }),
           //把userinfo存入pinia
           store.userInfo = res.userInfo,
-          //登陆成功跳转对应页面
-          router.replace({ path: "/bnaPartners" })
+          store.active == '/' ? (
+            //登陆成功跳转对应页面
+            router.replace({ path: '/bnaPartners' }),
+            // 修改菜单选中状态
+            store.active = '/bnaPartners'
+          ) : (
+            //登陆成功跳转对应页面
+            router.replace({ path: store.active })
+          )
         ) : (
           //登陆失败后重置表单
           ruleFormRef.value?.resetFields()

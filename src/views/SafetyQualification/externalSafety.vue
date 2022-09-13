@@ -1,5 +1,5 @@
 <template>
-    <h1>方式一</h1>
+    <!-- <h1>方式一</h1>
     <el-table :data="tableData" border style="width: 100%">
         <el-table-column type="expand">
             <template #default="props">
@@ -69,11 +69,13 @@
                 <el-table-column label="状态" prop="city" />
             </el-table-column>
         </el-table>
-    </div>
-
+    </div> -->
+    <Table :tableData="tableData" :loading="loading" :userType="false"></Table>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
+import Table from './components/Table.vue'
+import { selectSafetylicense } from '@/api/user'
 const tableData = [
     {
         date: '01',
@@ -145,6 +147,8 @@ const tableData = [
     }
 ]
 const status = ref(false)
+const loading = ref(false)
+
 const label = ref('')
 const tableData2 = [
     {
@@ -164,21 +168,7 @@ const handleNodeClick = (data: Tree) => {
     } else {
         status.value = false
         label.value = data.label
-        // switch (data.label) {
-        //     case '一级安全教育':
-        //         label.value = '一级安全教育'
-        //         break;
-        //     case '二级安全教育-1':
-        //         label.value = '二级安全教育'
-
-        //         break;
-        //     case '三级安全教育':
-        //         label.value = '三级安全教育'
-
-        //         break;
-        // }
     }
-
 }
 
 const data: Tree[] = [
@@ -271,5 +261,5 @@ const defaultProps = {
     label: 'label',
 }
 </script>
-<style>
-</style>
+        <style>
+        </style>
