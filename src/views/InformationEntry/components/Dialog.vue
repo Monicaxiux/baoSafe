@@ -3,7 +3,7 @@
         <el-card class="card" shadow="never">
             <br>
             <UploadFile :success="success" :dialogType="dialogType" :url="url"></UploadFile>
-            <el-button>示例模板</el-button>
+            <el-button @click="download">示例模板</el-button>
             <br><br><br>
             <el-card style="width:100%" shadow="hover">
                 <h3>提交步骤</h3>
@@ -26,6 +26,7 @@
 <script lang="ts" setup>
 import { ref, toRefs } from 'vue'
 import { ElMessageBox } from 'element-plus'
+import { ElNotification } from 'element-plus'
 import UploadFile from '@/components/UploadFile.vue'
 // 定义Props默认数据类型
 type Props = {
@@ -47,6 +48,14 @@ const handleClose = (done: () => void) => {
         .catch(() => {
             // catch error
         })
+}
+const download = () => {
+    ElNotification({
+        message: "正在下载示例模板，请稍等...",
+        type: 'success',
+    }),
+        window.location.href =
+        "https://safeedu.bnasafe.com/download/internal/excel";
 }
 </script>
 <style scoped>

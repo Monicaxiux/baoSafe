@@ -84,10 +84,19 @@ export const selectSafety = ((eilnfo: any) => {
     })
 })
 
-//安全资质查询
+//年度安全资质查询
 export const selectSafetylicense = ((eilnfo: any) => {
     return request({
         url: '/assist/query/project/user/safe/license',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+//表格导入查询
+export const selectQueryExcel = ((eilnfo: any) => {
+    return request({
+        url: '/internal/query/excel',
         method: 'post',
         data: eilnfo
     })

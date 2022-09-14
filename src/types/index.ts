@@ -88,3 +88,11 @@ export class selectApproval {
     manageArea3: number = 0
     pageNum: number = 1
 }
+
+// 安全资质查询
+export class selectSafe {
+    assistCompany: string = ""
+    projectNumber: string = ""
+    projectName: string = ""
+    pageNum: number = 1
+}

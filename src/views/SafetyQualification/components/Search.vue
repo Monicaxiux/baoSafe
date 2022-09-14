@@ -1,29 +1,42 @@
 <template>
     <el-form :model="data.parameter" status-icon class="demo-ruleForm from">
-        <el-form-item label="安全教育级别">
-            <el-select style="width: 150px;margin-right: 20px;" v-model="data.parameter.safetyLevel" clearable
-                placeholder="安全教育级别">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="分厂">
-            <el-select style="width: 150px;margin-right: 20px;" v-model="data.parameter.safetyLevel" clearable
-                placeholder="请选择分厂">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="科室">
-            <el-select style="width: 150px;margin-right: 20px;" v-model="data.parameter.safetyLevel" clearable
-                placeholder="请选择科室">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="工号">
-            <el-input class="input" v-model="data.parameter.icCardWorkNumber" clearable placeholder="请输入工号" />
-        </el-form-item>
-        <el-form-item label="姓名">
-            <el-input class="input" v-model="data.parameter.username" clearable placeholder="请输入姓名" />
-        </el-form-item>
+        <template v-if="userType">
+            <el-form-item label="安全教育级别">
+                <el-select style="width: 150px;margin-right: 20px;" v-model="data.parameter.safetyLevel" clearable
+                    placeholder="安全教育级别">
+                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="分厂">
+                <el-select style="width: 150px;margin-right: 20px;" v-model="data.parameter.safetyLevel" clearable
+                    placeholder="请选择分厂">
+                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="科室">
+                <el-select style="width: 150px;margin-right: 20px;" v-model="data.parameter.safetyLevel" clearable
+                    placeholder="请选择科室">
+                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="工号">
+                <el-input class="input" v-model="data.parameter.icCardWorkNumber" clearable placeholder="请输入工号" />
+            </el-form-item>
+            <el-form-item label="姓名">
+                <el-input class="input" v-model="data.parameter.username" clearable placeholder="请输入姓名" />
+            </el-form-item>
+        </template>
+        <template v-if="!userType">
+            <el-form-item label="所在公司">
+                <el-input class="input" v-model="data.parameter.assistCompany" clearable placeholder="所在公司" />
+            </el-form-item>
+            <el-form-item label="项目编码">
+                <el-input class="input" v-model="data.parameter.projectNumber" clearable placeholder="项目编码" />
+            </el-form-item>
+            <el-form-item label="项目名称">
+                <el-input class="input" v-model="data.parameter.projectName" clearable placeholder="项目名称" />
+            </el-form-item>
+        </template>
         <el-button type="primary" class="button" @click="(data.parameter.pageNum = 1), select(data)">
             <el-icon class="i">
                 <Search />
@@ -52,6 +65,7 @@ const options = [
 type Props = {
     data: any,//搜索参数
     select: Function,//搜索方法
+    userType: boolean
 
 }
 // 使用defineProps接收父组件的传递值

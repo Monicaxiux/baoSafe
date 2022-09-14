@@ -1,12 +1,12 @@
 <template>
-    <el-upload v-model:file-list="fileList" name="excelFile" class="upload-demo" :action="proUrl + url"
+    <el-upload v-model:file-list="fileList" name="excelFile" class="upload-demo" :action="uplodUrl + url"
         :on-remove="handleRemove" :limit="1" :before-upload="beforeUpload" :on-success="success">
         <el-button type="primary">点击上传</el-button>
     </el-upload>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { devUrl, proUrl } from '@/utils/url'
+import { uplodUrl } from '@/utils/url'
 import { isImg, isXlsx } from '@/utils/regexp'
 import type { UploadProps, UploadUserFile } from 'element-plus'
 // 定义Props默认数据类型

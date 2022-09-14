@@ -1,13 +1,13 @@
 <template>
     <div>
         <el-table border v-loading="loading" max-height="650" :data="tableData" class="tablex">
-            <el-table-column prop="icCardWorkNumber" label="人员类型" width="100" />
-            <el-table-column prop="icCardWorkNumber" label="所在公司" width="200" />
-            <el-table-column prop="icCardWorkNumber" label="所在部门" width="200" />
-            <el-table-column prop="icCardWorkNumber" label="所在分厂" width="200" />
-            <el-table-column prop="icCardWorkNumber" label="当前岗位" width="220" />
+            <el-table-column prop="userType" label="人员类型" width="100" />
+            <el-table-column prop="company" label="所在公司" width="200" />
+            <el-table-column prop="department" label="所在部门" width="200" />
+            <el-table-column prop="factory" label="所在分厂" width="200" />
+            <el-table-column prop="recentJob" label="当前岗位" width="220" />
             <el-table-column prop="username" label="员工姓名" width="90" />
-            <el-table-column prop="icCardWorkNumber" label="IC卡号" />
+            <el-table-column prop="workNumber" label="IC卡号" />
             <el-table-column label="IC卡照片" width="90">
                 <template #default="scope">
                     <MyImg :imgUrl="scope.row.icPic"></MyImg>
@@ -18,13 +18,13 @@
                     <MyImg :imgUrl="scope.row.userPic"></MyImg>
                 </template>
             </el-table-column>
-            <el-table-column prop="authAreaList[0].name" label="进厂年" />
-            <el-table-column prop="authAreaList[0].name" label="进厂月" />
-            <el-table-column fixed="right" label="操作" width="160">
+            <el-table-column prop="aenterFactoryYear" label="进厂年" />
+            <el-table-column prop="enterFactoryMonth" label="进厂月" />
+            <!-- <el-table-column fixed="right" label="操作" width="160">
                 <template #default="scope">
 
                 </template>
-            </el-table-column>
+            </el-table-column> -->
         </el-table>
     </div>
 </template>

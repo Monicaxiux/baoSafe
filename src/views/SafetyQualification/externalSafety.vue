@@ -47,7 +47,6 @@
         <el-table-column label="项目名称" prop="name" />
     </el-table>
     <br><br>
-
     <h1>方式二</h1>
     <br><br><br>
     <div style="display: flex;justify-content: space-between;">
@@ -70,82 +69,33 @@
             </el-table-column>
         </el-table>
     </div> -->
+    <Search :select="selectUserList" :userType="false" :data="eilnfo"></Search>
     <Table :tableData="tableData" :loading="loading" :userType="false"></Table>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
+import Search from './components/Search.vue'
 import Table from './components/Table.vue'
 import { selectSafetylicense } from '@/api/user'
-const tableData = [
-    {
-        date: '01',
-        name: '测试01',
-        family: [
-            {
-                name: 'Jerry',
-                state: 'California',
-                city: 'San Francisco',
-                address: '3650 21st St, San Francisco',
-                zip: 'CA 94114',
-                family2: [
-                    {
-                        name: 'Jerry',
-                        state: 'California',
-                        city: 'San Francisco',
-                        address: '3650 21st St, San Francisco',
-                        zip: 'CA 94114',
-                        family3: [
-                            {
-                                name: 'Jerry',
-                                state: 'California',
-                                city: 'San Francisco',
-                                address: '3650 21st St, San Francisco',
-                                zip: 'CA 94114',
-                            },
-                            {
-                                name: 'Jerry',
-                                state: 'California',
-                                city: 'San Francisco',
-                                address: '3650 21st St, San Francisco',
-                                zip: 'CA 94114',
-                            },
-                        ]
-                    },
-                    {
-                        name: 'Jerry',
-                        state: 'California',
-                        city: 'San Francisco',
-                        address: '3650 21st St, San Francisco',
-                        zip: 'CA 94114',
-                        family3: [
-                            {
-                                name: 'Jerry',
-                                state: 'California',
-                                city: 'San Francisco',
-                                address: '3650 21st St, San Francisco',
-                                zip: 'CA 94114',
-                            },
-                            {
-                                name: 'Jerry',
-                                state: 'California',
-                                city: 'San Francisco',
-                                address: '3650 21st St, San Francisco',
-                                zip: 'CA 94114',
-                            },
-                            {
-                                name: 'Jerry',
-                                state: 'California',
-                                city: 'San Francisco',
-                                address: '3650 21st St, San Francisco',
-                                zip: 'CA 94114',
-                            },
-                        ]
-                    }
-                ]
-            }
-        ],
-    }
-]
+import { EiInfo, selectSafe } from '@/types';
+const quer = reactive(new selectSafe)
+const eilnfo = reactive(new EiInfo)
+eilnfo.parameter = quer
+const dataCount = ref(0)
+const hide = ref(false)
+const tableData = ref([])
+const selectUserList = () => {
+    loading.value = true
+    selectSafetylicense(eilnfo).then((res: any) => {
+        loading.value = false
+        //将用户信息列表数据传入子组件
+        tableData.value = res.result.assistInfo == undefined ? [] : res.result.assistInfo
+        // 分页总页数
+        dataCount.value = res.result.dataCount == undefined ? 0 : res.result.dataCount
+        // 如果只有一页则不展示分页
+        hide.value = dataCount.value < 11 ? false : true
+    })
+}
 const status = ref(false)
 const loading = ref(false)
 

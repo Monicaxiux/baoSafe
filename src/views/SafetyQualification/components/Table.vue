@@ -56,51 +56,61 @@
                 </el-table-column>
             </el-table-column>
         </el-table>
-        <el-table v-if="!userType" :data="tableData" border style="width: 100%">
+        <el-table v-if="!userType" v-loading="loading" max-height="720" :data="tableData" border style="width: 100%">
             <el-table-column type="expand">
                 <template #default="props">
                     <div m="4">
-                        <el-table :data="props.row.family" border>
+                        <el-table :data="props.row.safeEdu1List" border>
                             <el-table-column label="一级安全教育">
                                 <el-table-column type="expand">
                                     <template #default="props">
                                         <div m="4">
-                                            <el-table :data="props.row.family2" border>
+                                            <el-table :data="props.row.safeEdu2List" border>
                                                 <el-table-column label="二级安全教育">
                                                     <el-table-column type="expand">
                                                         <template #default="props">
                                                             <div m="4">
-                                                                <el-table :data="props.row.family3" border>
+                                                                <el-table :data="props.row.safeEdu3List" border>
                                                                     <el-table-column label="三级安全教育">
-                                                                        <el-table-column label="审核人" prop="name" />
-                                                                        <el-table-column label="电话" prop="state" />
-                                                                        <el-table-column label="区域" prop="city" />
-                                                                        <el-table-column label="状态" prop="address" />
+                                                                        <el-table-column label="教育时间" prop="eduDate" />
+                                                                        <el-table-column label="教育人" prop="eduPerson" />
+                                                                        <el-table-column label="联系电话"
+                                                                            prop="eduPersonPhone" />
+                                                                        <el-table-column label="所在区域"
+                                                                            prop="manageArea" />
+                                                                        <el-table-column label="状态"
+                                                                            prop="checkStatus" />
                                                                     </el-table-column>
                                                                 </el-table>
                                                             </div>
                                                         </template>
                                                     </el-table-column>
-                                                    <el-table-column label="审核人" prop="name" />
-                                                    <el-table-column label="电话" prop="state" />
-                                                    <el-table-column label="区域" prop="city" />
-                                                    <el-table-column label="状态" prop="address" />
+                                                    <el-table-column label="教育时间" prop="eduDate" />
+                                                    <el-table-column label="教育人" prop="eduPerson" />
+                                                    <el-table-column label="联系电话" prop="eduPersonPhone" />
+                                                    <el-table-column label="所在区域" prop="manageArea" />
+                                                    <el-table-column label="状态" prop="checkStatus" />
                                                 </el-table-column>
                                             </el-table>
                                         </div>
                                     </template>
                                 </el-table-column>
-                                <el-table-column label="审核人" prop="name" />
-                                <el-table-column label="电话" prop="state" />
-                                <el-table-column label="区域" prop="city" />
-                                <el-table-column label="状态" prop="address" />
+                                <el-table-column label="教育时间" prop="eduDate" />
+                                <el-table-column label="教育人" prop="eduPerson" />
+                                <el-table-column label="联系电话" prop="eduPersonPhone" />
+                                <el-table-column label="所在区域" prop="manageArea" />
+                                <el-table-column label="状态" prop="checkStatus" />
                             </el-table-column>
                         </el-table>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column label="项目编号" prop="date" />
-            <el-table-column label="项目名称" prop="name" />
+            <el-table-column label="项目编号" prop="projectNumber" />
+            <el-table-column label="项目名称" prop="projectName" />
+            <el-table-column label="协力单位" prop="assistCompany" />
+            <el-table-column label="负责人" prop="safetyEducationCharge" />
+            <el-table-column label="开始时间" prop="workCycleStart" />
+            <el-table-column label="结束时间" prop="workCycleEnd" />
         </el-table>
     </div>
 </template>
@@ -117,5 +127,26 @@ type Props = {
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
 </script>
-<style scoped src="@/assets/css/table.css">
+<style scoped>
+:deep(.el-table thead) {
+    color: #323232;
+}
+
+@media screen and (max-width: 1500px) {
+    .tablex {
+        max-height: 60vh;
+        height: 60vh;
+        width: 100%;
+        overflow-y: auto;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .tablex {
+        max-height: 70vh;
+        height: 70vh;
+        overflow-y: auto;
+        width: 100%;
+    }
+}
 </style>

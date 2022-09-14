@@ -86,15 +86,15 @@ const menus = ref([
                 path: '/externalApproval',
                 name: '年度安全教育审批'
             },
-            {
-                path: '/project',
-                name: '项目过期查询'
-            },
+            // {
+            //     path: '/project',
+            //     name: '项目过期查询'
+            // },
         ]
     },
     {
         index: '3',
-        title: '证书管理',
+        title: '安全资质证书管理',
         icon: 'iconfont icon-zhengshu-copy i',
         children: [
             {
@@ -118,11 +118,11 @@ const menus = ref([
         children: [
             {
                 path: '/recordSearch',
-                name: '作业登记查询'
+                name: '人员轨迹跟踪'
             },
             {
                 path: '/projectSearch',
-                name: '施工记录查询'
+                name: '项目施工人员管理'
             },
             {
                 path: '/projectIsSearch',
