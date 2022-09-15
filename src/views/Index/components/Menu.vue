@@ -98,7 +98,7 @@ const menus = ref([
         icon: 'iconfont icon-zhengshu-copy i',
         children: [
             {
-                path: '/',
+                path: '/certimport',
                 name: '证书导入'
             },
             {

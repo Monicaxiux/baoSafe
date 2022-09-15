@@ -16,7 +16,7 @@ import { ElNotification } from 'element-plus'
 import Pagination from '@/components/Pagination.vue'//分页组件
 import { ref, reactive, onMounted } from "vue";
 import { piniaData } from '@/store';//引入pinia状态管理
-import { selectQueryExcel } from '@/api/user'
+import { selectQueryExcel, internalExcel } from '@/api/user'
 import { EiInfo } from '@/types'
 //pinia状态管理
 const store = piniaData();
@@ -57,10 +57,19 @@ const select = (i) => {
             url.value = '/e'
             title.value = '上传考卷照片'
             break;
-        case 4:
+        case 5:
             ElMessageBox.confirm('确认提交数据?')
                 .then(() => {
-
+                    eiInfo.userInfo = {
+                        username: store.userInfo.username
+                    }
+                    internalExcel(eiInfo).then((res: any) => {
+                        ElNotification({
+                            message: res.sys.msg,
+                            type: 'success',
+                        })
+                        tableData.value = []
+                    })
                 })
                 .catch(() => {
                     // catch error
@@ -78,10 +87,10 @@ onMounted(() => {
     selectUserList()
 })
 //文件导入成功
-const success = () => {
+const success = (val: any) => {
     ElNotification({
-        message: '导入成功！',
-        type: 'warning',
+        message: val.sys.msg,
+        type: 'success',
     })
     selectUserList();
     dialogVisible.value = false
@@ -96,7 +105,7 @@ const selectUserList = () => {
         dataCount.value = res.result.dataCount == undefined ? 0 : res.result.dataCount
         // 如果只有一页则不展示分页
         hide.value = dataCount.value < 11 ? false : true
-        store.fileStatus = false
+        store.fileStatus = tableData.value != [] ? false : true
     })
 }
 </script>

@@ -1,22 +1,18 @@
 <template>
     <el-form :model="data.parameter" status-icon class="demo-ruleForm from">
         <template v-if="userType">
-            <el-form-item label="安全教育级别">
-                <el-select style="width: 150px;margin-right: 20px;" v-model="data.parameter.safetyLevel" clearable
-                    placeholder="安全教育级别">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+            <el-form-item label="部门">
+                <el-select style="width: 150px;margin-right: 20px;" @change="change"
+                    v-model="data.parameter.baoDepartment" clearable placeholder="请选择部门">
+                    <el-option v-for="item in departmentList" :key="item.baoDepartmentId"
+                        :label="item.baoDepartmentName" :value="item.baoDepartmentId" />
                 </el-select>
             </el-form-item>
             <el-form-item label="分厂">
-                <el-select style="width: 150px;margin-right: 20px;" v-model="data.parameter.safetyLevel" clearable
-                    placeholder="请选择分厂">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-                </el-select>
-            </el-form-item>
-            <el-form-item label="科室">
-                <el-select style="width: 150px;margin-right: 20px;" v-model="data.parameter.safetyLevel" clearable
-                    placeholder="请选择科室">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                <el-select style="width: 150px;margin-right: 20px;" @change="(data.parameter.pageNum = 1), select(data)"
+                    v-model="data.parameter.baoFactory" clearable placeholder="请选择分厂">
+                    <el-option v-for="item in baoFactoryList" :key="item.baoFactoryId" :label="item.baoFactoryName"
+                        :value="item.baoFactoryId" />
                 </el-select>
             </el-form-item>
             <el-form-item label="工号">
@@ -47,29 +43,36 @@
 
 <script setup lang="ts">
 import { Search, Plus } from '@element-plus/icons-vue'//引入elementui 图标
-const options = [
-    {
-        value: '1',
-        label: '一级',
-    },
-    {
-        value: '2',
-        label: '二级',
-    },
-    {
-        value: '3',
-        label: '三级',
-    },
-]
+import { ref, onMounted, reactive } from 'vue'
+import { selectDepartment, selectFactory } from '@/api/areas'
+import { EiInfo } from '@/types'
+const departmentList: any = ref([])
+const baoFactoryList: any = ref([])
+const eiInfo = reactive(new EiInfo)
 // 定义Props默认数据类型
 type Props = {
     data: any,//搜索参数
     select: Function,//搜索方法
     userType: boolean
-
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
+onMounted(() => {
+    selectDepartment().then((res: any) => {
+        departmentList.value = res.result.departmentSelect
+    })
+})
+const change = (val) => {
+    props.data.parameter.baoFactory = ''
+    props.data.parameter.pageNum = 1
+    props.select(props.data)
+    eiInfo.parameter = {
+        departmentId: val
+    }
+    selectFactory(eiInfo).then((res: any) => {
+        baoFactoryList.value = res.result.factorySelect
+    })
+}
 </script>
 
 <style scoped>

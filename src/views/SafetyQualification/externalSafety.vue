@@ -100,6 +100,7 @@ const status = ref(false)
 const loading = ref(false)
 
 const label = ref('')
+
 const tableData2 = [
     {
         name: '1111',
@@ -107,6 +108,7 @@ const tableData2 = [
         city: '111'
     }
 ]
+
 interface Tree {
     label: string
     children?: Tree[]
@@ -210,6 +212,7 @@ const defaultProps = {
     children: 'children',
     label: 'label',
 }
+
 </script>
-        <style>
-        </style>
+<style>
+</style>

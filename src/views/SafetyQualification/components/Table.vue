@@ -56,7 +56,7 @@
                 </el-table-column>
             </el-table-column>
         </el-table>
-        <el-table v-if="!userType" v-loading="loading" max-height="720" :data="tableData" border style="width: 100%">
+        <el-table v-if="!userType" v-loading="loading" max-height="820" :data="tableData" border style="width: 100%">
             <el-table-column type="expand">
                 <template #default="props">
                     <div m="4">

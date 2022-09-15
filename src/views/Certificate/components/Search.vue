@@ -1,38 +1,24 @@
 <template>
     <div style="margin-bottom: 20px">
         <el-steps :space="500" :active="1" simple>
-            <el-step title="步骤1：上传表格" />
-            <el-step title="步骤2：上传IC卡照片" />
-            <el-step title="步骤3：上传个人照片" />
-            <!-- <el-step title="步骤4：上传考卷照片" /> -->
-            <el-step title="步骤5：提交数据" />
+            <el-step title="步骤1：上传作业证表格" />
+            <el-step title="步骤2：上传作业证照片" />
+            <el-step title="步骤3：提交数据" />
         </el-steps>
         <br>
         <el-button @click="select(1)" type="primary">
             <el-icon>
                 <FolderOpened />
             </el-icon>
-            上传表格
+            上传作业证表格
         </el-button>
         <el-button @click="select(2)" :disabled="store.fileStatus" type="primary">
             <el-icon>
                 <Picture />
             </el-icon>
-            上传IC卡照片
+            上传作业证照片
         </el-button>
         <el-button @click="select(3)" :disabled="store.fileStatus" type="primary">
-            <el-icon>
-                <Picture />
-            </el-icon>
-            上传个人照片
-        </el-button>
-        <!-- <el-button @click="select(4)" :disabled="store.fileStatus" type="primary">
-            <el-icon>
-                <Picture />
-            </el-icon>
-            上传考卷照片
-        </el-button> -->
-        <el-button @click="select(5)" :disabled="store.fileStatus" type="primary">
             <el-icon>
                 <Check />
             </el-icon>

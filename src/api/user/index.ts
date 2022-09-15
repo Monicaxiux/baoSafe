@@ -101,3 +101,39 @@ export const selectQueryExcel = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+
+//作业证导入查询
+export const selectLicense = ((eilnfo: any) => {
+    return request({
+        url: '/license/query/excel',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 将表格数据写入数据库
+export const internalExcel = ((eilnfo: any) => {
+    return request({
+        url: '/internal/insert/excel/data',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 将作业证数据写入数据库
+export const internalLicense = ((eilnfo: any) => {
+    return request({
+        url: '/license/insert/excel/data',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 查询bna安全资质
+export const selectBnasafe = ((eilnfo: any) => {
+    return request({
+        url: '/internal/query/project/user/safe/license',
+        method: 'post',
+        data: eilnfo
+    })
+})

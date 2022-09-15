@@ -1,6 +1,11 @@
 <template>
-    <el-upload v-model:file-list="fileList" name="excelFile" class="upload-demo" :action="uplodUrl + url"
-        :on-remove="handleRemove" :limit="1" :before-upload="beforeUpload" :on-success="success">
+    <el-upload v-if="dialogType == 1" v-model:file-list="fileList" name="excelFile" class="upload-demo"
+        :action="uplodUrl + url" :on-remove="handleRemove" :limit="1" :before-upload="beforeUpload"
+        :on-success="success">
+        <el-button type="primary">点击上传</el-button>
+    </el-upload>
+    <el-upload v-if="dialogType != 1" v-model:file-list="fileList" name="excelFile" class="upload-demo"
+        :action="uplodUrl + url" :on-remove="handleRemove" multiple :before-upload="beforeUpload" :on-success="success">
         <el-button type="primary">点击上传</el-button>
     </el-upload>
 </template>

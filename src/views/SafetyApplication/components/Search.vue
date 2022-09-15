@@ -7,7 +7,7 @@
                 <el-step title="步骤3：提交申报" />
             </el-steps>
             <br v-if="!userType">
-            <el-button @click="select(1)" type="primary">
+            <el-button v-if="!userType" @click="select(1)" type="primary">
                 <i class="iconfont icon-iconfonticon02"></i>
                 系统导入
             </el-button>

@@ -90,6 +90,11 @@ const routes: Array<RouteRecordRaw> = [
 				path: '/project',
 				name: 'project',
 				component: () => import('../views/Expiration/project.vue'),
+			},
+			{
+				path: '/certimport',
+				name: 'certimport',
+				component: () => import('../views/Certificate/certimport.vue'),
 			}
 		]
 	},

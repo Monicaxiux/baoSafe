@@ -28,7 +28,7 @@
                 <el-table-column prop="projectType" label="项目类型" width="140" />
                 <el-table-column prop="safetyEducationCharge" label="负责人" width="140" />
                 <el-table-column prop="projectCreateTime" label="项目创建时间" width="140" />
-                <el-table-column prop="licenseArea" label="项目区域" width="140" />
+                <el-table-column prop="licenseArea" label="项目状态" width="140" />
                 <el-table-column prop="workCycle" label="项目周期" width="140" />
                 <el-table-column prop="contactPerson" label="联系人" width="140" />
                 <el-table-column label="一级审批">
