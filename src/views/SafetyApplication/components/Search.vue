@@ -11,7 +11,7 @@
                 <i class="iconfont icon-iconfonticon02"></i>
                 系统导入
             </el-button>
-            <el-button @click="select(2)" type="primary">
+            <el-button v-if="userType" @click="select(2)" type="primary">
                 <el-icon>
                     <FolderOpened />
                 </el-icon>

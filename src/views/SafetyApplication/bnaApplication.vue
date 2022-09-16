@@ -12,15 +12,19 @@
 import Search from './components/Search.vue'
 import Table from './components/Table.vue'
 import { ElMessageBox } from 'element-plus'
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, reactive } from "vue";
 import Dialog from './components/Dialog.vue'
 import { selectDepartment } from '@/api/areas'
+import { applySafe } from '@/api/user'
+import { ElNotification } from 'element-plus'
+import { EiInfo } from '@/types';
 const departmentSelect = ref([])
 const tableData: any = ref([])
 const dialogVisible = ref(false)
 const dialogType = ref(1)
 const buttonStatus = ref(true)
 const submitStatus = ref(true)
+const eiInfo = reactive(new EiInfo)
 const url = ref('')
 const title = ref('')
 const multiple: any = ref([])//多选选中内容
@@ -37,6 +41,7 @@ const success = () => {
 watch(tableData.value, (newValue, oldValue) => {
     console.log(newValue);
     submitStatus.value = newValue.length != 0 ? false : true
+    buttonStatus.value = newValue.length != 0 ? false : true
 })
 // 移除按钮事件
 const handleDelete = (i: any) => {
@@ -48,7 +53,6 @@ const handleDelete = (i: any) => {
 // 多选框选中事件
 const handleChange = (val: any) => {
     multiple.value = val
-    buttonStatus.value = multiple.value.length != 0 ? false : true
 }
 // 表格移除事件
 const select = (i: any) => {
@@ -66,20 +70,36 @@ const select = (i: any) => {
         case 3:
             ElMessageBox.confirm('确定移除选中项?')
                 .then(() => {
-                    var ids = multiple.value.map(item => item.id);
-                    ids.map(Number).forEach(item => {
-                        for (let i = tableData.value.length - 1; i >= 0; i--) {
-                            if (tableData.value[i].id == item) {
-                                tableData.value.splice(i, 1);
-                            }
-                        }
-                    });
+                    tableData.value = []
+                    // var ids = multiple.value.map(item => item.id);
+                    // ids.map(Number).forEach(item => {
+                    //     for (let i = tableData.value.length - 1; i >= 0; i--) {
+                    //         if (tableData.value[i].id == item) {
+                    //             tableData.value.splice(i, 1);
+                    //         }
+                    //     }
+                    // });
                 }).catch(() => { })
             break;
         case 4:
             ElMessageBox.confirm('确定提交名单?')
                 .then(() => {
+                    let List: any = []
+                    for (let i = 0; i < tableData.value.length; i++) {
+                        List.push(tableData.value[i].id)
+                    }
+                    console.log(List);
 
+                    eiInfo.parameter = {
+                        userId: List
+                    }
+                    applySafe(eiInfo).then((res: any) => {
+                        ElNotification({
+                            message: `${res.sys.msg}`,
+                            type: 'success',
+                        })
+                        tableData.value = []
+                    })
                 }).catch(() => { })
             break;
     }

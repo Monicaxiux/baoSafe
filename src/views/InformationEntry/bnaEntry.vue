@@ -105,7 +105,11 @@ const selectUserList = () => {
         dataCount.value = res.result.dataCount == undefined ? 0 : res.result.dataCount
         // 如果只有一页则不展示分页
         hide.value = dataCount.value < 11 ? false : true
-        store.fileStatus = tableData.value != [] ? false : true
+        if (tableData.value == []) {
+            store.fileStatus = true
+        } else {
+            store.fileStatus = false
+        }
     })
 }
 </script>

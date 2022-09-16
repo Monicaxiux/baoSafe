@@ -61,7 +61,7 @@ const menus = ref([
             },
             {
                 path: '/bnaApproval',
-                name: '安全教育审批'
+                name: '安全教育审核'
             },
         ]
     },
@@ -84,7 +84,7 @@ const menus = ref([
             },
             {
                 path: '/externalApproval',
-                name: '年度安全教育审批'
+                name: '年度安全教育审核'
             },
             // {
             //     path: '/project',

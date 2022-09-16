@@ -137,3 +137,21 @@ export const selectBnasafe = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+
+// bna安全教育申报
+export const applySafe = ((eilnfo: any) => {
+    return request({
+        url: '/internal/apply/safe/edu',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 年度安全教育查询项目中每个员工的安全教育状态
+export const selectEachUser = ((eilnfo: any) => {
+    return request({
+        url: '/assist/safety/status/each/user',
+        method: 'post',
+        data: eilnfo
+    })
+})
