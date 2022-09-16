@@ -15,7 +15,7 @@ import { selectBna, selectUpData } from '@/api/user';//api方法
 import { getBase64 } from '@/utils/regexp'
 import { selectDepartment } from '@/api/areas'
 
-//部门下拉框
+//部门下拉框内容
 const departmentSelect = ref([])
 //分页搜索参数
 const query = reactive(new bna);
