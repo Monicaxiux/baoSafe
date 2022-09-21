@@ -95,6 +95,21 @@ const routes: Array<RouteRecordRaw> = [
 				path: '/certimport',
 				name: 'certimport',
 				component: () => import('../views/Certificate/certimport.vue'),
+			},
+			{
+				path: '/dicArea',
+				name: 'dicArea',
+				component: () => import('../views/Dictionary/dicArea.vue'),
+			},
+			{
+				path: '/sector',
+				name: 'sector',
+				component: () => import('../views/Dictionary/sector.vue'),
+			},
+			{
+				path: '/selectLicense',
+				name: 'selectLicense',
+				component: () => import('../views/Certificate/selectLicense.vue'),
 			}
 		]
 	},

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-table border v-loading="loading" max-height="650" :data="tableData" class="tablex">
+        <el-table border v-loading="loading" max-height="600" :data="tableData" class="tablex">
             <el-table-column prop="username" label="员工姓名" width="90" />
             <el-table-column prop="icCardWorkNumber" label="IC卡号" />
             <el-table-column prop="licenseName" label="证书名称" width="210" />

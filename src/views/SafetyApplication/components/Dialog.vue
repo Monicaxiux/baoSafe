@@ -6,14 +6,14 @@
             <Table :userType="userType" :tableType="false" :tableData="tableData" :loading="loading" :handleDelete="[]"
                 :handleChange="handleChange">
             </Table>
-            <Pagination :hide="hide" :pagesize="eilnfo.parameter.limit" :total="dataCount"
-                :currentpage="eilnfo.parameter.pageNum" :options="eilnfo" :render="selectUserList">
+            <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum"
+                :options="eilnfo" :render="selectUserList">
             </Pagination>
         </div>
         <el-card v-if="dialogType == 1" class="card" shadow="never">
             <br>
             <UploadFile :success="success" :dialogType="dialogType" :url="url"></UploadFile>
-            <el-button>示例模板</el-button>
+            <el-button @click="download">示例模板</el-button>
             <br><br><br>
             <el-card style="width:100%" shadow="hover">
                 <h3>提交步骤</h3>
@@ -43,6 +43,7 @@ import Pagination from '@/components/Pagination.vue'//分页组件
 import UploadFile from '@/components/UploadFile.vue'
 import { bna, external, EiInfo } from '@/types';
 import { selectBna, selectExternal } from '@/api/user';//api方法
+import { ElNotification } from 'element-plus'
 // 定义Props默认数据类型
 type Props = {
     dialogVisible: boolean,
@@ -55,7 +56,14 @@ type Props = {
     userType: boolean,
     success: Function
 }
-
+const download = () => {
+    ElNotification({
+        message: "正在下载示例模板，请稍等...",
+        type: 'success',
+    }),
+        window.location.href =
+        "https://safeedu.bnasafe.com/download/assist/excel";
+}
 //是否展示分页
 const hide = ref(false);
 //总页数

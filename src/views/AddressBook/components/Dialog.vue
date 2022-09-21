@@ -12,12 +12,12 @@
                         <el-input class="input" v-model="userInfo.assistCompany" clearable placeholder="请输入协力单位" />
                     </el-form-item>
                     <!-- <el-form-item label="部门" v-if="!userType">
-                        <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
-                            v-model="data.parameter.baoDepartment" placeholder="请选择部门">
-                            <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId"
-                                :label="item.baoDepartmentName" :value="item.baoDepartmentId" />
-                        </el-select>
-                    </el-form-item> -->
+                    <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
+                        v-model="data.parameter.baoDepartment" placeholder="请选择部门">
+                        <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId"
+                            :label="item.baoDepartmentName" :value="item.baoDepartmentId" />
+                    </el-select>
+                </el-form-item> -->
                     <el-form-item label="所在单位" v-if="userType">
                         <el-input class="input" v-model="userInfo.actualCompany" clearable placeholder="请输入所在单位" />
                     </el-form-item>

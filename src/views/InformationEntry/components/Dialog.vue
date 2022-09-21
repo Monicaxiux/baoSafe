@@ -3,7 +3,7 @@
         <el-card class="card" shadow="never">
             <br>
             <UploadFile :success="success" :dialogType="dialogType" :url="url"></UploadFile>
-            <el-button @click="download">示例模板</el-button>
+            <el-button v-if="dialogType == 1" @click="download">示例模板</el-button>
             <br><br><br>
             <el-card style="width:100%" shadow="hover">
                 <h3>提交步骤</h3>

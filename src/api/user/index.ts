@@ -155,3 +155,40 @@ export const selectEachUser = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+
+
+// 审批年度安全教育
+export const selectVerify = ((eilnfo: any) => {
+    return request({
+        url: '/assist/verify/safe/edu',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+//BNA审批前查询人员
+export const selectBnaSafety = ((eilnfo: any) => {
+    return request({
+        url: '/internal/query/safe/before/verify',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 审批BNA安全教育
+export const selectBnaVerify = ((eilnfo: any) => {
+    return request({
+        url: '/internal/verify/safe/edu',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 查询过期作业证
+export const selectExpira = ((eilnfo: any) => {
+    return request({
+        url: '/license/query/soon/overdue',
+        method: 'post',
+        data: eilnfo
+    })
+})

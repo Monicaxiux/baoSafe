@@ -6,58 +6,32 @@
         <el-form-item label="项目名称" v-if="userType">
             <el-input class="input" v-model="data.parameter.projectName" clearable placeholder="请输入项目名称" />
         </el-form-item>
-        <el-form-item label="教育等级" v-if="userType">
-            <el-select style="width: 150px;margin-right: 20px;" @change="change" v-model="data.parameter.safeLevel"
-                placeholder="请选择教育等级">
-                <el-option v-for="item in educationLevel" :key="item.id" :label="item.value" :value="item.id" />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="二级区域" v-if="userType">
-            <el-select :disabled="disabled2" style="width: 150px;margin-right: 20px;" @change="change2"
-                v-model="data.parameter.manageArea2" placeholder="请选择二级区域">
-                <el-option v-for="item in manageArea2List" :key="item.id" :label="item.value" :value="item.id" />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="三级区域" v-if="userType">
-            <el-select :disabled="disabled3" style="width: 150px;margin-right: 20px;" @change="select(data)"
-                v-model="data.parameter.manageArea3" placeholder="请选择三级区域">
-                <el-option v-for="item in manageArea3List" :key="item.id" :label="item.value" :value="item.id" />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="部门" v-if="!userType">
-            <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
-                v-model="data.parameter.baoDepartment" placeholder="请选择部门">
-                <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId" :label="item.baoDepartmentName"
-                    :value="item.baoDepartmentId" />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="分厂" v-if="!userType">
-            <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
-                v-model="data.parameter.baoDepartment" placeholder="请选择分厂">
-                <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId" :label="item.baoDepartmentName"
-                    :value="item.baoDepartmentId" />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="科室" v-if="!userType">
-            <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
-                v-model="data.parameter.baoDepartment" placeholder="请选择科室">
-                <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId" :label="item.baoDepartmentName"
-                    :value="item.baoDepartmentId" />
-            </el-select>
-        </el-form-item>
-        <!-- <el-form-item label="审核状态">
-            <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
-                v-model="data.parameter.baoDepartment" placeholder="请选择审核状态">
-                <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId" :label="item.baoDepartmentName"
-                    :value="item.baoDepartmentId" />
-            </el-select>
-        </el-form-item> -->
+
         <el-form-item label="IC卡号" v-if="!userType">
             <el-input class="input" v-model="data.parameter.icCardWorkNumber" clearable placeholder="请输入IC卡号" />
         </el-form-item>
         <el-form-item label="员工姓名" v-if="!userType">
             <el-input class="input" v-model="data.parameter.username" clearable placeholder="请输入员工姓名" />
         </el-form-item>
+        <el-form-item label="教育等级">
+            <el-select style="width: 150px;margin-right: 20px;" @change="change" v-model="data.parameter.safeLevel"
+                placeholder="请选择教育等级">
+                <el-option v-for="item in educationLevel" :key="item.id" :label="item.value" :value="item.id" />
+            </el-select>
+        </el-form-item>
+        <el-form-item label="二级区域">
+            <el-select :disabled="disabled2" style="width: 150px;margin-right: 20px;" @change="change2"
+                v-model="data.parameter.manageArea2" placeholder="请选择二级区域">
+                <el-option v-for="item in manageArea2List" :key="item.id" :label="item.value" :value="item.id" />
+            </el-select>
+        </el-form-item>
+        <el-form-item label="三级区域">
+            <el-select :disabled="disabled3" style="width: 150px;margin-right: 20px;" @change="select(data)"
+                v-model="data.parameter.manageArea3" placeholder="请选择三级区域">
+                <el-option v-for="item in manageArea3List" :key="item.id" :label="item.value" :value="item.id" />
+            </el-select>
+        </el-form-item>
+
         <el-button type="primary" class="button" @click="(data.parameter.pageNum = 1), select(data)">
             <el-icon class="i">
                 <Search />

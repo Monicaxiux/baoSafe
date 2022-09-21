@@ -49,3 +49,20 @@ export const selectLeave = ((eiInfo: any) => {
         data: eiInfo
     })
 })
+
+//新增区域
+export const addArea = ((eiInfo: any) => {
+    return request({
+        url: '/area/add/new/area',
+        method: 'post',
+        data: eiInfo
+    })
+})
+
+//查询部门与分厂
+export const selectDepAndFac = (() => {
+    return request({
+        url: '/area/query/all/department/factory',
+        method: 'post'
+    })
+})

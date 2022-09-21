@@ -20,11 +20,12 @@ export class external {
 }
 //BNA员工搜索条件
 export class bna {
-    baoDepartment: any = 1
     username: string = ''
     icCardWorkNumber: string = ''
+    safeLevel: number = 1
+    manageArea2: number = 0
+    manageArea3: number = 0
     pageNum: number = 1
-    limit: number = 10
 }
 //BNA安全资质搜索条件
 export class bnaSafety {
@@ -129,4 +130,24 @@ export class projectNum {
     areaId: number = 0
     projectName: any = ''
     pageNum: number = 1
+}
+
+//Bna审核人员
+export class examScore {
+    examScore: any = ''
+    examPic: any = ''
+    trainStartDate: any = ''
+    trainEndDate: any = ''
+    examDate: any = ''
+    nextSafeManageArea: any = ''
+}
+
+//查询即将过期证书
+export class expiration {
+    baoDepartment: any = ''
+    baoFactory: any = ''
+    licenseName: any = ''
+    licenseNumber: any = ''
+    licenseType: any = 1
+    pageNum: any = 1
 }

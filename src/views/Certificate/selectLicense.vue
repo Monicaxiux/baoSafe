@@ -1,5 +1,5 @@
 <template>
-    <Search :data="[]" :searchType="2" :select="select"></Search>
+    <Search :data="eiInfo" :searchType="1" :select="select"></Search>
     <Table :loading="loading" :tableData="tableData"></Table>
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eiInfo.parameter.pageNum" :options="eiInfo"
         :render="selectUserList">

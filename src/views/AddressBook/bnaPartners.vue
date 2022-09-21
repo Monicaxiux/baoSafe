@@ -5,8 +5,8 @@
     <Table :handleEdit="handleEdit" :userType="userType" :loading="loading" :handleDelete="handleDelete"
         :tableData="tableData">
     </Table>
-    <Pagination :hide="hide" :pagesize="eilnfo.parameter.limit" :total="dataCount"
-        :currentpage="eilnfo.parameter.pageNum" :options="eilnfo" :render="selectUserList">
+    <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
+        :render="selectUserList">
     </Pagination>
     <Dialog :licenseEdit="licenseEdit" :licenseDelete="licenseDelete" :uploadUserPic="uploadUserPic"
         :uploadIcPic="uploadIcPic" :userInfo="userInfo" :userType="userType" :dialogVisible="dialogVisible"

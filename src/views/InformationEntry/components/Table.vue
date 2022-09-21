@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-table border v-loading="loading" max-height="650" :data="tableData" class="tablex">
+        <el-table border v-loading="loading" max-height="620" :data="tableData" class="tablex">
             <el-table-column prop="userType" label="人员类型" width="100" />
             <el-table-column prop="company" label="所在公司" width="200" />
             <el-table-column prop="department" label="所在部门" width="200" />

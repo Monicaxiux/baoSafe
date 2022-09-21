@@ -49,7 +49,7 @@ const menus = ref([
             },
             {
                 path: '/bnaPartners',
-                name: 'BNA员工信息维护'
+                name: '员工信息维护'
             },
             {
                 path: '/bnaSafety',
@@ -70,10 +70,10 @@ const menus = ref([
         title: '年度安全教育信息',
         icon: 'iconfont icon-tianshenpi i',
         children: [
-            {
-                path: '/externalPartners',
-                name: '协力员工信息维护'
-            },
+            // {
+            //     path: '/externalPartners',
+            //     name: '协力员工信息维护'
+            // },
             {
                 path: '/externalSafety',
                 name: '年度安全教育查询'
@@ -102,7 +102,7 @@ const menus = ref([
                 name: '证书导入'
             },
             {
-                path: '/',
+                path: '/selectLicense',
                 name: '证书查询'
             },
             {
@@ -140,11 +140,11 @@ const menus = ref([
                 name: '权限管理'
             },
             {
-                path: '/',
+                path: '/dicArea',
                 name: '区域管理'
             },
             {
-                path: '/',
+                path: '/sector',
                 name: '部门分厂管理'
             },
         ]

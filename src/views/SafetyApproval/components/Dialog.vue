@@ -1,7 +1,11 @@
 <template>
-    <el-dialog v-model="dialogVisible" title="审核安全教育" width="80%" :before-close="handleClose">
-        <ESearch :data="eiInfo" :select="selectUserList"></ESearch>
-        <ETable :tableData="tableData" :loading="loading"></ETable>
+    <el-dialog v-model="dialogVisible" title="审核安全教育" :width="dialogType == 1 ? '80%' : '50%'"
+        :before-close="handleClose">
+        <ESearch :from="from" :isForm="isForm" :handleDelete="handleDelete" :uploadUserPic=uploadUserPic
+            :manageAreaList="manageAreaList" :tableDatax="tableDatax" :type="dialogType" :data="eiInfo"
+            :select="selectUserList">
+        </ESearch>
+        <ETable v-if="dialogType == 1" :tableData="tableData" :loading="loading"></ETable>
         <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eiInfo.parameter.pageNum"
             :options="eiInfo" :render="selectUserList">
         </Pagination>
@@ -27,7 +31,13 @@ type Props = {
     dialogVisible: boolean,
     dialogType: number,
     handle: Function,
-    projectId: number
+    projectId: number,
+    manageAreaList: any,
+    from: any,
+    isForm: any,
+    handleDelete: any,
+    uploadUserPic: any,
+    tableDatax: any,
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
@@ -54,7 +64,11 @@ const handleClose = (done: () => void) => {
 // 监听项目变化查询内容
 watch(props, (newValue, oldValue) => {
     eiInfo.parameter.projectId = newValue.projectId
-    selectUserList();
+    if (props.dialogType != 1) {
+
+    } else {
+        selectUserList();
+    }
 })
 const selectUserList = () => {
     loading.value = true
@@ -69,7 +83,7 @@ const selectUserList = () => {
     })
 }
 onMounted(() => {
-    selectUserList();
+    // selectUserList();
 })
 </script>
 <style scoped>

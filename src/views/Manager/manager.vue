@@ -3,10 +3,10 @@
     </Search>
     <Table :handleEdit="handleEdit" :loading="loading" :tableData="tableData">
     </Table>
-    <Pagination :hide="hide" :pagesize="eilnfo.parameter.limit" :total="dataCount"
-        :currentpage="eilnfo.parameter.pageNum" :options="eilnfo" :render="selectUserList">
+    <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
+        :render="selectUserList">
     </Pagination>
-    <Dialog :dialogVisible="dialogVisible" :handleEditT="handleEditT"></Dialog>
+    <Dialog :from="from" :dialogVisible="dialogVisible" :handleEditT="handleEditT"></Dialog>
 </template>
 <script lang="ts" setup>
 import Table from './components/Table.vue'
@@ -21,6 +21,12 @@ import { ref, onMounted, reactive } from 'vue';
 const departmentSelect = ref([])
 const loading = ref(false)
 const tableData = ref([])
+const from = reactive({
+    userId: 0,
+    userAuth: 0,
+    authArea: 0,
+    manageArea: <any>[]
+})
 // 查询条件
 const query = reactive(new bna);
 const eilnfo = reactive(new EiInfo);
@@ -46,9 +52,17 @@ const selectUserList = () => {
     })
 }
 // 编辑
-const handleEdit = (row) => {
+const handleEdit = (index: number, row: any) => {
     console.log(row);
-
+    from.userAuth = row.userAuth;
+    if (row.authAreaList[0].id == 0) {
+        from.manageArea = [];
+    } else {
+        for (let i = 0; i < row.authAreaList.length; i++) {
+            from.manageArea.push(row.authAreaList[i].id);
+        }
+    }
+    from.userId = row.userId;
     dialogVisible.value = true
 }
 // 确认编辑
