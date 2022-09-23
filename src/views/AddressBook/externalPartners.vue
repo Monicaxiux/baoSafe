@@ -46,7 +46,7 @@ eilnfo.parameter = query
 const userInfo = ref(new externalInfo);
 // dom初始化完成请求数据操纵dom
 onMounted(() => {
-    selectUserList(eilnfo);//查询协力用户列表
+    // selectUserList(eilnfo);//查询协力用户列表
 })
 //查询协力用户列表
 const selectUserList = (eilnfo) => {

@@ -10,7 +10,7 @@
     </Dialog>
     <el-dialog v-model="dialog" title="请选择下级区域" width="30%" :before-close="close">
         <el-form-item label="下级区域">
-            <el-select style="width: 150px;margin-right: 20px;" multiple collapse-tags v-model="nextSafeManageArea"
+            <el-select style="width: 150px;margin-right: 20px;" multiple v-model="nextSafeManageArea"
                 placeholder="请选择下级区域">
                 <el-option v-for="item in manageAreaList" :key="item.id" :label="item.value" :value="item.id" />
             </el-select>
@@ -21,6 +21,25 @@
                 <el-button type="primary" @click="submitApproval">确定</el-button>
             </span>
         </template>
+    </el-dialog>
+    <el-dialog v-model="qrImgDialog" title="打印二维码" width="500px">
+        <div style="text-align: center">
+            <el-button type="primary" v-print="'#printTest'">打印全部</el-button>
+        </div>
+        <div style="text-align: center" id="printTest">
+            <div style="text-align: center" v-for="item in qrImgB64" :key="item.id">
+                <div style="text-align: center" class="qrDiv">
+                    <h1 style="font-size: 30px">宝日智慧安全</h1>
+                    <br />
+                    <img :src="item.base64img" />
+                    <div class="qrText">2022</div>
+                    <div style="margin-top: -50px;">
+                        <h2>姓名:{{ item.username }}</h2>
+                        <h2>IC卡号:{{ item.icCardWorkNumber }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
     </el-dialog>
 </template>
 <script lang="ts" setup>
@@ -37,6 +56,8 @@ import { ElMessageBox } from 'element-plus'
 import { selectAddress } from '@/api/safety'
 import { piniaData } from '@/store';//引入pinia状态管理
 import { ElNotification } from 'element-plus'
+import jrQrcode from "jr-qrcode";
+import request from '@/utils/request'
 
 //pinia状态管理
 const store = piniaData();
@@ -56,7 +77,9 @@ const dialog = ref(false)
 const tableData = ref([]);
 //总页数
 const dataCount = ref(0);
-
+const base64img: any = ref([])
+const qrImgB64: any = ref([])
+const qrImgDialog = ref(false)
 const nextSafeManageArea = ref([])
 const manageAreaList: any = ref([])
 const loading = ref(false)
@@ -157,9 +180,39 @@ const close = () => {
             // catch error
         })
 }
-const getQrCode = () => {
-}
+const getQrCode = (i: number, row: any) => {
 
+    const eiInfo = new EiInfo();
+    eiInfo.parameter = {
+        projectId: row.projectId,
+        pageNum: 1,
+    };
+    request.post("/assist/safety/status/each/user", eiInfo).then((res: any) => {
+
+        let idList: any = [];
+        for (let i = 0; i < res.result.safeList.length; i++) {
+            idList.push(res.result.safeList[i].icCardWorkNumber);
+        }
+        let jxIdList: any = [];
+        for (let i = 0; i < idList.length; i++) {
+            // jxIdList.push(window.btoa(idList[i]))
+            jxIdList.push(idList[i]);
+
+            base64img.value.push(
+                jrQrcode.getQrBase64(
+                    `https://bnasafe.com?action=gogogo&id=${jxIdList[i]}`)
+            );
+            qrImgB64.value.push({
+                id: res.result.safeList[i].userId,
+                username: res.result.safeList[i].username,
+                icCardWorkNumber: res.result.safeList[i].icCardWorkNumber,
+                base64img: base64img.value[i],
+            });
+        }
+        qrImgDialog.value = true
+    });
+
+}
 const handle = (i: any) => {
     switch (i) {
         case 1:
@@ -203,15 +256,16 @@ const handle = (i: any) => {
 const submitApproval = () => {
     ElMessageBox.confirm('确定通过审核?')
         .then(() => {
-            eilnfo.parameter = {
+            let eiInfo = new EiInfo
+            eiInfo.parameter = {
                 result: 1,
                 safeEduId: safeEduId.value,
                 nextSafeManageArea: nextSafeManageArea.value
             }
-            eilnfo.userInfo = {
+            eiInfo.userInfo = {
                 id: store.userInfo.id
             }
-            selectVerify(eilnfo).then((res) => {
+            selectVerify(eiInfo).then((res) => {
                 ElNotification({
                     message: "安全教育审批完成",
                     type: 'success',
@@ -227,4 +281,26 @@ const submitApproval = () => {
 }
 </script>
 <style scoped>
+.qrDiv {
+    width: 400px;
+    border-radius: 14px;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.qrText {
+    width: 70px;
+    text-align: center;
+    line-height: 70px;
+    position: relative;
+    border-radius: 10px;
+    top: -160px;
+    font-size: 25px;
+    font-weight: bold;
+    left: 165px;
+    height: 70px;
+    background-color: white;
+}
 </style>

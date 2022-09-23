@@ -8,6 +8,7 @@ import { createPinia } from 'pinia'
 import piniaPluginPersist from 'pinia-plugin-persist'
 import vue3PreviewImage from 'vue3-preview-image'
 import router from './router'
+import print from 'vue3-print-nb'
 import locale from 'element-plus/lib/locale/lang/zh-cn'
 const pinia = createPinia()
 pinia.use(piniaPluginPersist)
@@ -16,5 +17,6 @@ const app = createApp(App);
 app.use(ElementPlus, { locale })
 app.use(pinia)
 app.use(router)
+app.use(print)
 app.use(vue3PreviewImage)
 app.mount('#app')

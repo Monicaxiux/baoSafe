@@ -103,6 +103,7 @@ const logins = () => {
           }),
           //把userinfo存入pinia
           store.userInfo = res.userInfo,
+          store.expiredAlarm = res.result.expiredAlarm,
           store.active == '/' ? (
             //登陆成功跳转对应页面
             router.replace({ path: '/bnaPartners' }),

@@ -2,7 +2,7 @@
     <div>
         <el-table border v-loading="loading" max-height="600" :data="tableData" class="tablex">
             <el-table-column prop="username" label="员工姓名" width="90" />
-            <el-table-column prop="icCardWorkNumber" label="IC卡号" />
+            <el-table-column prop="icCardWorkNumber" label="IC卡号" width="150" />
             <el-table-column prop="licenseName" label="证书名称" width="210" />
             <el-table-column prop="licenseNumber" label="证书编号" width="200" />
             <el-table-column prop="licenseType" label="证书类型" width="200" />
@@ -12,6 +12,16 @@
             <el-table-column label="证书照片" width="90">
                 <template #default="scope">
                     <MyImg :imgUrl="scope.row.licensePic"></MyImg>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作" width="90">
+                <template #default="scope">
+                    <el-button size="small" type="primary" @click="handleEdit(scope.$index, scope.row)">
+                        <el-icon>
+                            <EditPen />
+                        </el-icon>
+                        编辑
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -26,6 +36,7 @@ import { Delete, EditPen } from '@element-plus/icons-vue'//引入elementui 图�
 type Props = {
     tableData: Array<any>,//表格数据
     loading: boolean,
+    handleEdit: any
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()

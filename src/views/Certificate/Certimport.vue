@@ -1,6 +1,6 @@
 <template>
-    <Search :data="[]" :searchType="2" :select="select"></Search>
-    <Table :loading="loading" :tableData="tableData"></Table>
+    <Search :data="[]" :add="null" :searchType="2" :select="select"></Search>
+    <Table :handleEdit="null" :loading="loading" :tableData="tableData"></Table>
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eiInfo.parameter.pageNum" :options="eiInfo"
         :render="selectUserList">
     </Pagination>
@@ -48,6 +48,11 @@ const select = (i) => {
         case 3:
             ElMessageBox.confirm('确认提交数据?')
                 .then(() => {
+                    store.lsfileStatus = true
+                    ElNotification({
+                        message: '正在导入中...',
+                        type: 'success',
+                    })
                     eiInfo.userInfo = {
                         username: store.userInfo.username
                     }
@@ -57,6 +62,7 @@ const select = (i) => {
                             type: 'success',
                         })
                         tableData.value = []
+                        selectUserList()
                     })
                 })
                 .catch(() => {
@@ -90,7 +96,7 @@ const selectUserList = () => {
         dataCount.value = res.result.dataCount == undefined ? 0 : res.result.dataCount
         // 如果只有一页则不展示分页
         hide.value = dataCount.value < 11 ? false : true
-        store.fileStatus = tableData.value != [] ? false : true
+        store.lsfileStatus = dataCount.value != 0 ? false : true
     })
 }
 </script>

@@ -12,12 +12,16 @@
             <template #title>
                 <i :class="item.icon"></i>
                 <span>{{ item.title }}</span>
+                <div v-if="item.title == '安全资质证书管理' && !store.isCollapse" class="db_title">{{
+                        store.expiredAlarm.expiredLicenseNum
+                }}</div>
             </template>
             <el-menu-item v-for="(i, ix) in item.children" :key="ix"
                 @click="store.active = i.path, addTab(i.path, i.name)" :index="i.path">
-                <el-icon>
+                <el-icon v-if="i.name != '证书过期查询'">
                     <Grid />
                 </el-icon>
+                <div v-if="i.name == '证书过期查询'" class="db_title"></div>
                 {{ i.name }}
             </el-menu-item>
         </el-sub-menu>
@@ -28,7 +32,7 @@
 import { Grid, Fold } from '@element-plus/icons-vue'//引入elementui 图标
 import { useRouter } from "vue-router";//引入路由
 import { piniaData } from '@/store';//引入pinia状态管理
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 // 定义Props默认数据类型
 type Props = {
     addTab: Function
@@ -37,6 +41,10 @@ type Props = {
 const props = defineProps<Props>()
 const store = piniaData()
 const router = useRouter();
+const sumData = ref(0)
+onMounted(() => {
+})
+
 const menus = ref([
     {
         index: '1',
@@ -92,27 +100,9 @@ const menus = ref([
             // },
         ]
     },
+
     {
         index: '3',
-        title: '安全资质证书管理',
-        icon: 'iconfont icon-zhengshu-copy i',
-        children: [
-            {
-                path: '/certimport',
-                name: '证书导入'
-            },
-            {
-                path: '/selectLicense',
-                name: '证书查询'
-            },
-            {
-                path: '/license',
-                name: '证书过期查询'
-            },
-        ]
-    },
-    {
-        index: '4',
         title: '作业登记管理',
         icon: 'iconfont icon-fenghuangxiangmutubiao_dengjichu i',
         children: [
@@ -127,6 +117,25 @@ const menus = ref([
             {
                 path: '/projectIsSearch',
                 name: '项目查询'
+            },
+        ]
+    },
+    {
+        index: '4',
+        title: '安全资质证书管理',
+        icon: 'iconfont icon-zhengshu-copy i',
+        children: [
+            {
+                path: '/certimport',
+                name: '证书导入'
+            },
+            {
+                path: '/selectLicense',
+                name: '证书查询'
+            },
+            {
+                path: '/license',
+                name: '证书过期查询'
             },
         ]
     },
@@ -150,6 +159,7 @@ const menus = ref([
         ]
     }
 ])
+
 const onIsCollapse = () => {
     store.isCollapse = !store.isCollapse;
 }

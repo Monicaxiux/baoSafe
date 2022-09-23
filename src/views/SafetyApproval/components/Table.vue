@@ -50,7 +50,7 @@
                     <el-table-column prop="safetyEducation3.checkStatus" label="状态" width="110"></el-table-column>
                 </el-table-column>
             </template>
-            <el-table-column fixed="right" label="操作" width="160">
+            <el-table-column fixed="right" label="操作" width="180">
                 <template #default="scope">
                     <el-button size="small" type="primary" @click="approval(scope.$index, scope.row)">
                         <el-icon>
@@ -58,12 +58,12 @@
                         </el-icon>
                         审批
                     </el-button>
-                    <!-- <el-button size="small" type="primary" @click="getQrCode(scope.$index, scope.row)">
+                    <el-button size="small" type="primary" @click="getQrCode(scope.$index, scope.row)">
                         <el-icon>
                             <Picture />
                         </el-icon>
-                        生成二维码
-                    </el-button> -->
+                        二维码
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>

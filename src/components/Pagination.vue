@@ -2,8 +2,8 @@
   <div>
     <br>
     <el-pagination v-if="hide" background @size-change="handleSizeChange" @current-change="handlePageChange"
-      :page-sizes="[10, 30, 100]" :current-page="currentpage" :page-size="pagesize" layout="prev, pager, next, jumper"
-      :total="total">
+      :page-sizes="[10, 30, 100]" :current-page="currentpage" :page-size="pagesize"
+      layout="total,prev, pager, next, jumper" :total="total">
     </el-pagination>
   </div>
 </template>

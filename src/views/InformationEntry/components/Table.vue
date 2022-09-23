@@ -18,8 +18,44 @@
                     <MyImg :imgUrl="scope.row.userPic"></MyImg>
                 </template>
             </el-table-column>
-            <el-table-column prop="aenterFactoryYear" label="进厂年" />
+            <el-table-column prop="enterFactoryYear" label="进厂年" />
             <el-table-column prop="enterFactoryMonth" label="进厂月" />
+            <el-table-column label="一级安全教育级别">
+                <el-table-column prop="safeEdu1.trainStartDate" width="110" label="培训开始日期">
+                </el-table-column>
+                <el-table-column prop="safeEdu1.trainEndDate" width="110" label="培训结束日期">
+                </el-table-column>
+                <el-table-column prop="safeEdu1.examDate" width="110" label="考试时间">
+                </el-table-column>
+                <el-table-column prop="safeEdu1.examScore" label="考试成绩" width="80">
+                </el-table-column>
+                <el-table-column prop="safeEdu1.chiefExaminer" label="主考人" width="80">
+                </el-table-column>
+            </el-table-column>
+            <el-table-column label="二级安全教育级别">
+                <el-table-column prop="safeEdu2.trainStartDate" width="110" label="培训开始日期">
+                </el-table-column>
+                <el-table-column prop="safeEdu2.trainEndDate" width="110" label="培训结束日期">
+                </el-table-column>
+                <el-table-column prop="safeEdu2.examDate" width="110" label="考试时间">
+                </el-table-column>
+                <el-table-column prop="safeEdu2.examScore" label="考试成绩" width="80">
+                </el-table-column>
+                <el-table-column prop="safeEdu2.chiefExaminer" label="主考人" width="80">
+                </el-table-column>
+            </el-table-column>
+            <el-table-column label="三级安全教育级别">
+                <el-table-column prop="safeEdu3.trainStartDate" width="110" label="培训开始日期">
+                </el-table-column>
+                <el-table-column prop="safeEdu3.trainEndDate" width="110" label="培训结束日期">
+                </el-table-column>
+                <el-table-column prop="safeEdu3.examDate" width="110" label="考试时间">
+                </el-table-column>
+                <el-table-column prop="safeEdu3.examScore" label="考试成绩" width="80">
+                </el-table-column>
+                <el-table-column prop="safeEdu3.chiefExaminer" label="主考人" width="80">
+                </el-table-column>
+            </el-table-column>
             <!-- <el-table-column fixed="right" label="操作" width="160">
                 <template #default="scope">
 

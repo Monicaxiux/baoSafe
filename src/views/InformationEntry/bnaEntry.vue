@@ -60,6 +60,11 @@ const select = (i) => {
         case 5:
             ElMessageBox.confirm('确认提交数据?')
                 .then(() => {
+                    store.fileStatus = true
+                    ElNotification({
+                        message: '正在提交中.....',
+                        type: 'success',
+                    })
                     eiInfo.userInfo = {
                         username: store.userInfo.username
                     }
@@ -68,7 +73,7 @@ const select = (i) => {
                             message: res.sys.msg,
                             type: 'success',
                         })
-                        tableData.value = []
+                        selectUserList()
                     })
                 })
                 .catch(() => {
@@ -105,7 +110,7 @@ const selectUserList = () => {
         dataCount.value = res.result.dataCount == undefined ? 0 : res.result.dataCount
         // 如果只有一页则不展示分页
         hide.value = dataCount.value < 11 ? false : true
-        if (tableData.value == []) {
+        if (dataCount.value == 0) {
             store.fileStatus = true
         } else {
             store.fileStatus = false

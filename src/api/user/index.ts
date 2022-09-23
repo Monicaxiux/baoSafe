@@ -192,3 +192,56 @@ export const selectExpira = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+
+// 修改作业证
+export const licenseUpdate = ((eilnfo: any) => {
+    return request({
+        url: '/license/update',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 添加作业证
+export const licenseInsert = ((eilnfo: any) => {
+    return request({
+        url: '/license/insert',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 修改人员权限
+export const updateUserAuth = ((eilnfo: any) => {
+    return request({
+        url: '/user/update/internal/user/auth',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 修改人员信息
+export const updateUser = ((eilnfo: any) => {
+    return request({
+        url: '/user/update',
+        method: 'post',
+        data: eilnfo
+    })
+})
+// 新增人员信息
+export const addUser = ((eilnfo: any) => {
+    return request({
+        url: '/user/add/internal/address/book',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 删除人员信息
+export const deleteUser = ((eilnfo: any) => {
+    return request({
+        url: '/user/delete',
+        method: 'post',
+        data: eilnfo
+    })
+})

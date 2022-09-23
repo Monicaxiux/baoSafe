@@ -65,6 +65,8 @@ export class bnaInfo {
     age: any = ""
     phone: any = ""
     licenseList: any = []
+    userPicModify: any = 0
+    icPicModify: any = 0
     userPic: string = ""
 }
 //项目信息

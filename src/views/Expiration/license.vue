@@ -32,6 +32,7 @@ const handleChange = (val: any) => {
     multipleSelection.value = val.map(item => item.licenseId)
 }
 const selectUserList = () => {
+    eilnfo.parameter.overdue = 1
     loading.value = false
     selectExpira(eilnfo).then((res: any) => {
         loading.value = false

@@ -87,11 +87,6 @@ const routes: Array<RouteRecordRaw> = [
 				component: () => import('../views/Expiration/license.vue'),
 			},
 			{
-				path: '/project',
-				name: 'project',
-				component: () => import('../views/Expiration/project.vue'),
-			},
-			{
 				path: '/certimport',
 				name: 'certimport',
 				component: () => import('../views/Certificate/certimport.vue'),
@@ -114,7 +109,7 @@ const routes: Array<RouteRecordRaw> = [
 		]
 	},
 	{
-		path: '/',//登陆
+		path: '/',//登录
 		name: 'login',
 		component: () => import('../views/User/login.vue')
 	},

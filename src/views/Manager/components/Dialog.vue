@@ -24,8 +24,8 @@
         </el-card>
         <template #footer>
             <span class="dialog-footer">
-                <el-button @click="handleEditT">取消</el-button>
-                <el-button type="primary" @click="handleEditT">确定</el-button>
+                <el-button @click="handleEditT(2)">取消</el-button>
+                <el-button type="primary" @click="handleEditT(1)">确定</el-button>
             </span>
         </template>
     </el-dialog>
@@ -137,9 +137,9 @@ const change2 = (i: any) => {
 }
 
 const handleClose = (done: () => void) => {
-    ElMessageBox.confirm('Are you sure to close this dialog?')
+    ElMessageBox.confirm('是否取消操作?')
         .then(() => {
-            props.handleEditT();
+            props.handleEditT(2);
             console.log(props.dialogVisible);
         })
         .catch(() => {

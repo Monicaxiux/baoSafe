@@ -1,6 +1,6 @@
 <template>
     <Search :userType="true" :select="selectUserList" :data="eilnfo"></Search>
-    <Table :userType="true" :loading="loading" :tableData="tableData"></Table>
+    <Table :licenseEdit="[]" :userType="true" :loading="loading" :tableData="tableData"></Table>
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
         :render="selectUserList">
     </Pagination>

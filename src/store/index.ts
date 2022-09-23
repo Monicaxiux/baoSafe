@@ -5,12 +5,14 @@ export const piniaData = defineStore("piniaData", {
         return {
             userInfo: <userInfo>{},
             isCollapse: <boolean>false,
+            expiredAlarm: <any>{},
             active: <string>'/bnaPartners',
             editableTabs: <any>[{
                 title: 'BNA员工信息维护',
                 name: '/bnaPartners',
             }],
-            fileStatus: <boolean>true
+            fileStatus: <boolean>true,
+            lsfileStatus: <boolean>true
         };
     },
     getters: {},

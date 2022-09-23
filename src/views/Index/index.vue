@@ -54,7 +54,7 @@ const change = (val: any) => {
     router.push({ path: val })
 }
 onMounted(() => {
-
+    initWebSocket()
 })
 const clickRig = () => {
     // document.oncontextmenu = (e) => {
@@ -135,6 +135,48 @@ const logOut = () => {
 
         })
 
+}
+// 代办事项 开始
+const initWebSocket = () => {
+    //初始化weosocket
+    var websocket: any = null;
+    //判断当前浏览器是否支持WebSocket
+    if ("WebSocket" in window) {
+        //改成你的地址
+        websocket = new WebSocket("wss://safeedu.bnasafe.com//websocket");
+    } else {
+        console.log("当前浏览器 Not support websocket");
+    }
+
+    //连接发生错误的回调方法
+    websocket.onerror = function () {
+        console.log('连接失败');
+
+    };
+
+    //连接成功建立的回调方法
+    websocket.onopen = function () {
+        console.log('连接成功');
+    };
+
+    // 2、每隔30s向后端发送一条商议好的数据
+    setInterval(() => {
+        console.log('重置监测心跳')
+        websocket.send("心跳")
+        // 3、发送数据 2s后没有接收到返回的数据进行关闭websocket重连
+        // setTimeout(() => {
+        //   console.log("后台挂掉，没有心跳了....");
+        //   console.log("打印websocket的地址:" + websocket);
+        // }, 2000);
+    }, 30000)
+
+    //接收到消息的回调方法
+    websocket.onmessage = function (event) {
+        let pending = JSON.parse(event.data);
+        console.log(pending.expiredLicenseNum);
+
+        store.expiredAlarm.expiredLicenseNum = pending.expiredLicenseNum
+    };
 }
 </script>
 

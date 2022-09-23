@@ -17,13 +17,16 @@
 import Table from './components/Table.vue'//员工表格
 import Search from './components/Search.vue'
 import Dialog from './components/Dialog.vue'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElNotification } from 'element-plus'
 import { ref, onMounted, reactive } from 'vue'
 import Pagination from '@/components/Pagination.vue'//分页组件
 import { bna, EiInfo, bnaInfo } from '@/types';
-import { selectBna, selectUpData } from '@/api/user';//api方法
+import { addUser, deleteUser, selectBna, selectUpData, updateUser } from '@/api/user';//api方法
 import { getBase64 } from '@/utils/regexp'
 import { selectDepartment } from '@/api/areas'
+import { piniaData } from '@/store';//引入pinia状态管理
+//pinia状态管理
+const store = piniaData();
 //正常用const定义，ref和reactive都是用来定义vue3响应式数据，ref定义的要用.value来控制
 const userType = false;
 //总页数
@@ -49,7 +52,7 @@ eilnfo.parameter = query
 const userInfo = ref(new bnaInfo)
 // dom初始化完成请求数据操纵dom
 onMounted(() => {
-    selectUserList(eilnfo);//查询协力用户列表
+    // selectUserList(eilnfo);//查询协力用户列表
     selectDepartment().then((res: any) => {
         departmentSelect.value = res.result.departmentSelect
     })
@@ -89,13 +92,38 @@ const handleAdd = () => {
 }
 // 确认编辑协力员工
 const handleEditT = () => {
+    let eiInfo = new EiInfo
+    eiInfo.parameter = userInfo.value
+    eiInfo.userInfo = store.userInfo
+    switch (dialogType.value) {
+        case 1:
+            updateUser(eiInfo).then((res: any) => {
+                selectUserList(eilnfo)
+            })
+            break;
+        case 2:
+            addUser(eiInfo).then((res: any) => {
+                selectUserList(eilnfo)
+            })
+            break;
+    }
     dialogVisible.value = false;
 }
 // 删除协力员工
 const handleDelete = (index, row) => {
     ElMessageBox.confirm('确定要删除该员工?')
         .then(() => {
-            console.log(row.id, "删除按钮");
+            let eiInfo = new EiInfo
+            eiInfo.parameter = {
+                userId: row.id
+            }
+            deleteUser(eiInfo).then((res: any) => {
+                selectUserList(eilnfo)
+                ElNotification({
+                    message: '删除成功！',
+                    type: 'success',
+                })
+            })
         })
         .catch(() => {
             // catch error
@@ -106,11 +134,13 @@ const handleDelete = (index, row) => {
 const uploadUserPic = (f) => {
     getBase64(f.file).then((res: any) => {
         userInfo.value.userPic = res
+        userInfo.value.userPicModify = 1
     });
 }
 //自定义上传方法
 const uploadIcPic = (f) => {
     getBase64(f.file).then((res: any) => {
+        userInfo.value.icPicModify = 1
         userInfo.value.icPic = res
     });
 }

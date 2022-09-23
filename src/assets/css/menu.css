@@ -90,3 +90,14 @@ span:hover {
     color: #BFCBD9;
     background-color: #1f2d3d;
 }
+
+.db_title {
+    background-color: #ff4700db;
+    border-radius: 20%;
+    padding: 1px 4px;
+    margin-left: 7px;
+    height: 16px;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+}

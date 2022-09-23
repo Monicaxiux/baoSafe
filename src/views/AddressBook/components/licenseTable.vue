@@ -11,7 +11,7 @@
                 </MyImg>
             </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="160">
+        <!-- <el-table-column fixed="right" label="操作" width="160">
             <template #default="scope">
                 <el-button size="small" type="primary" @click="licenseEdit(scope.$index, scope.row)">
                     <el-icon>
@@ -26,7 +26,7 @@
                     删除
                 </el-button>
             </template>
-        </el-table-column>
+        </el-table-column> -->
     </el-table>
 </template>
 <script lang="ts" setup>

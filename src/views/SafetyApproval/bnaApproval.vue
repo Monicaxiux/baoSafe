@@ -20,6 +20,25 @@
             </span>
         </template>
     </el-dialog>
+    <el-dialog v-model="qrImgDialog" title="打印二维码" width="500px">
+        <div style="text-align: center">
+            <el-button style="margin: 0 auto;" type="primary" v-print="'#printTest'">打印全部</el-button>
+        </div>
+        <div id="printTest">
+            <div>
+                <div style="text-align: center" class="qrDiv">
+                    <h1 style="font-size: 27px">BNA安全</h1>
+                    <img :src="qrImgB64" />
+                    <div class="qrText">2022</div>
+                    <div style="margin-top: -50px;line-height: 17px;font-size: 13px;">
+                        <h2>部门:{{ baoDepartment }}</h2>
+                        <h2>姓名:{{ userName }}</h2>
+                        <h2>工号:{{ icCardWorkNumber }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </el-dialog>
 </template>
 <script lang="ts" setup>
 import Table from './components/Table.vue'//员工表格
@@ -35,6 +54,7 @@ import { selectDepartment } from '@/api/areas'
 import { ElNotification } from 'element-plus'
 import { piniaData } from '@/store';//引入pinia状态管理
 import { selectAddress } from '@/api/safety'
+import jrQrcode from "jr-qrcode";
 
 const store = piniaData();
 
@@ -59,6 +79,11 @@ const manageAreaList: any = ref([])
 const tableDatax: any = ref([])
 const from = reactive(new examScore)
 const remark = ref('')
+const qrImgDialog = ref(false)
+const baoDepartment = ref('')
+const icCardWorkNumber = ref('')
+const userName = ref('')
+const qrImgB64 = ref('')
 // 监听表格数据来开启提交按钮
 watch(from, (newValue, oldValue) => {
     newValue.examPic != '' ? addExam() : false
@@ -148,8 +173,16 @@ const approval = (index, row: any) => {
         }
     }
 }
-const getQrCode = () => {
+const getQrCode = (i: number, row: any) => {
+    qrImgB64.value = jrQrcode.getQrBase64(
+        `https://bnasafe.com?action=gogogo&id=${row.icCardWorkNumber}`
+    );
+    console.log(qrImgB64.value);
 
+    userName.value = row.username;
+    icCardWorkNumber.value = row.icCardWorkNumber;
+    baoDepartment.value = row.baoDepartment;
+    qrImgDialog.value = true;
 }
 const handle = (i: any) => {
     switch (i) {
@@ -296,4 +329,26 @@ const isForm = (obj) => {
 };
 </script>
 <style scoped>
+.qrDiv {
+    width: 400px;
+    border-radius: 14px;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.qrText {
+    width: 70px;
+    text-align: center;
+    line-height: 70px;
+    position: relative;
+    border-radius: 10px;
+    top: -160px;
+    font-size: 25px;
+    font-weight: bold;
+    left: 165px;
+    height: 70px;
+    background-color: white;
+}
 </style>

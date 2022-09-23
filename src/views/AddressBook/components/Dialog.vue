@@ -11,15 +11,23 @@
                     <el-form-item label="协力单位" v-if="userType">
                         <el-input class="input" v-model="userInfo.assistCompany" clearable placeholder="请输入协力单位" />
                     </el-form-item>
-                    <!-- <el-form-item label="部门" v-if="!userType">
-                    <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
-                        v-model="data.parameter.baoDepartment" placeholder="请选择部门">
-                        <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId"
-                            :label="item.baoDepartmentName" :value="item.baoDepartmentId" />
-                    </el-select>
-                </el-form-item> -->
+                    <el-form-item label="部门" v-if="!userType">
+                        <el-select @change="change" v-model="userInfo.baoDepartment" placeholder="请选择部门">
+                            <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId"
+                                :label="item.baoDepartmentName" :value="item.baoDepartmentId" />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="分厂">
+                        <el-select v-model="userInfo.baoFactory" clearable placeholder="请选择分厂">
+                            <el-option v-for="item in baoFactoryList" :key="item.baoFactoryId"
+                                :label="item.baoFactoryName" :value="item.baoFactoryId" />
+                        </el-select>
+                    </el-form-item>
                     <el-form-item label="所在单位" v-if="userType">
                         <el-input class="input" v-model="userInfo.actualCompany" clearable placeholder="请输入所在单位" />
+                    </el-form-item>
+                    <el-form-item label="当前岗位">
+                        <el-input class="input" v-model="userInfo.recentJob" clearable placeholder="请输入当前岗位" />
                     </el-form-item>
                     <el-form-item label="IC卡号">
                         <el-input class="input" v-model="userInfo.icCardWorkNumber" clearable placeholder="请输入IC卡号" />
@@ -43,27 +51,59 @@
             </el-card>
             <el-card shadow="hover" style="width: 1020px">
                 <h1>特种作业证</h1>
-                <el-button type="primary" @click="handleEditT">添加证书</el-button>
-                <el-button type="primary" @click="handleEditT">查看换证历史记录</el-button>
+                <!-- <el-button type="primary" @click="handleEditLis">添加证书</el-button> -->
+                <!-- <el-button type="primary" @click="handleEditT">查看换证历史记录</el-button> -->
                 <br><br>
                 <LicenseTable :licenseData="userInfo.licenseUpdateList" :licenseDelete="licenseDelete"
                     :licenseEdit="licenseEdit"></LicenseTable>
             </el-card>
+            <el-drawer v-model="drawer" :title="status ? '新增特种作业证' : '修改特种作业证'" direction="rtl"
+                :before-close="handleCloseLis">
+                <el-form-item label="证书编号">
+                    <el-input class="input" v-model="licenseList.licenseNumber" clearable placeholder="请输入证书编号" />
+                </el-form-item>
+                <el-form-item label="证书名称">
+                    <el-input class="input" v-model="licenseList.licenseName" clearable placeholder="请输入证书名称" />
+                </el-form-item>
+                <el-form-item label="取证日期">
+                    <el-date-picker v-model="licenseList.receiveDate" value-format="YYYY-MM-DD" type="date"
+                        placeholder="请选择取证日期" />
+                </el-form-item>
+                <el-form-item label="复证日期">
+                    <el-date-picker v-model="licenseList.restoreDate" value-format="YYYY-MM-DD" type="date"
+                        placeholder="请选择复证日期" />
+                </el-form-item>
+                <el-form-item label="到期日期">
+                    <el-date-picker v-model="licenseList.expiryDate" value-format="YYYY-MM-DD" type="date"
+                        placeholder="请选择到期日期" />
+                </el-form-item>
+                <el-form-item label="证书照片">
+                    <UploadImage :upload="uploadUserPic" :url="licenseList.licensePic"></UploadImage>
+                </el-form-item>
+                <template #footer>
+                    <span class=" dialog-footer">
+                        <el-button @click="handleCloseLis">取消</el-button>
+                        <el-button type="primary" @click="handleEditTLis()">确定</el-button>
+                    </span>
+                </template>
+            </el-drawer>
         </div>
         <template #footer>
             <span class=" dialog-footer">
                 <el-button @click="handleEditT">取消</el-button>
-                <el-button type="primary" @click="handleEditT">确定</el-button>
+                <el-button type="primary" @click="handleEditT(dialogType)">确定</el-button>
             </span>
         </template>
     </el-dialog>
     <el-dialog v-model="licenseDialog" :title="licenseDialogType == 1 ? '新增特种作业证' : '编辑特种作业证'" width="75%"></el-dialog>
 </template>
 <script lang="ts" setup>
-import { ref, toRefs } from 'vue'
+import { onMounted, ref, toRefs } from 'vue'
 import { ElMessageBox } from 'element-plus'
 import LicenseTable from './licenseTable.vue'
-import UploadImage from '@/components/UploadImage.vue'//分页组件
+import UploadImage from '@/components/UploadImage.vue'
+import { selectDepartment, selectFactory } from '@/api/areas';
+import { EiInfo } from '@/types';
 // 定义Props默认数据类型
 type Props = {
     dialogVisible: boolean,
@@ -76,9 +116,37 @@ type Props = {
     licenseDelete: Function,
     licenseEdit: Function
 }
+onMounted(() => {
+    // 查询部门下拉框
+    selectDepartment().then((res: any) => {
+        departmentSelect.value = res.result.departmentSelect
+    })
+})
+const status = ref(false)
 // 使用defineProps接收父组件的传递值
+const drawer = ref(false)
+const licenseList: any = ref({})
+const handleEditLis = () => {
+    status.value = true
+    drawer.value = true
+}
+
+const handleEditTLis = () => {
+
+}
+const handleCloseLis = () => {
+    ElMessageBox.confirm('确定取消操作?')
+        .then(() => {
+            drawer.value = false
+        })
+        .catch(() => {
+            // catch error
+        })
+}
 const props = defineProps<Props>()
 const licenseDialog = ref(false)
+const departmentSelect: any = ref([])
+const baoFactoryList: any = ref([])
 const licenseDialogType = ref(1)
 const handleClose = (done: () => void) => {
     ElMessageBox.confirm('确定取消操作?')
@@ -89,6 +157,16 @@ const handleClose = (done: () => void) => {
         .catch(() => {
             // catch error
         })
+}
+const change = (val) => {
+    let eiInfo = new EiInfo
+    // props.userInfo.baoFactory = ''
+    eiInfo.parameter = {
+        departmentId: val
+    }
+    selectFactory(eiInfo).then((res: any) => {
+        baoFactoryList.value = res.result.factorySelect
+    })
 }
 </script>
 <style>

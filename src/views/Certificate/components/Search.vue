@@ -12,13 +12,13 @@
             </el-icon>
             上传作业证表格
         </el-button>
-        <el-button @click="select(2)" :disabled="store.fileStatus" type="primary">
+        <el-button @click="select(2)" :disabled="store.lsfileStatus" type="primary">
             <el-icon>
                 <Picture />
             </el-icon>
             上传作业证照片
         </el-button>
-        <el-button @click="select(3)" :disabled="store.fileStatus" type="primary">
+        <el-button @click="select(3)" :disabled="store.lsfileStatus" type="primary">
             <el-icon>
                 <Check />
             </el-icon>
@@ -26,10 +26,24 @@
         </el-button>
     </div>
     <div v-if="searchType == 1" style="margin-bottom: 20px;display: flex;">
-        <el-form-item label="作业证类型">
+        <el-form-item label="特种作业证类型">
             <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
                 v-model="data.parameter.licenseType" placeholder="请选择作业证类型">
                 <el-option v-for="item in licenseTypeList" :key="item.id" :label="item.name" :value="item.id" />
+            </el-select>
+        </el-form-item>
+        <el-form-item label="部门">
+            <el-select style="width: 150px;margin-right: 20px;" @change="change" v-model="data.parameter.baoDepartment"
+                placeholder="请选择部门">
+                <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId" :label="item.baoDepartmentName"
+                    :value="item.baoDepartmentId" />
+            </el-select>
+        </el-form-item>
+        <el-form-item label="分厂">
+            <el-select style="width: 150px;margin-right: 20px;" @change="(data.parameter.pageNum = 1), select(data)"
+                v-model="data.parameter.baoFactory" clearable placeholder="请选择分厂">
+                <el-option v-for="item in baoFactoryList" :key="item.baoFactoryId" :label="item.baoFactoryName"
+                    :value="item.baoFactoryId" />
             </el-select>
         </el-form-item>
         <el-form-item label="证书编号">
@@ -43,21 +57,30 @@
                 <Search />
             </el-icon>查询
         </el-button>
+        <el-button type="primary" class="button" @click="add">
+            添加
+        </el-button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { Search, FolderOpened, Picture, Check } from '@element-plus/icons-vue'//引入elementui 图标
 import { piniaData } from '@/store';//引入pinia状态管理
-import { ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
+import { EiInfo } from '@/types';
+import { selectDepartment, selectFactory } from '@/api/areas';
 //pinia状态管理
 const store = piniaData();
 // 定义Props默认数据类型
 type Props = {
     data: any,
     select: Function,
-    searchType: number
+    searchType: number,
+    add: any
 }
+const eiInfo = reactive(new EiInfo)
+const baoFactoryList: any = ref([])
+const departmentSelect: any = ref([])
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
 const licenseTypeList: any = ref([
@@ -78,6 +101,23 @@ const licenseTypeList: any = ref([
         name: '特种设备操作证'
     }
 ])
+onMounted(() => {
+    // 查询部门下拉框
+    selectDepartment().then((res: any) => {
+        departmentSelect.value = res.result.departmentSelect
+    })
+})
+const change = (val) => {
+    props.data.parameter.baoFactory = ''
+    props.data.parameter.pageNum = 1
+    props.select(props.data)
+    eiInfo.parameter = {
+        departmentId: val
+    }
+    selectFactory(eiInfo).then((res: any) => {
+        baoFactoryList.value = res.result.factorySelect
+    })
+}
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-table v-if="userType" v-loading="loading" max-height="650" :data="tableData" class="tablex">
-            <el-table-column fixed prop="baoCompany" label="人员类型" width="200" />
+            <el-table-column fixed prop="userType" label="人员类型" width="200" />
             <el-table-column fixed prop="baoCompany" label="所在公司" width="200" />
             <el-table-column prop="baoDepartment" label="所在部门" width="200" />
             <el-table-column prop="baoFactory" label="所在分厂" width="170" />
@@ -11,47 +11,47 @@
             <el-table-column prop="enterFactoryYear" label="进厂年" width="100" />
             <el-table-column prop="enterFactoryMonth" label="进厂月" width="100" />
             <el-table-column label="一级安全教育">
-                <el-table-column prop="trainStartDate" label="培训起始日期" width="110"></el-table-column>
-                <el-table-column prop="trainEndDate" label="培训结束日期" width="110"></el-table-column>
-                <el-table-column prop="examDate" label="考试时间" width="110"></el-table-column>
-                <el-table-column prop="examScore" label="考试成绩" width="90"></el-table-column>
-                <el-table-column prop="chiefExaminer" label="主考人" width="70"></el-table-column>
-                <el-table-column prop="chiefExaminerPhone" label="联系方式" width="110"></el-table-column>
-                <el-table-column prop="checkStatus" label="审核状态" width="90"></el-table-column>
-                <el-table-column prop="checkStatus" label="区域" width="90"></el-table-column>
+                <el-table-column prop="safeEdu1.trainStartDate" label="培训起始日期" width="110"></el-table-column>
+                <el-table-column prop="safeEdu1.trainEndDate" label="培训结束日期" width="110"></el-table-column>
+                <el-table-column prop="safeEdu1.examDate" label="考试时间" width="110"></el-table-column>
+                <el-table-column prop="safeEdu1.examScore" label="考试成绩" width="90"></el-table-column>
+                <el-table-column prop="safeEdu1.chiefExaminer" label="主考人" width="70"></el-table-column>
+                <el-table-column prop="safeEdu1.chiefExaminerPhone" label="联系方式" width="110"></el-table-column>
+                <el-table-column prop="safeEdu1.checkStatus" label="审核状态" width="90"></el-table-column>
+                <el-table-column prop="safeEdu1.manageArea" label="区域" width="90"></el-table-column>
                 <el-table-column label="考卷照片" width="90">
                     <template #default="scope">
-                        <MyImg :imgUrl="scope.row.examPaper"></MyImg>
+                        <MyImg v-if="scope.row.safeEdu1 != null" :imgUrl="scope.row.safeEdu1.examPaper[0]"></MyImg>
                     </template>
                 </el-table-column>
             </el-table-column>
             <el-table-column label="二级安全教育">
-                <el-table-column prop="trainStartDate" label="培训起始日期" width="110"></el-table-column>
-                <el-table-column prop="trainEndDate" label="培训结束日期" width="110"></el-table-column>
-                <el-table-column prop="examDate" label="考试时间" width="110"></el-table-column>
-                <el-table-column prop="examScore" label="考试成绩" width="90"></el-table-column>
-                <el-table-column prop="chiefExaminer" label="主考人" width="70"></el-table-column>
-                <el-table-column prop="chiefExaminerPhone" label="联系方式" width="110"></el-table-column>
-                <el-table-column prop="checkStatus" label="审核状态" width="90"></el-table-column>
-                <el-table-column prop="checkStatus" label="区域" width="90"></el-table-column>
+                <el-table-column prop="safeEdu2.trainStartDate" label="培训起始日期" width="110"></el-table-column>
+                <el-table-column prop="safeEdu2.trainEndDate" label="培训结束日期" width="110"></el-table-column>
+                <el-table-column prop="safeEdu2.examDate" label="考试时间" width="110"></el-table-column>
+                <el-table-column prop="safeEdu2.examScore" label="考试成绩" width="90"></el-table-column>
+                <el-table-column prop="safeEdu2.chiefExaminer" label="主考人" width="70"></el-table-column>
+                <el-table-column prop="safeEdu2.chiefExaminerPhone" label="联系方式" width="110"></el-table-column>
+                <el-table-column prop="safeEdu2.checkStatus" label="审核状态" width="90"></el-table-column>
+                <el-table-column prop="safeEdu2.manageArea" label="区域" width="90"></el-table-column>
                 <el-table-column label="考卷照片" width="90">
                     <template #default="scope">
-                        <MyImg :imgUrl="scope.row.examPaper"></MyImg>
+                        <MyImg v-if="scope.row.safeEdu2 != null" :imgUrl="scope.row.safeEdu2.examPaper[0]"></MyImg>
                     </template>
                 </el-table-column>
             </el-table-column>
             <el-table-column label="三级安全教育">
-                <el-table-column prop="trainStartDate" label="培训起始日期" width="110"></el-table-column>
-                <el-table-column prop="trainEndDate" label="培训结束日期" width="110"></el-table-column>
-                <el-table-column prop="examDate" label="考试时间" width="110"></el-table-column>
-                <el-table-column prop="examScore" label="考试成绩" width="90"></el-table-column>
-                <el-table-column prop="chiefExaminer" label="主考人" width="70"></el-table-column>
-                <el-table-column prop="chiefExaminerPhone" label="联系方式" width="110"></el-table-column>
-                <el-table-column prop="checkStatus" label="审核状态" width="90"></el-table-column>
-                <el-table-column prop="checkStatus" label="区域" width="90"></el-table-column>
+                <el-table-column prop="safeEdu3.trainStartDate" label="培训起始日期" width="110"></el-table-column>
+                <el-table-column prop="safeEdu3.trainEndDate" label="培训结束日期" width="110"></el-table-column>
+                <el-table-column prop="safeEdu3.examDate" label="考试时间" width="110"></el-table-column>
+                <el-table-column prop="safeEdu3.examScore" label="考试成绩" width="90"></el-table-column>
+                <el-table-column prop="safeEdu3.chiefExaminer" label="主考人" width="70"></el-table-column>
+                <el-table-column prop="safeEdu3.chiefExaminerPhone" label="联系方式" width="110"></el-table-column>
+                <el-table-column prop="safeEdu3.checkStatus" label="审核状态" width="90"></el-table-column>
+                <el-table-column prop="safeEdu3.manageArea" label="区域" width="90"></el-table-column>
                 <el-table-column label="考卷照片" width="90">
                     <template #default="scope">
-                        <MyImg :imgUrl="scope.row.examPaper"></MyImg>
+                        <MyImg v-if="scope.row.safeEdu3 != null" :imgUrl="scope.row.safeEdu3.examPaper[0]"></MyImg>
                     </template>
                 </el-table-column>
             </el-table-column>
@@ -122,6 +122,13 @@
                 <el-table-column label="负责人" prop="safetyEducationCharge" />
                 <el-table-column label="开始时间" prop="workCycleStart" />
                 <el-table-column label="结束时间" prop="workCycleEnd" />
+                <el-table-column label="操作">
+                    <template #default="scope">
+                        <el-button size="small" type="primary" @click="licenseEdit(scope.$index, scope.row)">
+                            审核登记表
+                        </el-button>
+                    </template>
+                </el-table-column>
             </el-table-column>
         </el-table>
     </div>
@@ -134,7 +141,8 @@ import MyImg from '@/components/ImaPreview.vue'
 type Props = {
     tableData: Array<any>,//表格数据
     loading: boolean,
-    userType: boolean
+    userType: boolean,
+    licenseEdit: any
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
