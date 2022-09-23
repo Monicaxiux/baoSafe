@@ -8,12 +8,17 @@
     <Dialog :from="[]" :tableDatax="[]" :uploadUserPic="[]" :handleDelete="[]" :isForm="[]" :manageAreaList="[]"
         :projectId="projectId" :dialogType="1" :dialogVisible="dialogVisible" :handle="handle">
     </Dialog>
-    <el-dialog v-model="dialog" title="请选择下级区域" width="30%" :before-close="close">
+    <el-dialog v-model="dialog" title="请选择下级区域" width="20%" :before-close="close">
         <el-form-item label="下级区域">
             <el-select style="width: 150px;margin-right: 20px;" multiple v-model="nextSafeManageArea"
                 placeholder="请选择下级区域">
                 <el-option v-for="item in manageAreaList" :key="item.id" :label="item.value" :value="item.id" />
             </el-select>
+        </el-form-item>
+        <el-form-item label="附件上传">
+            <el-button type="primary">
+                点击上传
+            </el-button>
         </el-form-item>
         <template #footer>
             <span class="dialog-footer">
