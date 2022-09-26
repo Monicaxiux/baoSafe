@@ -35,9 +35,10 @@
             </el-icon>查询
         </el-button>
         <el-button type="primary" class="button" @click="download">
-            <el-icon class="i">
-                <Search />
-            </el-icon>导出
+            导出
+        </el-button>
+        <el-button type="primary" class="button" @click="Limit">
+            设置期限
         </el-button>
     </el-form>
 </template>
@@ -58,7 +59,8 @@ type Props = {
     data: any,//搜索参数
     select: Function,//搜索方法
     userType: boolean,
-    download: Function
+    download: Function,
+    Limit: Function
 }
 const eiInfo = reactive(new EiInfo)
 const baoFactoryList: any = ref([])

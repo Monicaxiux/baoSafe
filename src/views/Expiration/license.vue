@@ -1,10 +1,23 @@
 <template>
-    <Search :select="selectUserList" :data="eilnfo" :download="download" :userType="false"></Search>
+    <Search :select="selectUserList" :data="eilnfo" :download="download" :Limit="Limit" :userType="false"></Search>
     <Table :handleChange="handleChange" :loading="loading" :multipleSelection="multipleSelection" :tableType="true"
         :tableData="tableData" :license="license"></Table>
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
         :render="selectUserList">
     </Pagination>
+    <el-dialog v-model="dialogVisible" title="设置过期期限" width="30%" :before-close="handleClose">
+        <el-form-item label="过期期限/月">
+            <el-input v-model.number="expiryLimit"
+                oninput="value=value.replace(/[^\d]/g,''),age=value.replace(/[^\d]/g,'')" clearable
+                placeholder="请输入过期期限" />
+        </el-form-item>
+        <template #footer>
+            <span class=" dialog-footer">
+                <el-button @click="handleClose">取消</el-button>
+                <el-button type="primary" @click="handleEditTLis()">确定</el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 <script lang="ts" setup>
 import Table from './components/Table.vue'
@@ -12,20 +25,43 @@ import Pagination from '@/components/Pagination.vue'//分页组件
 import Search from './components/Search.vue'
 import { ref, reactive } from 'vue'
 import { EiInfo, expiration } from '@/types';
-import { selectExpira } from '@/api/user'
+import { selectExpira, updexpiryLimit } from '@/api/user'
 import { ElNotification } from 'element-plus'
+
 
 const quer = reactive(new expiration)
 const eilnfo = reactive(new EiInfo);
 eilnfo.parameter = quer
 const tableData = ref([])
+const dialogVisible = ref(false)
 const loading = ref(false)
 const dataCount = ref(0)
 const hide = ref(false)
+const expiryLimit = ref(null)
 const multipleSelection = ref([])
 
 const license = () => {
 
+}
+const Limit = () => {
+    dialogVisible.value = true
+}
+const handleEditTLis = () => {
+    if (expiryLimit.value) {
+        updexpiryLimit(expiryLimit.value).then((res) => {
+            ElNotification({
+                message: "设置成功",
+                type: 'success',
+            })
+            dialogVisible.value = false
+            expiryLimit.value = null
+        })
+    } else {
+        ElNotification({
+            message: '请输入过期期限',
+            type: 'warning',
+        })
+    }
 }
 // 多选框选中事件
 const handleChange = (val: any) => {
@@ -59,6 +95,9 @@ const download = () => {
             type: 'warning',
         })
     )
+}
+const handleClose = () => {
+    dialogVisible.value = false
 }
 </script>
 <style scoped>

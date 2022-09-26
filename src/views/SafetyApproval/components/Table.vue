@@ -21,7 +21,7 @@
             <template v-if="userType">
                 <el-table-column fixed prop="assistCompany" label="公司" width="140" />
                 <el-table-column fixed prop="projectNumber" label="项目编号" width="140" />
-                <el-table-column prop="projectName" label="项目名称" width="140" />
+                <el-table-column prop="projectName" label="项目名称" width="440" />
                 <el-table-column prop="projectType" label="项目类型" width="140" />
                 <el-table-column prop="safetyEducationCharge" label="负责人" width="140" />
                 <el-table-column prop="projectCreateTime" label="项目创建时间" width="260" />

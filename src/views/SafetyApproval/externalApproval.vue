@@ -8,7 +8,7 @@
     <Dialog :from="[]" :tableDatax="[]" :uploadUserPic="[]" :handleDelete="[]" :isForm="[]" :manageAreaList="[]"
         :projectId="projectId" :dialogType="1" :dialogVisible="dialogVisible" :handle="handle">
     </Dialog>
-    <el-dialog v-model="dialog" title="请选择下级区域" width="20%" :before-close="close">
+    <el-dialog v-model="dialog" title="请选择下级区域" width="60%" :before-close="close">
         <el-form-item label="下级区域">
             <el-select style="width: 150px;margin-right: 20px;" multiple v-model="nextSafeManageArea"
                 placeholder="请选择下级区域">
@@ -16,9 +16,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="附件上传">
-            <el-button type="primary">
-                点击上传
-            </el-button>
+            <UploadImage :upload="uploadUserPic" :uploadType="true" :url="filePic"></UploadImage>
         </el-form-item>
         <template #footer>
             <span class="dialog-footer">
@@ -57,6 +55,7 @@ import { bna, EiInfo, bnaInfo, selectApproval } from '@/types';
 import { selectVerify, selectSafety } from '@/api/user';//api方法
 import { getBase64 } from '@/utils/regexp'
 import { selectDepartment } from '@/api/areas'
+import UploadImage from '@/components/UploadImage.vue'
 import { ElMessageBox } from 'element-plus'
 import { selectAddress } from '@/api/safety'
 import { piniaData } from '@/store';//引入pinia状态管理
@@ -80,6 +79,7 @@ const hide = ref(false)
 const dialog = ref(false)
 //表格数据
 const tableData = ref([]);
+const filePic: any = ref([])
 //总页数
 const dataCount = ref(0);
 const base64img: any = ref([])
@@ -109,7 +109,14 @@ const selectUserList = () => {
         hide.value = dataCount.value < 11 ? false : true
     })
 }
+//自定义上传方法
+const uploadUserPic = (f) => {
+    getBase64(f.file).then((res: any) => {
+        filePic.value.push(res)
+    });
+}
 const approval = (index, row: any) => {
+    filePic.value = []
     if (store.userInfo.userAuth == 0) {
         ElNotification({
             message: '当前用户不具备审批权限',
@@ -131,11 +138,6 @@ const approval = (index, row: any) => {
                 message: '当前项目已经完成安全教育',
                 type: 'warning',
             })
-        } else if (store.userInfo.userAuth == 1 && row.safetyEducation1.checkStatus == '通过') {
-            ElNotification({
-                message: '当前已完成一级安全教育',
-                type: 'warning',
-            })
         } else if (store.userInfo.userAuth == 2 && row.safetyEducation2.checkStatus == '通过') {
             ElNotification({
                 message: '当前已完成二级安全教育',
@@ -149,9 +151,16 @@ const approval = (index, row: any) => {
             let s: any = 0
             switch (store.userInfo.userAuth) {
                 case 1:
-                    s = 1
-                    safeEduId.value = row.safetyEducation1.id
-                    manageAreaType = 2
+                    if (row.safetyEducation1.checkStatus == "通过") {
+                        s = row.safetyEducation2.manageAreaId
+                        safeEduId.value = row.safetyEducation2.id
+                        manageAreaType = 3
+                    } else {
+                        s = 1
+                        safeEduId.value = row.safetyEducation1.id
+                        manageAreaType = 2
+                    }
+
                     break;
                 case 2:
                     s = row.safetyEducation2.manageAreaId
@@ -186,14 +195,12 @@ const close = () => {
         })
 }
 const getQrCode = (i: number, row: any) => {
-
     const eiInfo = new EiInfo();
     eiInfo.parameter = {
         projectId: row.projectId,
         pageNum: 1,
     };
     request.post("/assist/safety/status/each/user", eiInfo).then((res: any) => {
-
         let idList: any = [];
         for (let i = 0; i < res.result.safeList.length; i++) {
             idList.push(res.result.safeList[i].icCardWorkNumber);
@@ -250,6 +257,7 @@ const handle = (i: any) => {
                 submitApproval()
             } else {
                 nextSafeManageArea.value = []
+                filePic.value = []
                 dialog.value = true
             }
             break;
@@ -265,7 +273,8 @@ const submitApproval = () => {
             eiInfo.parameter = {
                 result: 1,
                 safeEduId: safeEduId.value,
-                nextSafeManageArea: nextSafeManageArea.value
+                nextSafeManageArea: nextSafeManageArea.value,
+                filePic: filePic.value
             }
             eiInfo.userInfo = {
                 id: store.userInfo.id

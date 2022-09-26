@@ -245,3 +245,11 @@ export const deleteUser = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+
+// 设置过期期限
+export const updexpiryLimit = ((eilnfo: any) => {
+    return request({
+        url: `/license/update/expiry/limit?expiryLimit=${eilnfo}`,
+        method: 'post'
+    })
+})

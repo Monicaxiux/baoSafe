@@ -1,13 +1,19 @@
 <template>
     <div class="box">
-        <div v-if="url != ''" class="img">
+        <div v-if="url != '' && !uploadType" class="img">
             <MyImg :imgUrl="url"></MyImg>
         </div>
-        <div v-if="url == ''" class="img_hidd">
+        <div v-if="url == '' && !uploadType" class="img_hidd">
 
         </div>
-        <el-upload class="img_btn" action="#" :show-file-list="false" :before-upload="beforeUpload"
-            :http-request="upload">
+        <div v-if="url != [] && uploadType" v-for="(i, item) in url" :key="i" class="img">
+            <MyImg :imgUrl="url[item]"></MyImg>
+        </div>
+        <div v-if="url == [] && uploadType" class="img_hidd">
+
+        </div>
+        <el-upload class="img_btn" action="#" :multiple="uploadType" :show-file-list="false"
+            :before-upload="beforeUpload" :http-request="upload">
             <div class="upload">
                 <el-icon>
                     <Plus />
@@ -15,6 +21,7 @@
             </div>
         </el-upload>
     </div>
+
 </template>
 
 <script lang="ts" setup>
@@ -25,8 +32,9 @@ import { isImg } from '@/utils/regexp'
 
 // 定义Props默认数据类型
 type Props = {
-    url: string,
-    upload: Function
+    url: any,
+    upload: Function,
+    uploadType: boolean
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
@@ -40,6 +48,9 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
 <style scoped>
 .box {
     display: flex;
+    width: 800px;
+    /* overflow: auto; */
+    flex-flow: wrap;
 }
 
 .upload {
@@ -67,6 +78,7 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     width: 80px;
     height: 80px;
     margin-right: 20px;
+    margin-bottom: 10px;
     text-align: center;
 }
 

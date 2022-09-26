@@ -11,7 +11,7 @@
             </el-table-column>
             <el-table-column prop="username" label="员工姓名" width="130" />
             <el-table-column prop="icCardWorkNumber" label="IC工号" width="200" />
-            <el-table-column prop="licenseNumber" label="证书编号" width="280" />
+            <el-table-column prop="licenseNumber" label="证书编号" />
             <el-table-column prop="licenseName" label="证书名称" width="280" />
             <el-table-column prop="receiveDate" label="取证日期" width="110" />
             <el-table-column prop="expiryTime" label="复证日期" width="130" />

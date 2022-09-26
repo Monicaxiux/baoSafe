@@ -19,7 +19,7 @@
                     <el-button type="danger">停用</el-button>
                 </el-table-column>
             </el-table> -->
-            <el-table max-height="820" :data="tableData" border style="width: 100%">
+            <el-table max-height="760" :data="tableData" border style="width: 100%">
                 <el-table-column label="部门">
                     <el-table-column type="expand">
                         <template #default="props">

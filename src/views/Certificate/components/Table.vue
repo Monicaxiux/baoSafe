@@ -2,9 +2,9 @@
     <div>
         <el-table border v-loading="loading" max-height="600" :data="tableData" class="tablex">
             <el-table-column prop="username" label="员工姓名" width="90" />
-            <el-table-column prop="icCardWorkNumber" label="IC卡号" width="150" />
-            <el-table-column prop="licenseName" label="证书名称" width="210" />
-            <el-table-column prop="licenseNumber" label="证书编号" width="200" />
+            <el-table-column prop="icCardWorkNumber" label="IC卡号" />
+            <el-table-column prop="licenseName" label="证书名称" />
+            <el-table-column prop="licenseNumber" label="证书编号" />
             <el-table-column prop="licenseType" label="证书类型" width="200" />
             <el-table-column prop="receiveDate" label="取证日期" width="110" />
             <el-table-column prop="restoreDate" label="复证日期" width="110" />

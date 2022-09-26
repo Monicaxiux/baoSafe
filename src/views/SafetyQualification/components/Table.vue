@@ -79,7 +79,6 @@
                                                                         <el-table-column width="50"></el-table-column>
                                                                         <el-table-column width="50"></el-table-column>
                                                                         <el-table-column label="三级安全教育">
-
                                                                             <el-table-column label="教育时间"
                                                                                 prop="eduDate" />
                                                                             <el-table-column label="教育人"
@@ -90,6 +89,16 @@
                                                                                 prop="manageArea" />
                                                                             <el-table-column label="状态"
                                                                                 prop="checkStatus" />
+                                                                            <el-table-column label="操作">
+                                                                                <template #default="props">
+                                                                                    <el-button
+                                                                                        v-if="props.row.eduDate != '' && props.row.filePic.length != 0"
+                                                                                        @click="licenseEdit(props.$index, props.row, 2)"
+                                                                                        size="small" type="primary"
+                                                                                        plain>查看附件
+                                                                                    </el-button>
+                                                                                </template>
+                                                                            </el-table-column>
                                                                         </el-table-column>
                                                                     </el-table>
                                                                 </div>
@@ -100,6 +109,15 @@
                                                         <el-table-column label="联系电话" prop="eduPersonPhone" />
                                                         <el-table-column label="所在区域" prop="manageArea" />
                                                         <el-table-column label="状态" prop="checkStatus" />
+                                                        <el-table-column label="操作">
+                                                            <template #default="props">
+                                                                <el-button
+                                                                    @click="licenseEdit(props.$index, props.row, 2)"
+                                                                    v-if="props.row.eduDate != '' && props.row.filePic.length != 0"
+                                                                    type="primary" size="small" plain>查看附件
+                                                                </el-button>
+                                                            </template>
+                                                        </el-table-column>
                                                     </el-table-column>
                                                 </el-table>
                                             </div>
@@ -110,6 +128,13 @@
                                     <el-table-column label="联系电话" prop="eduPersonPhone" />
                                     <el-table-column label="所在区域" prop="manageArea" />
                                     <el-table-column label="状态" prop="checkStatus" />
+                                    <el-table-column label="操作">
+                                        <template #default="props">
+                                            <el-button v-if="props.row.eduDate != '' && props.row.filePic.length != 0"
+                                                @click="licenseEdit(props.$index, props.row, 2)" type="primary"
+                                                size="small" plain>查看附件</el-button>
+                                        </template>
+                                    </el-table-column>
                                 </el-table-column>
                             </el-table>
                         </div>
@@ -124,7 +149,7 @@
                 <el-table-column label="结束时间" prop="workCycleEnd" />
                 <el-table-column label="操作">
                     <template #default="scope">
-                        <el-button size="small" type="primary" @click="licenseEdit(scope.$index, scope.row)">
+                        <el-button size="small" type="primary" @click="licenseEdit(scope.$index, scope.row, 1)">
                             审核登记表
                         </el-button>
                     </template>
