@@ -226,11 +226,13 @@ const handle = (i: any) => {
                         eiInfo.userInfo = {
                             id: store.userInfo.id
                         }
-                        selectBnaVerify(eiInfo).then((res) => {
-                            ElNotification({
-                                message: "安全教育审批完成",
-                                type: 'success',
-                            })
+                        selectBnaVerify(eiInfo).then((res: any) => {
+                            if (res.sys.status != -1) {
+                                ElNotification({
+                                    message: "安全教育审批完成",
+                                    type: 'success',
+                                })
+                            }
                             dialogVisible.value = false
                             dialog.value = false
                             selectUserList()
@@ -271,11 +273,13 @@ const submitApproval = () => {
             }
             console.log(eiInfo.parameter);
 
-            selectBnaVerify(eiInfo).then((res) => {
-                ElNotification({
-                    message: "安全教育审批完成",
-                    type: 'success',
-                })
+            selectBnaVerify(eiInfo).then((res: any) => {
+                if (res.sys.status != -1) {
+                    ElNotification({
+                        message: "安全教育审批完成",
+                        type: 'success',
+                    })
+                }
                 dialogVisible.value = false
                 selectUserList()
             })

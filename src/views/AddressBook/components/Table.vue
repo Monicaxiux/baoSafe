@@ -33,7 +33,7 @@
                 <el-table-column prop="enterFactoryMonth" label="进厂月" width="100" />
                 <el-table-column prop="manageArea" label="所在区域" width="100" />
             </template>
-            <el-table-column label="特种作业证">
+            <!-- <el-table-column label="特种作业证">
                 <el-table-column prop="licenseList[0].licenseNumber" label="证书编号" width="200" />
                 <el-table-column prop="licenseList[0].licenseName" label="证书名称" width="200" />
                 <el-table-column prop="licenseList[0].receiveDate" label="取证日期" width="110" />
@@ -45,7 +45,7 @@
                         </MyImg>
                     </template>
                 </el-table-column>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column fixed="right" label="操作" width="160">
                 <template #default="scope">
                     <el-button size="small" type="primary" @click="handleEdit(scope.$index, scope.row)">

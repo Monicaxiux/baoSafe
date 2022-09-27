@@ -1,5 +1,5 @@
 <template>
-    <el-dialog v-model="dialogVisible" :title="dialogType == 1 ? '编辑员工' : '添加员工'" width="75%"
+    <el-dialog v-model="dialogVisible" :title="dialogType == 1 ? '编辑员工' : '添加员工'" width="20%"
         :before-close="handleClose">
         <!-- <span v-if="dialogType == 1">当前为<a v-if="userType">协力</a><a v-if="!userType">Bna</a>编辑</span>
         <span v-if="dialogType == 2">当前为<a v-if="userType">协力</a><a v-if="!userType">Bna</a>新增</span> -->
@@ -49,14 +49,14 @@
                     </el-form-item>
                 </el-form>
             </el-card>
-            <el-card shadow="hover" style="width: 1020px">
+            <!-- <el-card shadow="hover" style="width: 1020px">
                 <h1>特种作业证</h1>
-                <!-- <el-button type="primary" @click="handleEditLis">添加证书</el-button> -->
-                <!-- <el-button type="primary" @click="handleEditT">查看换证历史记录</el-button> -->
+                <el-button type="primary" @click="handleEditLis">添加证书</el-button>
+                <el-button type="primary" @click="handleEditT">查看换证历史记录</el-button>
                 <br><br>
                 <LicenseTable :licenseData="userInfo.licenseUpdateList" :licenseDelete="licenseDelete"
                     :licenseEdit="licenseEdit"></LicenseTable>
-            </el-card>
+            </el-card> -->
             <el-drawer v-model="drawer" :title="status ? '新增特种作业证' : '修改特种作业证'" direction="rtl"
                 :before-close="handleCloseLis">
                 <el-form-item label="证书编号">
@@ -98,7 +98,7 @@
     <el-dialog v-model="licenseDialog" :title="licenseDialogType == 1 ? '新增特种作业证' : '编辑特种作业证'" width="75%"></el-dialog>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, toRefs } from 'vue'
+import { onMounted, ref, toRefs, watch } from 'vue'
 import { ElMessageBox } from 'element-plus'
 import LicenseTable from './licenseTable.vue'
 import UploadImage from '@/components/UploadImage.vue'
@@ -116,10 +116,31 @@ type Props = {
     licenseDelete: Function,
     licenseEdit: Function
 }
+const props = defineProps<Props>()
+
 onMounted(() => {
     // 查询部门下拉框
     selectDepartment().then((res: any) => {
         departmentSelect.value = res.result.departmentSelect
+    })
+    // let eiInfo = new EiInfo
+    // eiInfo.parameter = {
+    //     departmentId: props.userInfo.baoDepartment
+    // }
+    // selectFactory(eiInfo).then((res: any) => {
+    //     baoFactoryList.value = res.result.factorySelect
+    // })
+})
+// 监听表格数据来开启提交按钮
+watch(props.userInfo, (newValue, oldValue) => {
+    console.log(newValue.baoDepartment);
+
+    let eiInfo = new EiInfo
+    eiInfo.parameter = {
+        departmentId: newValue.baoDepartment
+    }
+    selectFactory(eiInfo).then((res: any) => {
+        baoFactoryList.value = res.result.factorySelect
     })
 })
 const status = ref(false)
@@ -143,7 +164,6 @@ const handleCloseLis = () => {
             // catch error
         })
 }
-const props = defineProps<Props>()
 const licenseDialog = ref(false)
 const departmentSelect: any = ref([])
 const baoFactoryList: any = ref([])
@@ -160,7 +180,7 @@ const handleClose = (done: () => void) => {
 }
 const change = (val) => {
     let eiInfo = new EiInfo
-    // props.userInfo.baoFactory = ''
+    props.userInfo.baoFactory = ''
     eiInfo.parameter = {
         departmentId: val
     }

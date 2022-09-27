@@ -238,11 +238,14 @@ const handle = (i: any) => {
                     eiInfo.userInfo = {
                         id: store.userInfo.id
                     }
-                    selectVerify(eiInfo).then((res) => {
-                        ElNotification({
-                            message: "安全教育审批完成",
-                            type: 'success',
-                        })
+                    selectVerify(eiInfo).then((res: any) => {
+                        if (res.sys.status != -1) {
+                            ElNotification({
+                                message: "安全教育审批完成",
+                                type: 'success',
+                            })
+                        }
+
                         dialog.value = false
                         dialogVisible.value = false
                         selectUserList()
@@ -279,11 +282,13 @@ const submitApproval = () => {
             eiInfo.userInfo = {
                 id: store.userInfo.id
             }
-            selectVerify(eiInfo).then((res) => {
-                ElNotification({
-                    message: "安全教育审批完成",
-                    type: 'success',
-                })
+            selectVerify(eiInfo).then((res: any) => {
+                if (res.sys.status != -1) {
+                    ElNotification({
+                        message: "安全教育审批完成",
+                        type: 'success',
+                    })
+                }
                 dialog.value = false
                 dialogVisible.value = false
                 selectUserList()

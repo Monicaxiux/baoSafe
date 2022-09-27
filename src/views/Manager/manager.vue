@@ -30,8 +30,10 @@ const from = reactive({
     userId: <any>0,
     userAuth: <any>'',
     authArea: <any>[],
-    authArea2: <any>'',
-    manageArea: <any>[]
+    authArea2: <any>[],
+    manageArea: <any>[],
+    addressList: <any>[],
+    addressList3: <any>[]
 })
 // 查询条件
 const query = reactive(new bna);
@@ -61,15 +63,23 @@ const selectUserList = () => {
 const handleEdit = (index: number, row: any) => {
     // 清空表单
     from.authArea = []
+    from.addressList = []
+    from.authArea2 = []
+    from.addressList3 = []
     console.log(row);
     from.userAuth = row.userAuth;
-    // if (row.authAreaList[0].id == 0) {
-    //     from.manageArea = [];
-    // } else {
-    //     for (let i = 0; i < row.authAreaList.length; i++) {
-    //         from.manageArea.push(row.authAreaList[i].id);
-    //     }
-    // }
+
+    for (let i = 0; i < row.authAreaList.length; i++) {
+        if (row.authAreaList[i].type == 'manageArea2') {
+            from.authArea.push(row.authAreaList[i].id);
+            from.addressList.push(row.authAreaList[i]);
+        }
+        if (row.authAreaList[i].type == 'manageArea3') {
+            from.authArea2.push(row.authAreaList[i].id);
+            from.addressList3.push(row.authAreaList[i]);
+        }
+    }
+
     from.userId = row.userId;
     dialogVisible.value = true
 }
@@ -104,13 +114,17 @@ const handleEditT = (i) => {
             if (from.authArea2.length != 0) {
                 eiInfo.parameter.authArea = from.authArea2
             }
+            eiInfo.parameter.authArea.push(1)
             eiInfo.userInfo = store.userInfo
             updateUserAuth(eiInfo).then((res: any) => {
                 selectUserList()
-                ElNotification({
-                    message: res.sys.msg,
-                    type: 'success',
-                })
+                if (res.sys.status != -1) {
+                    ElNotification({
+                        message: res.sys.msg,
+                        type: 'success',
+                    })
+                }
+
                 dialogVisible.value = false
 
             })

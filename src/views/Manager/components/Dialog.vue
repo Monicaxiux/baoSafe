@@ -10,15 +10,23 @@
             </el-form-item>
             <h4>选择区域</h4>
             <el-form-item>
-                <el-select :disabled="disabled" @change="change2" :multiple="multiple"
-                    style="width: 150px;margin-right: 20px;" v-model="from.authArea" placeholder="请选择二级区域">
-                    <el-option v-for="item in addressList" :key="item.id" :label="item.value" :value="item.id" />
+                <el-select disabled style="width: 150px;margin-right: 20px;" v-model="authArea" placeholder="请选择一级区域">
+                    <el-option v-for="item in addressList1" :key="item.id" :label="item.name || item.value"
+                        :value="item.id" />
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-select @change="change2" :multiple="multiple" style="width: 150px;margin-right: 20px;"
+                    v-model="from.authArea" placeholder="请选择二级区域">
+                    <el-option v-for="item in from.addressList" :key="item.id" :label="item.name || item.value"
+                        :value="item.id" />
                 </el-select>
             </el-form-item>
             <el-form-item>
                 <el-select :disabled="disabled2" multiple style="width: 150px;margin-right: 20px;"
                     v-model="from.authArea2" placeholder="请选择三级区域">
-                    <el-option v-for="item in addressList3" :key="item.id" :label="item.value" :value="item.id" />
+                    <el-option v-for="item in from.addressList3" :key="item.id" :label="item.name || item.value"
+                        :value="item.id" />
                 </el-select>
             </el-form-item>
         </el-card>
@@ -31,7 +39,7 @@
     </el-dialog>
 </template>
 <script lang="ts" setup>
-import { ref, toRefs } from 'vue'
+import { ref, toRefs, watch } from 'vue'
 import { ElMessageBox } from 'element-plus'
 import { selectAddress } from '@/api/safety';
 import { EiInfo } from '@/types';
@@ -43,11 +51,16 @@ type Props = {
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
-const addressList: any = ref([])
-const addressList3: any = ref([])
+const authArea = ref(1)
 const disabled = ref(true)
 const disabled2 = ref(true)
-const multiple = ref(false)
+const multiple = ref(true)
+const addressList1: any = ref([
+    {
+        name: "宝日汽车板",
+        id: 1,
+    },
+])
 const options = ref([
     {
         label: "一级安全教育",
@@ -71,6 +84,25 @@ const options = ref([
     }
 ])
 
+// 监听表格数据来开启提交按钮
+watch(props.from, (newValue, oldValue) => {
+    console.log(newValue.userAuth);
+    switch (newValue.userAuth) {
+        case '一级安全教育':
+            disabled.value = true
+            break;
+        case '二级安全教育':
+            multiple.value = true
+            disabled2.value = true
+            disabled.value = false
+            break;
+        case '三级安全教育':
+            multiple.value = false
+            disabled2.value = false
+            disabled.value = false
+            break;
+    }
+})
 
 const change = (i: any) => {
     console.log(i);
@@ -78,12 +110,13 @@ const change = (i: any) => {
     let manageAreaType = 1
     props.from.authArea2 = ''
     props.from.authArea = ''
-    addressList.value = []
-    addressList3.value = []
+    props.from.addressList = []
+    props.from.addressList3 = []
     let s = 0
     switch (i) {
         case 1:
-            manageAreaType = 1
+            manageAreaType = 2
+            s = 1
             disabled.value = true
             break;
         case 2:
@@ -99,7 +132,6 @@ const change = (i: any) => {
             multiple.value = false
             disabled2.value = false
             disabled.value = false
-
             break;
         case 0:
             disabled.value = true
@@ -113,7 +145,7 @@ const change = (i: any) => {
         manageAreaType: manageAreaType
     }
     selectAddress(eiInfo).then((res: any) => {
-        addressList.value = res.result.manageArea
+        props.from.addressList = res.result.manageArea
     })
 }
 
@@ -124,13 +156,12 @@ const change2 = (i: any) => {
         props.from.authArea2 = ''
         console.log(i);
         let eiInfo = new EiInfo
-
         eiInfo.parameter = {
             previousKey: i,
             manageAreaType: 3
         }
         selectAddress(eiInfo).then((res: any) => {
-            addressList3.value = res.result.manageArea
+            props.from.addressList3 = res.result.manageArea
         })
     }
 
