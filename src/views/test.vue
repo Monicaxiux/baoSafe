@@ -126,6 +126,7 @@ onMounted(() => {
 
 <template>
     <div class="app-container home">
+        <h1>A表</h1>
         <el-table class="t1" ref="dragTable" :data="tableData" row-key="id" border :row-class-name="tableRowClassName">
             <el-table-column prop="date" label="日期"></el-table-column>
             <el-table-column prop="name" label="姓名"></el-table-column>
@@ -137,7 +138,8 @@ onMounted(() => {
             </el-table-column>
         </el-table>
         <br><br><br>
-        <el-table class="t2" ref="dragTable" :data="tableData" row-key="id" border :row-class-name="tableRowClassName">
+        <h1>B表</h1>
+        <el-table class="t2" ref="dragTable" :data="tableData2" row-key="id" border :row-class-name="tableRowClassName">
             <el-table-column prop="date" label="日期"></el-table-column>
             <el-table-column prop="name" label="姓名"></el-table-column>
             <el-table-column prop="address" label="地址"></el-table-column>
@@ -185,11 +187,17 @@ const data = reactive({
             date: "5555-55-55",
             address: "测试_5",
         }
-    ]
-
+    ],
+    tableData2: [{
+        id: "1",
+        name: "text_1",
+        date: "1111-11-11",
+        address: "测试_1",
+    },]
 });
 
 const { tableData } = toRefs(data);
+const { tableData2 } = toRefs(data);
 
 // 创建sortable实例
 function initSortable(className) {
