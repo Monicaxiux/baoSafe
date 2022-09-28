@@ -16,15 +16,15 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-select @change="change2" :multiple="multiple" style="width: 150px;margin-right: 20px;"
+                <el-select @change="change2" :disabled="disabled" style="width: 150px;margin-right: 20px;"
                     v-model="from.authArea" placeholder="请选择二级区域">
                     <el-option v-for="item in from.addressList" :key="item.id" :label="item.name || item.value"
                         :value="item.id" />
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-select :disabled="disabled2" multiple style="width: 150px;margin-right: 20px;"
-                    v-model="from.authArea2" placeholder="请选择三级区域">
+                <el-select :disabled="disabled2" style="width: 150px;margin-right: 20px;" v-model="from.authArea2"
+                    placeholder="请选择三级区域">
                     <el-option v-for="item in from.addressList3" :key="item.id" :label="item.name || item.value"
                         :value="item.id" />
                 </el-select>
@@ -87,6 +87,7 @@ const options = ref([
 // 监听表格数据来开启提交按钮
 watch(props.from, (newValue, oldValue) => {
     console.log(newValue.userAuth);
+
     switch (newValue.userAuth) {
         case '一级安全教育':
             disabled.value = true
@@ -99,7 +100,7 @@ watch(props.from, (newValue, oldValue) => {
         case '三级安全教育':
             multiple.value = false
             disabled2.value = false
-            disabled.value = false
+            disabled.value = true
             break;
     }
 })
@@ -116,6 +117,7 @@ const change = (i: any) => {
     switch (i) {
         case 1:
             manageAreaType = 2
+            disabled2.value = true
             s = 1
             disabled.value = true
             break;
@@ -131,12 +133,14 @@ const change = (i: any) => {
             s = 1
             multiple.value = false
             disabled2.value = false
-            disabled.value = false
+            disabled.value = true
             break;
         case 0:
+            disabled2.value = true
             disabled.value = true
             break;
         case -1:
+            disabled2.value = true
             disabled.value = true
             break;
     }

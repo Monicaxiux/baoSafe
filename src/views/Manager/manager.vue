@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <Search :select="selectUserList" :data="eilnfo" :departmentSelect="departmentSelect">
     </Search>
     <Table :handleEdit="handleEdit" :loading="loading" :tableData="tableData">
@@ -19,7 +19,8 @@ import { selectDepartment } from '@/api/areas';//api方法
 import { ref, onMounted, reactive } from 'vue';
 import { piniaData } from '@/store';//引入pinia状态管理
 import { th } from 'element-plus/es/locale';
-import { ElNotification } from 'element-plus';
+import { ElMessageBox, ElNotification } from 'element-plus';
+import { selectAddress } from '@/api/safety';
 //pinia状态管理
 const store = piniaData();
 // 部门下拉框数据
@@ -29,8 +30,8 @@ const tableData = ref([])
 const from = reactive({
     userId: <any>0,
     userAuth: <any>'',
-    authArea: <any>[],
-    authArea2: <any>[],
+    authArea: <any>'',
+    authArea2: <any>'',
     manageArea: <any>[],
     addressList: <any>[],
     addressList3: <any>[]
@@ -62,21 +63,34 @@ const selectUserList = () => {
 // 编辑
 const handleEdit = (index: number, row: any) => {
     // 清空表单
-    from.authArea = []
+    from.authArea = ''
     from.addressList = []
-    from.authArea2 = []
+    from.authArea2 = ''
     from.addressList3 = []
     console.log(row);
     from.userAuth = row.userAuth;
+    let eiInfo = new EiInfo
 
     for (let i = 0; i < row.authAreaList.length; i++) {
         if (row.authAreaList[i].type == 'manageArea2') {
-            from.authArea.push(row.authAreaList[i].id);
-            from.addressList.push(row.authAreaList[i]);
+            from.authArea = row.authAreaList[i].id;
+            eiInfo.parameter = {
+                previousKey: 1,
+                manageAreaType: 2
+            }
+            selectAddress(eiInfo).then((res: any) => {
+                from.addressList = res.result.manageArea
+            })
         }
         if (row.authAreaList[i].type == 'manageArea3') {
-            from.authArea2.push(row.authAreaList[i].id);
-            from.addressList3.push(row.authAreaList[i]);
+            from.authArea2 = row.authAreaList[i].id;
+            // from.addressList3.push(row.authAreaList[i]);
+            eiInfo.parameter = {
+                manageAreaType: 3
+            }
+            selectAddress(eiInfo).then((res: any) => {
+                from.addressList3 = res.result.manageArea
+            })
         }
     }
 
@@ -107,14 +121,19 @@ const handleEditT = (i) => {
                 case "三级安全教育":
                     eiInfo.parameter.userAuth = 3;
                     break;
-                case "普通员工":
+                case "无权限" || "普通员工":
                     eiInfo.parameter.userAuth = -1;
                     break;
             }
             if (from.authArea2.length != 0) {
                 eiInfo.parameter.authArea = from.authArea2
             }
-            eiInfo.parameter.authArea.push(1)
+            if (from.authArea.length == 0 && from.userAuth == 1) {
+                eiInfo.parameter.authArea = 1
+            } else {
+                delete eiInfo.parameter.authArea
+            }
+            // eiInfo.parameter.authArea.push(1)
             eiInfo.userInfo = store.userInfo
             updateUserAuth(eiInfo).then((res: any) => {
                 selectUserList()
@@ -123,6 +142,22 @@ const handleEditT = (i) => {
                         message: res.sys.msg,
                         type: 'success',
                     })
+                } else {
+                    ElMessageBox.confirm('该区域已有其他人负责，是否强制修改?')
+                        .then(() => {
+                            eiInfo.parameter.force = 1
+                            updateUserAuth(eiInfo).then((res: any) => {
+                                selectUserList()
+                                if (res.sys.status != -1) {
+                                    ElNotification({
+                                        message: res.sys.msg,
+                                        type: 'success',
+                                    })
+                                }
+                            })
+                        }).catch(() => {
+
+                        })
                 }
 
                 dialogVisible.value = false
@@ -137,4 +172,4 @@ const handleEditT = (i) => {
 }
 </script>
 <style scoped>
-</style>
+</style> -->

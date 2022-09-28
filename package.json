@@ -21,6 +21,7 @@
     "pinia-persistedstate-plugin": "^0.1.0",
     "pinia-plugin-persist": "^1.0.0",
     "screenfull": "^6.0.2",
+    "sortablejs": "^1.15.0",
     "vue": "^3.2.25",
     "vue-print-nb": "^1.7.5",
     "vue-router": "^4.1.0",

@@ -105,6 +105,11 @@ const routes: Array<RouteRecordRaw> = [
 				path: '/selectLicense',
 				name: 'selectLicense',
 				component: () => import('../views/Certificate/selectLicense.vue'),
+			},
+			{
+				path: '/test',
+				name: 'test',
+				component: () => import('../views/test.vue'),
 			}
 		]
 	},

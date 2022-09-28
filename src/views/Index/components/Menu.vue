@@ -156,6 +156,10 @@ const menus = ref([
                 path: '/sector',
                 name: '部门分厂管理'
             },
+            {
+                path: '/test',
+                name: '测试页面'
+            },
         ]
     }
 ])

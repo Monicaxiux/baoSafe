@@ -15,8 +15,7 @@
                 </el-form-item>
                 <el-form-item v-if="dialogType != 1" label="证书类型">
                     <el-select style="width: 100%" v-model="userInfo.licenseType" placeholder="请选择作业证类型">
-                        <el-option v-for="item in licenseTypeList" :key="item.name" :label="item.name"
-                            :value="item.name" />
+                        <el-option v-for="item in licenseTypeList" :key="item.id" :label="item.name" :value="item.id" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="证书编号">
@@ -84,15 +83,19 @@ const userInfo: any = ref({
 })
 const licenseTypeList = ref([
     {
+        id: 1,
         name: '特种作业证'
     },
     {
+        id: 2,
         name: '生产经营单位负责人证'
     },
     {
+        id: 3,
         name: '安全生产管理人员证'
     },
     {
+        id: 4,
         name: '特种设备操作证'
     }
 ])

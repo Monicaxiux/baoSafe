@@ -66,3 +66,11 @@ export const selectDepAndFac = (() => {
         method: 'post'
     })
 })
+
+//查询全部安全教育区域
+export const selectAll = (() => {
+    return request({
+        url: '/area/query/all/manage/area',
+        method: 'post'
+    })
+})
