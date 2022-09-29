@@ -83,10 +83,9 @@ const typeChange = (val) => {
             delete props.data.parameter.baoFactory
             break;
     }
+
     props.data.parameter.pageNum = 1
     props.select(props.data)
-
-
 }
 const userTypeList = [
     {

@@ -9,13 +9,40 @@
                 <el-table-column prop="icCardWorkNumber" label="工号" />
                 <el-table-column prop="username" label="员工姓名" width="100" />
                 <el-table-column label="一级审批">
+                    <el-table-column prop="safetyEducation1.chiefExaminer" label="教育人" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation1.chiefExaminerPhone" label="联系电话" width="110">
+                    </el-table-column>
+                    <el-table-column prop="safetyEducation1.examScore" label="考试分数" width="110">
+                    </el-table-column>
+                    <el-table-column prop="safetyEducation1.examDate" label="考试日期" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation1.trainStartDate" label="开始日期" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation1.trainEndDate" label="结束日期" width="110"></el-table-column>
                     <el-table-column prop="safetyEducation1.checkStatus" label="状态" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation1.manageArea" label="区域" width="110"></el-table-column>
                 </el-table-column>
                 <el-table-column label="二级审批">
+                    <el-table-column prop="safetyEducation2.chiefExaminer" label="教育人" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation2.chiefExaminerPhone" label="联系电话" width="110">
+                    </el-table-column>
+                    <el-table-column prop="safetyEducation2.examScore" label="考试分数" width="110">
+                    </el-table-column>
+                    <el-table-column prop="safetyEducation2.examDate" label="考试日期" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation2.trainStartDate" label="开始日期" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation2.trainEndDate" label="结束日期" width="110"></el-table-column>
                     <el-table-column prop="safetyEducation2.checkStatus" label="状态" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation2.manageArea" label="区域" width="110"></el-table-column>
                 </el-table-column>
                 <el-table-column label="三级审批">
+                    <el-table-column prop="safetyEducation3.chiefExaminer" label="教育人" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation3.chiefExaminerPhone" label="联系电话" width="110">
+                    </el-table-column>
+                    <el-table-column prop="safetyEducation3.examScore" label="考试分数" width="110">
+                    </el-table-column>
+                    <el-table-column prop="safetyEducation3.examDate" label="考试日期" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation3.trainStartDate" label="开始日期" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation3.trainEndDate" label="结束日期" width="110"></el-table-column>
                     <el-table-column prop="safetyEducation3.checkStatus" label="状态" width="110"></el-table-column>
+                    <el-table-column prop="safetyEducation3.manageArea" label="区域" width="110"></el-table-column>
                 </el-table-column>
             </template>
             <template v-if="userType">
@@ -58,7 +85,8 @@
                         </el-icon>
                         审批
                     </el-button>
-                    <el-button size="small" type="primary" @click="getQrCode(scope.$index, scope.row)">
+                    <el-button size="small" v-if="scope.row.safetyEducation3.checkStatus == '通过'" type="primary"
+                        @click="getQrCode(scope.$index, scope.row)">
                         <el-icon>
                             <Picture />
                         </el-icon>

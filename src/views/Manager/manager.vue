@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
     <Search :select="selectUserList" :data="eilnfo" :departmentSelect="departmentSelect">
     </Search>
     <Table :handleEdit="handleEdit" :loading="loading" :tableData="tableData">
@@ -93,7 +93,22 @@ const handleEdit = (index: number, row: any) => {
             })
         }
     }
-
+    if (row.userAuth == '三级安全教育') {
+        eiInfo.parameter = {
+            manageAreaType: 3
+        }
+        selectAddress(eiInfo).then((res: any) => {
+            from.addressList3 = res.result.manageArea
+        })
+    }
+    if (row.userAuth == '二级安全教育') {
+        eiInfo.parameter = {
+            manageAreaType: 2
+        }
+        selectAddress(eiInfo).then((res: any) => {
+            from.addressList = res.result.manageArea
+        })
+    }
     from.userId = row.userId;
     dialogVisible.value = true
 }
@@ -131,7 +146,7 @@ const handleEditT = (i) => {
             if (from.authArea.length == 0 && from.userAuth == 1) {
                 eiInfo.parameter.authArea = 1
             } else {
-                delete eiInfo.parameter.authArea
+                // delete eiInfo.parameter.authArea
             }
             // eiInfo.parameter.authArea.push(1)
             eiInfo.userInfo = store.userInfo
@@ -172,4 +187,4 @@ const handleEditT = (i) => {
 }
 </script>
 <style scoped>
-</style> -->
+</style>

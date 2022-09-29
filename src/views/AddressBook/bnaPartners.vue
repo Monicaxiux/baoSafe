@@ -10,7 +10,7 @@
     </Pagination>
     <Dialog :licenseEdit="licenseEdit" :licenseDelete="licenseDelete" :uploadUserPic="uploadUserPic"
         :uploadIcPic="uploadIcPic" :userInfo="userInfo" :userType="userType" :dialogVisible="dialogVisible"
-        :dialogType="dialogType" :handleEditT="handleEditT">
+        :dialogType="dialogType" :handleEditT="handleEditT" :handleCloseLis="handleCloseLis">
     </Dialog>
 </template>
 <script setup lang="ts">
@@ -92,22 +92,39 @@ const handleAdd = () => {
 }
 // 确认编辑协力员工
 const handleEditT = () => {
-    let eiInfo = new EiInfo
-    eiInfo.parameter = userInfo.value
-    eiInfo.userInfo = store.userInfo
-    switch (dialogType.value) {
-        case 1:
-            updateUser(eiInfo).then((res: any) => {
-                selectUserList(eilnfo)
-            })
-            break;
-        case 2:
-            addUser(eiInfo).then((res: any) => {
-                selectUserList(eilnfo)
-            })
-            break;
+    if (userInfo.value.icCardWorkNumber.length == 0 || userInfo.value.username.length == 0) {
+        ElNotification({
+            message: "请填写IC卡号和员工姓名！",
+            type: 'warning',
+        })
+    } else {
+        let eiInfo = new EiInfo
+        eiInfo.parameter = userInfo.value
+        eiInfo.userInfo = store.userInfo
+        switch (dialogType.value) {
+            case 1:
+                updateUser(eiInfo).then((res: any) => {
+                    selectUserList(eilnfo)
+                })
+                break;
+            case 2:
+                addUser(eiInfo).then((res: any) => {
+                    selectUserList(eilnfo)
+                })
+                break;
+        }
+        dialogVisible.value = false;
     }
-    dialogVisible.value = false;
+
+}
+const handleCloseLis = () => {
+    ElMessageBox.confirm('确定取消操作?')
+        .then(() => {
+            dialogVisible.value = false;
+        })
+        .catch(() => {
+            // catch error
+        })
 }
 // 删除协力员工
 const handleDelete = (index, row) => {

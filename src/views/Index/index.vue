@@ -156,12 +156,12 @@ const initWebSocket = () => {
 
     //连接成功建立的回调方法
     websocket.onopen = function () {
-        console.log('连接成功');
+        // console.log('连接成功');
     };
 
     // 2、每隔30s向后端发送一条商议好的数据
     setInterval(() => {
-        console.log('重置监测心跳')
+        // console.log('重置监测心跳')
         websocket.send("心跳")
         // 3、发送数据 2s后没有接收到返回的数据进行关闭websocket重连
         // setTimeout(() => {

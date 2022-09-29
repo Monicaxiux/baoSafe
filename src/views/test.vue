@@ -122,32 +122,47 @@ onMounted(() => {
 }
 </style> -->
 
-
-
 <template>
     <div class="app-container home">
         <h1>A表</h1>
         <el-table class="t1" ref="dragTable" :data="tableData" row-key="id" border :row-class-name="tableRowClassName">
-            <el-table-column prop="date" label="日期"></el-table-column>
-            <el-table-column prop="name" label="姓名"></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="" width="70">
                 <template #default="scope">
-                    <el-button class="move" type="text" size="small">拖 拽</el-button>
+                    <el-button class="move" type="text" size="small"><i
+                            class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
                 </template>
             </el-table-column>
+            <el-table-column prop="date" label="日期" width="110"></el-table-column>
+            <el-table-column prop="name" label="姓名" width="110"></el-table-column>
+            <el-table-column prop="address" label="地址"></el-table-column>
+
         </el-table>
         <br><br><br>
         <h1>B表</h1>
         <el-table class="t2" ref="dragTable" :data="tableData2" row-key="id" border :row-class-name="tableRowClassName">
-            <el-table-column prop="date" label="日期"></el-table-column>
-            <el-table-column prop="name" label="姓名"></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="" width="70">
                 <template #default="scope">
-                    <el-button class="move" type="text" size="small">拖 拽</el-button>
+                    <el-button class="move" type="text" size="small"><i
+                            class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
                 </template>
             </el-table-column>
+            <el-table-column prop="date" label="日期" width="110"></el-table-column>
+            <el-table-column prop="name" label="姓名" width="110"></el-table-column>
+            <el-table-column prop="address" label="地址"></el-table-column>
+
+        </el-table>
+        <br><br><br>
+        <h1>C表</h1>
+        <el-table class="t3" ref="dragTable" :data="tableData3" row-key="id" border :row-class-name="tableRowClassName">
+            <el-table-column label="" width="70">
+                <template #default="scope">
+                    <el-button class="move" type="text" size="small"><i
+                            class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
+                </template>
+            </el-table-column>
+            <el-table-column prop="date" label="日期" width="110"></el-table-column>
+            <el-table-column prop="name" label="姓名" width="110"></el-table-column>
+            <el-table-column prop="address" label="地址"></el-table-column>
         </el-table>
     </div>
 </template>
@@ -164,10 +179,9 @@ const data = reactive({
         },
         {
             id: "2",
-            name: "text_2_不可拖拽",
+            name: "text_2",
             date: "2222-22-22",
-            address: "测试_2_不可拖拽",
-            disabled: true,
+            address: "测试_2",
         },
         {
             id: "3",
@@ -188,16 +202,27 @@ const data = reactive({
             address: "测试_5",
         }
     ],
-    tableData2: [{
-        id: "1",
-        name: "text_1",
-        date: "1111-11-11",
-        address: "测试_1",
-    },]
+    tableData2: [
+        {
+            id: "8",
+            name: "text_8",
+            date: "8888-88-88",
+            address: "测试_8",
+        }
+    ],
+    tableData3: [
+        {
+            id: "9",
+            name: "text_9",
+            date: "9999-99-99",
+            address: "测试_9",
+        }
+    ]
 });
 
 const { tableData } = toRefs(data);
 const { tableData2 } = toRefs(data);
+const { tableData3 } = toRefs(data);
 
 // 创建sortable实例
 function initSortable(className) {
@@ -206,6 +231,7 @@ function initSortable(className) {
     // 创建拖拽实例
     let dragTable = Sortable.create(table, {
         animation: 150, //动画
+        group: "t2",
         disabled: false, // 拖拽不可用? false 启用（刚刚渲染表格的时候起作用，后面不起作用）
         handle: ".move", //指定拖拽目标，点击此目标才可拖拽元素(此例中设置操作按钮拖拽)
         filter: ".disabled", //指定不可拖动的类名（el-table中可通过row-class-name设置行的class）
@@ -213,19 +239,20 @@ function initSortable(className) {
         ghostClass: "ghostClass", //设置拖拽停靠样式类名
         chosenClass: "chosenClass", //设置选中样式类名
         // 开始拖动事件
-        onStart: () => {
-            console.log("开始拖动");
+        onStart: (evt) => {
+            // console.log(evt.oldIndex);
+        },
+        // 元素从列表中移除进入另一个列表
+        onRemove: (/**Event*/evt) => {
+            console.log(evt);
+        },
+        onAdd: (evt) => {
+            // console.log(evt);
         },
         // 结束拖动事件
         onEnd: ({ newIndex, oldIndex }) => {
             console.log(
-                "结束拖动",
-                `拖动前索引${oldIndex}---拖动后索引${newIndex}`
-            );
-            const currRow = tableData.value.splice(oldIndex, 1)[0];
-            tableData.value.splice(newIndex, 0, currRow);
-            console.log(
-                "结束拖动", tableData.value);
+                "结束拖动", tableData.value, "A表数据");
         },
     });
 };
@@ -236,26 +263,40 @@ function initSortable2(className) {
     // 创建拖拽实例
     let dragTable = Sortable.create(table, {
         animation: 150, //动画
-        disabled: false, // 拖拽不可用? false 启用（刚刚渲染表格的时候起作用，后面不起作用）
-        handle: ".move", //指定拖拽目标，点击此目标才可拖拽元素(此例中设置操作按钮拖拽)
-        filter: ".disabled", //指定不可拖动的类名（el-table中可通过row-class-name设置行的class）
-        dragClass: "dragClass", //设置拖拽样式类名
-        ghostClass: "ghostClass", //设置拖拽停靠样式类名
-        chosenClass: "chosenClass", //设置选中样式类名
+        group: "t2",
         // 开始拖动事件
-        onStart: () => {
-            console.log("开始拖动");
+        onStart: (evt) => {
+            // console.log(evt.oldIndex);
         },
-        // 结束拖动事件
+        onAdd: (/**Event*/{ evt }) => {
+            // console.log(evt);
+        },
+        // // 结束拖动事件
         onEnd: ({ newIndex, oldIndex }) => {
             console.log(
-                "结束拖动",
-                `拖动前索引${oldIndex}---拖动后索引${newIndex}`
-            );
-            const currRow = tableData.value.splice(oldIndex, 1)[0];
-            tableData.value.splice(newIndex, 0, currRow);
+                "结束拖动", tableData2.value, "B表数据");
+        },
+    });
+};
+// 创建sortable实例
+function initSortable3(className) {
+    // 获取表格row的父节点
+    const table = document.querySelector('.' + className + ' .el-table__body-wrapper tbody');
+    // 创建拖拽实例
+    let dragTable = Sortable.create(table, {
+        animation: 150, //动画
+        group: "t2",
+        // 开始拖动事件
+        onStart: (evt) => {
+            console.log(evt.oldIndex);
+        },
+        onAdd: (/**Event*/{ evt }) => {
+            // console.log(evt);
+        },
+        // // 结束拖动事件
+        onEnd: ({ newIndex, oldIndex }) => {
             console.log(
-                "结束拖动", tableData.value);
+                "结束拖动", tableData3.value, ',"C表数据"');
         },
     });
 };
@@ -269,20 +310,12 @@ function tableRowClassName({ row }) {
 onMounted(() => {
     initSortable('t1')
     initSortable2('t2')
+    initSortable3('t3')
 })
 
 </script>
- 
-<style scope>
-/* .dragClass {
-  background: rgba($color: #41c21a, $alpha: 0.5) !important;
-}
-// 停靠
-.ghostClass {
-  background: rgba($color: #6cacf5, $alpha: 0.5) !important;
-}
-// 选择
-.chosenClass:hover > td {
-  background: rgba($color: #f56c6c, $alpha: 0.5) !important;
-} */
-</style>
+ <style>
+ .move {
+     cursor: move;
+ }
+ </style>

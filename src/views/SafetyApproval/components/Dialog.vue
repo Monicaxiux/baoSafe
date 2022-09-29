@@ -52,6 +52,23 @@ eiInfo.parameter = reactive({
     username: '',
     pageNum: 1
 })
+watch(() => props.projectId, (newValue, oldValue) => {
+    eiInfo.parameter.projectId = newValue
+    if (props.dialogType != 1) {
+
+    } else {
+        selectUserList();
+    }
+})
+// 监听项目变化查询内容
+// watch(props.projectId, (newValue, oldValue) => {
+//     eiInfo.parameter.projectId = newValue.projectId
+//     if (props.dialogType != 1) {
+
+//     } else {
+//         selectUserList();
+//     }
+// })
 const handleClose = (done: () => void) => {
     ElMessageBox.confirm('确定结束审核?')
         .then(() => {
@@ -61,15 +78,7 @@ const handleClose = (done: () => void) => {
             // catch error
         })
 }
-// 监听项目变化查询内容
-watch(props, (newValue, oldValue) => {
-    eiInfo.parameter.projectId = newValue.projectId
-    if (props.dialogType != 1) {
 
-    } else {
-        selectUserList();
-    }
-})
 const selectUserList = () => {
     loading.value = true
     selectEachUser(eiInfo).then((res: any) => {

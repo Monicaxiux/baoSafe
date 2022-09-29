@@ -90,7 +90,7 @@
         </div>
         <template #footer>
             <span class=" dialog-footer">
-                <el-button @click="handleEditT">取消</el-button>
+                <el-button @click="handleCloseLis">取消</el-button>
                 <el-button type="primary" @click="handleEditT(dialogType)">确定</el-button>
             </span>
         </template>
@@ -114,7 +114,8 @@ type Props = {
     uploadUserPic: Function,
     uploadIcPic: Function,
     licenseDelete: Function,
-    licenseEdit: Function
+    licenseEdit: Function,
+    handleCloseLis: Function
 }
 const props = defineProps<Props>()
 
@@ -155,15 +156,15 @@ const handleEditLis = () => {
 const handleEditTLis = () => {
 
 }
-const handleCloseLis = () => {
-    ElMessageBox.confirm('确定取消操作?')
-        .then(() => {
-            drawer.value = false
-        })
-        .catch(() => {
-            // catch error
-        })
-}
+// const handleCloseLis = () => {
+//     ElMessageBox.confirm('确定取消操作?')
+//         .then(() => {
+//             drawer.value = false
+//         })
+//         .catch(() => {
+//             // catch error
+//         })
+// }
 const licenseDialog = ref(false)
 const departmentSelect: any = ref([])
 const baoFactoryList: any = ref([])

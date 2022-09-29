@@ -129,8 +129,8 @@ const change = (i: any) => {
             disabled.value = false
             break;
         case 3:
-            manageAreaType = 2
-            s = 1
+            manageAreaType = 3
+            // s = 1
             multiple.value = false
             disabled2.value = false
             disabled.value = true
@@ -145,11 +145,16 @@ const change = (i: any) => {
             break;
     }
     eiInfo.parameter = {
-        previousKey: s,
+        // previousKey: s,
         manageAreaType: manageAreaType
     }
+
     selectAddress(eiInfo).then((res: any) => {
-        props.from.addressList = res.result.manageArea
+        if (manageAreaType == 3) {
+            props.from.addressList3 = res.result.manageArea
+        } else {
+            props.from.addressList = res.result.manageArea
+        }
     })
 }
 

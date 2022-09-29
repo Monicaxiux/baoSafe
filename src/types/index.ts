@@ -20,6 +20,7 @@ export class external {
 }
 //BNA员工搜索条件
 export class bna {
+    userType: number = 1
     username: string = ''
     icCardWorkNumber: string = ''
     safeLevel: number = 1

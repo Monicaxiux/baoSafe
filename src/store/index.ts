@@ -12,7 +12,9 @@ export const piniaData = defineStore("piniaData", {
                 name: '/bnaPartners',
             }],
             fileStatus: <boolean>true,
-            lsfileStatus: <boolean>true
+            lsfileStatus: <boolean>true,
+            countVerifySafeEduInternal: <any>0,
+            countVerifySafeEduExternal: <any>0
         };
     },
     getters: {},
