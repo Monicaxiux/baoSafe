@@ -129,7 +129,7 @@ const logOut = () => {
             // 初始化pinia数据
             store.$reset();
             // 返回登录界面
-            router.replace({ path: "/" })
+            router.push({ path: "/" })
         })
         .catch(() => {
 

@@ -15,13 +15,19 @@
                 <div v-if="item.title == '安全资质证书管理' && !store.isCollapse" class="db_title">{{
                         store.expiredAlarm.expiredLicenseNum
                 }}</div>
+                <div v-if="item.title == '三级安全教育信息' && !store.isCollapse" class="db_title">{{
+                        store.countVerifySafeEduInternal
+                }}</div>
+                <div v-if="item.title == '年度安全教育信息' && !store.isCollapse" class="db_title">{{
+                        store.countVerifySafeEduExternal
+                }}</div>
             </template>
             <el-menu-item v-for="(i, ix) in item.children" :key="ix"
                 @click="store.active = i.path, addTab(i.path, i.name)" :index="i.path">
-                <el-icon v-if="i.name != '证书过期查询'">
+                <el-icon v-if="i.name != '证书过期查询' && i.name != '安全教育审核' && i.name != '年度安全教育审核'">
                     <Grid />
                 </el-icon>
-                <div v-if="i.name == '证书过期查询'" class="db_title"></div>
+                <div v-if="i.name == '证书过期查询' || i.name == '安全教育审核' || i.name == '年度安全教育审核'" class="db_title"></div>
                 {{ i.name }}
             </el-menu-item>
         </el-sub-menu>
@@ -156,10 +162,10 @@ const menus = ref([
                 path: '/sector',
                 name: '部门分厂管理'
             },
-            {
-                path: '/test',
-                name: '测试页面'
-            },
+            // {
+            //     path: '/test',
+            //     name: '测试页面'
+            // },
         ]
     }
 ])
