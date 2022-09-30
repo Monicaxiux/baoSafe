@@ -8,9 +8,10 @@
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
         :render="selectUserList">
     </Pagination>
-    <Dialog :licenseEdit="licenseEdit" :licenseDelete="licenseDelete" :uploadUserPic="uploadUserPic"
-        :uploadIcPic="uploadIcPic" :userInfo="userInfo" :userType="userType" :dialogVisible="dialogVisible"
-        :dialogType="dialogType" :handleEditT="handleEditT" :handleCloseLis="handleCloseLis">
+    <Dialog :change="change" :baoFactoryList="baoFactoryList" :licenseEdit="licenseEdit" :licenseDelete="licenseDelete"
+        :uploadUserPic="uploadUserPic" :uploadIcPic="uploadIcPic" :userInfo="userInfo" :userType="userType"
+        :dialogVisible="dialogVisible" :dialogType="dialogType" :handleEditT="handleEditT"
+        :handleCloseLis="handleCloseLis">
     </Dialog>
 </template>
 <script setup lang="ts">
@@ -23,7 +24,7 @@ import Pagination from '@/components/Pagination.vue'//分页组件
 import { bna, EiInfo, bnaInfo } from '@/types';
 import { addUser, deleteUser, selectBna, selectUpData, updateUser } from '@/api/user';//api方法
 import { getBase64 } from '@/utils/regexp'
-import { selectDepartment } from '@/api/areas'
+import { selectDepartment, selectFactory } from '@/api/areas'
 import { piniaData } from '@/store';//引入pinia状态管理
 //pinia状态管理
 const store = piniaData();
@@ -45,6 +46,7 @@ const loading = ref(false)
 const query = reactive(new bna);
 //部门下拉框
 const departmentSelect = ref([])
+const baoFactoryList = ref([])
 //eilnfo格式参数
 const eilnfo = reactive(new EiInfo);
 //将分页搜索参数赋予eilnfo的parameter模块
@@ -57,6 +59,16 @@ onMounted(() => {
         departmentSelect.value = res.result.departmentSelect
     })
 })
+const change = (val) => {
+    let eiInfo = new EiInfo
+    userInfo.value.baoFactory = ''
+    eiInfo.parameter = {
+        departmentId: val
+    }
+    selectFactory(eiInfo).then((res: any) => {
+        baoFactoryList.value = res.result.factorySelect
+    })
+}
 //查询用户列表
 const selectUserList = (eilnfo) => {
     loading.value = true
@@ -80,8 +92,16 @@ const handleEdit = (index, row) => {
     // 查询数据，回滚页面
     selectUpData(eilnfo).then((res: any) => {
         userInfo.value = res.result.userLicense
+        let eiInfo = new EiInfo
+        eiInfo.parameter = {
+            departmentId: userInfo.value.baoDepartment
+        }
+        selectFactory(eiInfo).then((res: any) => {
+            baoFactoryList.value = res.result.factorySelect
+        })
         dialogType.value = 1
         dialogVisible.value = true;
+
     })
 }
 // 新增协力员工

@@ -55,7 +55,7 @@ export class externalInfo {
 }
 // BNA编辑/新增
 export class bnaInfo {
-    baoDepartment: number = 1
+    baoDepartment: any = ""
     baoFactory: string = ""
     recentJob: string = ""
     username: string = ""

@@ -1,6 +1,6 @@
 <template>
     <el-dialog v-model="dialogVisible" :title="dialogType == 1 ? '编辑员工' : '添加员工'" width="20%"
-        :before-close="handleClose">
+        :before-close="handleCloseLis">
         <!-- <span v-if="dialogType == 1">当前为<a v-if="userType">协力</a><a v-if="!userType">Bna</a>编辑</span>
         <span v-if="dialogType == 2">当前为<a v-if="userType">协力</a><a v-if="!userType">Bna</a>新增</span> -->
         <div style=" display: flex;
@@ -116,6 +116,8 @@ type Props = {
     licenseDelete: Function,
     licenseEdit: Function,
     handleCloseLis: Function
+    baoFactoryList: any,
+    change: Function
 }
 const props = defineProps<Props>()
 
@@ -133,17 +135,16 @@ onMounted(() => {
     // })
 })
 // 监听表格数据来开启提交按钮
-watch(props.userInfo, (newValue, oldValue) => {
-    console.log(newValue.baoDepartment);
-
-    let eiInfo = new EiInfo
-    eiInfo.parameter = {
-        departmentId: newValue.baoDepartment
-    }
-    selectFactory(eiInfo).then((res: any) => {
-        baoFactoryList.value = res.result.factorySelect
-    })
-})
+// watch(props.userInfo.baoDepartment, (newValue, oldValue) => {
+//     console.log(newValue);
+//     let eiInfo = new EiInfo
+//     eiInfo.parameter = {
+//         departmentId: newValue
+//     }
+//     selectFactory(eiInfo).then((res: any) => {
+//         props.baoFactoryList.baoFactoryList.value = res.result.factorySelect
+//     })
+// })
 const status = ref(false)
 // 使用defineProps接收父组件的传递值
 const drawer = ref(false)
@@ -167,7 +168,7 @@ const handleEditTLis = () => {
 // }
 const licenseDialog = ref(false)
 const departmentSelect: any = ref([])
-const baoFactoryList: any = ref([])
+// const baoFactoryList: any = ref([])
 const licenseDialogType = ref(1)
 const handleClose = (done: () => void) => {
     ElMessageBox.confirm('确定取消操作?')
@@ -179,16 +180,7 @@ const handleClose = (done: () => void) => {
             // catch error
         })
 }
-const change = (val) => {
-    let eiInfo = new EiInfo
-    props.userInfo.baoFactory = ''
-    eiInfo.parameter = {
-        departmentId: val
-    }
-    selectFactory(eiInfo).then((res: any) => {
-        baoFactoryList.value = res.result.factorySelect
-    })
-}
+
 </script>
 <style>
 .dialog-footer button:first-child {

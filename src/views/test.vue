@@ -125,7 +125,8 @@ onMounted(() => {
 <template>
     <div class="app-container home">
         <h1>A表</h1>
-        <el-table class="t1" ref="dragTable" :data="tableData" row-key="id" border :row-class-name="tableRowClassName">
+        <el-table name="A" class="t1" ref="dragTable" :data="tableData" row-key="id" border
+            :row-class-name="tableRowClassName">
             <el-table-column label="" width="70">
                 <template #default="scope">
                     <el-button class="move" type="text" size="small"><i
@@ -139,7 +140,8 @@ onMounted(() => {
         </el-table>
         <br><br><br>
         <h1>B表</h1>
-        <el-table class="t2" ref="dragTable" :data="tableData2" row-key="id" border :row-class-name="tableRowClassName">
+        <el-table name="B" class="t2" ref="dragTable" :data="tableData2" row-key="id" border
+            :row-class-name="tableRowClassName">
             <el-table-column label="" width="70">
                 <template #default="scope">
                     <el-button class="move" type="text" size="small"><i
@@ -153,7 +155,8 @@ onMounted(() => {
         </el-table>
         <br><br><br>
         <h1>C表</h1>
-        <el-table class="t3" ref="dragTable" :data="tableData3" row-key="id" border :row-class-name="tableRowClassName">
+        <el-table name="C" class="t3" ref="dragTable" :data="tableData3" row-key="id" border
+            :row-class-name="tableRowClassName">
             <el-table-column label="" width="70">
                 <template #default="scope">
                     <el-button class="move" type="text" size="small"><i
@@ -225,7 +228,7 @@ const { tableData2 } = toRefs(data);
 const { tableData3 } = toRefs(data);
 
 // 创建sortable实例
-function initSortable(className) {
+const initSortable = (className) => {
     // 获取表格row的父节点
     const table = document.querySelector('.' + className + ' .el-table__body-wrapper tbody');
     // 创建拖拽实例
@@ -244,20 +247,25 @@ function initSortable(className) {
         },
         // 元素从列表中移除进入另一个列表
         onRemove: (/**Event*/evt) => {
-            console.log(evt);
+            console.log(evt, 'A表打印');
+            var index = evt.oldIndex;
+            var arr = dragTable.toArray();
+            // console.log("新的顺序是：" + JSON.stringify(arr) + "，你移除了");
+            // console.log(evt.item);
+
         },
         onAdd: (evt) => {
             // console.log(evt);
         },
         // 结束拖动事件
         onEnd: ({ newIndex, oldIndex }) => {
-            console.log(
-                "结束拖动", tableData.value, "A表数据");
+            // console.log(
+            //     "结束拖动", tableData.value, "A表数据");
         },
     });
 };
 // 创建sortable实例
-function initSortable2(className) {
+const initSortable2 = (className) => {
     // 获取表格row的父节点
     const table = document.querySelector('.' + className + ' .el-table__body-wrapper tbody');
     // 创建拖拽实例
@@ -268,18 +276,27 @@ function initSortable2(className) {
         onStart: (evt) => {
             // console.log(evt.oldIndex);
         },
+        // 元素从列表中移除进入另一个列表
+        onRemove: (/**Event*/evt) => {
+            console.log(evt, 'B表打印');
+            var index = evt.oldIndex;
+            var arr = dragTable.toArray();
+            // console.log("新的顺序是：" + JSON.stringify(arr) + "，你移除了");
+            // console.log(evt.item);
+
+        },
         onAdd: (/**Event*/{ evt }) => {
             // console.log(evt);
         },
         // // 结束拖动事件
         onEnd: ({ newIndex, oldIndex }) => {
-            console.log(
-                "结束拖动", tableData2.value, "B表数据");
+            // console.log(
+            //     "结束拖动", tableData2.value, "B表数据");
         },
     });
 };
 // 创建sortable实例
-function initSortable3(className) {
+const initSortable3 = (className) => {
     // 获取表格row的父节点
     const table = document.querySelector('.' + className + ' .el-table__body-wrapper tbody');
     // 创建拖拽实例
@@ -288,20 +305,29 @@ function initSortable3(className) {
         group: "t2",
         // 开始拖动事件
         onStart: (evt) => {
-            console.log(evt.oldIndex);
+            // console.log(evt.oldIndex);
+        },
+        // 元素从列表中移除进入另一个列表
+        onRemove: (/**Event*/evt) => {
+            console.log(evt, 'C表打印');
+            var index = evt.oldIndex;
+            var arr = dragTable.toArray();
+            // console.log("新的顺序是：" + JSON.stringify(arr) + "，你移除了");
+            // console.log(evt.item);
+
         },
         onAdd: (/**Event*/{ evt }) => {
             // console.log(evt);
         },
         // // 结束拖动事件
         onEnd: ({ newIndex, oldIndex }) => {
-            console.log(
-                "结束拖动", tableData3.value, ',"C表数据"');
+            // console.log(
+            //     "结束拖动", tableData3.value, ',"C表数据"');
         },
     });
 };
 // 设置表格row的class
-function tableRowClassName({ row }) {
+const tableRowClassName = ({ row }) => {
     if (row.disabled) {
         return "disabled";
     }

@@ -189,6 +189,7 @@ const handleEditT = () => {
             })
         }
     } else {
+        delete eiInfo.parameter.licenseType
         delete eiInfo.parameter.icCardWorkNumberExact
         console.log(eiInfo);
         licenseUpdate(eiInfo).then((res: any) => {
