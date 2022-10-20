@@ -14,13 +14,16 @@
                     <MyImg :imgUrl="scope.row.licensePic"></MyImg>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="90">
+            <el-table-column v-if="type" label="操作" width="190">
                 <template #default="scope">
-                    <el-button size="small" type="primary" @click="handleEdit(scope.$index, scope.row)">
+                    <el-button size="small" type="primary" @click="handleEdit(scope.$index, scope.row, 1)">
                         <el-icon>
                             <EditPen />
                         </el-icon>
                         编辑
+                    </el-button>
+                    <el-button size="small" type="primary" @click="handleEdit(scope.$index, scope.row, 2)">
+                        历史记录
                     </el-button>
                 </template>
             </el-table-column>
@@ -36,7 +39,8 @@ import { Delete, EditPen } from '@element-plus/icons-vue'//引入elementui 图�
 type Props = {
     tableData: Array<any>,//表格数据
     loading: boolean,
-    handleEdit: any
+    handleEdit: any,
+    type: any
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()

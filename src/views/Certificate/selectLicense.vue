@@ -1,6 +1,6 @@
 <template>
     <Search :select="selectUserList" :add="add" :data="eilnfo" :searchType="1"></Search>
-    <Table :handleEdit="handleEdit" :handleChange="handleChange" :loading="loading"
+    <Table :type="true" :handleEdit="handleEdit" :handleChange="handleChange" :loading="loading"
         :multipleSelection="multipleSelection" :tableType="true" :tableData="tableData" :license="license"></Table>
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
         :render="selectUserList">
@@ -48,6 +48,24 @@
             </span>
         </template>
     </el-dialog>
+    <el-dialog v-model="dialogVisible2" title="历史记录" width="80%" :before-close="handleClose2">
+        <el-table border v-loading="loading" max-height="600" :data="tableDataHistory" class="tablex">
+            <el-table-column prop="licenseName" label="证书名称" width="200" />
+            <el-table-column prop="licenseNumber" label="证书编号" width="200" />
+            <el-table-column prop="licenseType" label="证书类型" width="200" />
+            <el-table-column prop="receiveDate" label="取证日期" width="110" />
+            <el-table-column prop="restoreDate" label="复证日期" width="110" />
+            <el-table-column prop="expiryDate" label="到期日期" width="110" />
+            <el-table-column prop="modifyType" label="操作类型" width="110" />
+            <el-table-column prop="modifyUser" label="操作人" width="110" />
+            <el-table-column prop="modifyTime" label="操作日期" width="170" />
+            <el-table-column label="证书照片" width="90">
+                <template #default="scope">
+                    <MyImg :imgUrl="scope.row.licensePic"></MyImg>
+                </template>
+            </el-table-column>
+        </el-table>
+    </el-dialog>
 </template>
 <script lang="ts" setup>
 import Table from './components/Table.vue'
@@ -55,7 +73,7 @@ import Pagination from '@/components/Pagination.vue'//分页组件
 import Search from './components/Search.vue'
 import { ref, reactive } from 'vue'
 import { EiInfo, expiration } from '@/types';
-import { selectExpira, licenseUpdate, licenseInsert } from '@/api/user'
+import { selectExpira, licenseUpdate, licenseInsert, selectHistory } from '@/api/user'
 import { ElNotification } from 'element-plus'
 import UploadImage from '@/components/UploadImage.vue'
 import { getBase64 } from '@/utils/regexp'
@@ -66,11 +84,13 @@ const quer = reactive(new expiration)
 const eilnfo = reactive(new EiInfo);
 eilnfo.parameter = quer
 const tableData = ref([])
+const tableDataHistory = ref([])
 const loading = ref(false)
 const dataCount = ref(0)
 const hide = ref(false)
 const multipleSelection = ref([])
 const dialogVisible = ref(false)
+const dialogVisible2 = ref(false)
 const dialogType = ref(1)
 const userInfo: any = ref({
     icCardWorkNumberExact: '',
@@ -129,7 +149,7 @@ const uploadUserPic = (f) => {
     });
 }
 
-// 下载特种作业证
+// 下载特种作业证表格
 const download = () => {
     multipleSelection.value.length != 0 ? (
         ElNotification({
@@ -145,11 +165,29 @@ const download = () => {
         })
     )
 }
-const handleEdit = (index, row) => {
-    console.log(row);
-    dialogType.value = 1
-    userInfo.value = JSON.parse(JSON.stringify(row))
-    dialogVisible.value = true
+const handleEdit = (index, row, i) => {
+    switch (i) {
+        case 1:
+            dialogType.value = 1
+            userInfo.value = JSON.parse(JSON.stringify(row))
+            dialogVisible.value = true
+            break;
+        case 2:
+            console.log(row.licenseNumber);
+            let eiInfo = new EiInfo
+            eiInfo.parameter = {
+                licenseNumber: row.licenseNumber,
+                pageNum: 1
+            }
+
+            selectHistory(eiInfo).then((res: any) => {
+                tableDataHistory.value = res.result.recordHistory
+            })
+            dialogVisible2.value = true
+
+            break;
+    }
+
 }
 const handleEditT = () => {
     let eiInfo = new EiInfo
@@ -209,6 +247,9 @@ const handleEditT = () => {
 }
 const handleClose = () => {
     dialogVisible.value = false
+}
+const handleClose2 = () => {
+    dialogVisible2.value = false
 }
 const isForm = (obj) => {
     for (let key in obj) {

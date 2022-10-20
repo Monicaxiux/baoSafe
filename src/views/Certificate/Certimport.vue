@@ -1,6 +1,6 @@
 <template>
     <Search :data="[]" :add="null" :searchType="2" :select="select"></Search>
-    <Table :handleEdit="null" :loading="loading" :tableData="tableData"></Table>
+    <Table :type="false" :handleEdit="null" :loading="loading" :tableData="tableData"></Table>
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eiInfo.parameter.pageNum" :options="eiInfo"
         :render="selectUserList">
     </Pagination>

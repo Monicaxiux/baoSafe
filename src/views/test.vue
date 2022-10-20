@@ -124,48 +124,103 @@ onMounted(() => {
 
 <template>
     <div class="app-container home">
-        <h1>A表</h1>
         <el-table name="A" class="t1" ref="dragTable" :data="tableData" row-key="id" border
             :row-class-name="tableRowClassName">
-            <el-table-column label="" width="70">
-                <template #default="scope">
-                    <el-button class="move" type="text" size="small"><i
-                            class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
-                </template>
+            <el-table-column label="磨床" width="110">
+                <el-table-column label="" width="70">
+                    <template #default="scope">
+                        <el-button class="move" type="text" size="small"><i
+                                class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="date" label="日期" width="110"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="110"></el-table-column>
+                <el-table-column prop="address" label="地址"></el-table-column>
             </el-table-column>
-            <el-table-column prop="date" label="日期" width="110"></el-table-column>
-            <el-table-column prop="name" label="姓名" width="110"></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
-
         </el-table>
-        <br><br><br>
-        <h1>B表</h1>
         <el-table name="B" class="t2" ref="dragTable" :data="tableData2" row-key="id" border
             :row-class-name="tableRowClassName">
-            <el-table-column label="" width="70">
-                <template #default="scope">
-                    <el-button class="move" type="text" size="small"><i
-                            class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
-                </template>
+            <el-table-column label="磨床" width="110">
+                <el-table-column label="" width="70">
+                    <template #default="scope">
+                        <el-button class="move" type="text" size="small"><i
+                                class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="date" label="日期" width="110"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="110"></el-table-column>
+                <el-table-column prop="address" label="地址"></el-table-column>
             </el-table-column>
-            <el-table-column prop="date" label="日期" width="110"></el-table-column>
-            <el-table-column prop="name" label="姓名" width="110"></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
-
         </el-table>
-        <br><br><br>
-        <h1>C表</h1>
         <el-table name="C" class="t3" ref="dragTable" :data="tableData3" row-key="id" border
             :row-class-name="tableRowClassName">
-            <el-table-column label="" width="70">
-                <template #default="scope">
-                    <el-button class="move" type="text" size="small"><i
-                            class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
-                </template>
+            <el-table-column label="人工检测" width="110">
+                <el-table-column label="" width="70">
+                    <template #default="scope">
+                        <el-button class="move" type="text" size="small"><i
+                                class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="date" label="日期" width="110"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="110"></el-table-column>
+                <el-table-column prop="address" label="地址"></el-table-column>
             </el-table-column>
-            <el-table-column prop="date" label="日期" width="110"></el-table-column>
-            <el-table-column prop="name" label="姓名" width="110"></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
+        </el-table>
+        <el-table name="C" class="t4" ref="dragTable" :data="tableData3" row-key="id" border
+            :row-class-name="tableRowClassName">
+            <el-table-column label="辊架" width="110">
+                <el-table-column label="" width="70">
+                    <template #default="scope">
+                        <el-button class="move" type="text" size="small"><i
+                                class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="date" label="日期" width="110"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="110"></el-table-column>
+                <el-table-column prop="address" label="地址"></el-table-column>
+            </el-table-column>
+        </el-table>
+        <el-table name="C" class="t5" ref="dragTable" :data="tableData3" row-key="id" border
+            :row-class-name="tableRowClassName">
+            <el-table-column label="机器人" width="110">
+                <el-table-column label="" width="70">
+                    <template #default="scope">
+                        <el-button class="move" type="text" size="small"><i
+                                class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="date" label="日期" width="110"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="110"></el-table-column>
+                <el-table-column prop="address" label="地址"></el-table-column>
+            </el-table-column>
+        </el-table>
+        <el-table name="C" class="t6" ref="dragTable" :data="tableData3" row-key="id" border
+            :row-class-name="tableRowClassName">
+            <el-table-column label="AGV1" width="110">
+                <el-table-column label="" width="70">
+                    <template #default="scope">
+                        <el-button class="move" type="text" size="small"><i
+                                class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="date" label="日期" width="110"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="110"></el-table-column>
+                <el-table-column prop="address" label="地址"></el-table-column>
+            </el-table-column>
+        </el-table>
+        <el-table name="C" class="t7" ref="dragTable" :data="tableData3" row-key="id" border
+            :row-class-name="tableRowClassName">
+            <el-table-column label="AGV2" width="110">
+                <el-table-column label="" width="70">
+                    <template #default="scope">
+                        <el-button class="move" type="text" size="small"><i
+                                class="iconfont icon-guanwangguanli_yidongguandian"></i></el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="date" label="日期" width="110"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="110"></el-table-column>
+                <el-table-column prop="address" label="地址"></el-table-column>
+            </el-table-column>
         </el-table>
     </div>
 </template>
@@ -264,68 +319,6 @@ const initSortable = (className) => {
         },
     });
 };
-// 创建sortable实例
-const initSortable2 = (className) => {
-    // 获取表格row的父节点
-    const table = document.querySelector('.' + className + ' .el-table__body-wrapper tbody');
-    // 创建拖拽实例
-    let dragTable = Sortable.create(table, {
-        animation: 150, //动画
-        group: "t2",
-        // 开始拖动事件
-        onStart: (evt) => {
-            // console.log(evt.oldIndex);
-        },
-        // 元素从列表中移除进入另一个列表
-        onRemove: (/**Event*/evt) => {
-            console.log(evt, 'B表打印');
-            var index = evt.oldIndex;
-            var arr = dragTable.toArray();
-            // console.log("新的顺序是：" + JSON.stringify(arr) + "，你移除了");
-            // console.log(evt.item);
-
-        },
-        onAdd: (/**Event*/{ evt }) => {
-            // console.log(evt);
-        },
-        // // 结束拖动事件
-        onEnd: ({ newIndex, oldIndex }) => {
-            // console.log(
-            //     "结束拖动", tableData2.value, "B表数据");
-        },
-    });
-};
-// 创建sortable实例
-const initSortable3 = (className) => {
-    // 获取表格row的父节点
-    const table = document.querySelector('.' + className + ' .el-table__body-wrapper tbody');
-    // 创建拖拽实例
-    let dragTable = Sortable.create(table, {
-        animation: 150, //动画
-        group: "t2",
-        // 开始拖动事件
-        onStart: (evt) => {
-            // console.log(evt.oldIndex);
-        },
-        // 元素从列表中移除进入另一个列表
-        onRemove: (/**Event*/evt) => {
-            console.log(evt, 'C表打印');
-            var index = evt.oldIndex;
-            var arr = dragTable.toArray();
-            // console.log("新的顺序是：" + JSON.stringify(arr) + "，你移除了");
-            // console.log(evt.item);
-
-        },
-        onAdd: (/**Event*/{ evt }) => {
-            // console.log(evt);
-        },
-        // // 结束拖动事件
-        onEnd: ({ newIndex, oldIndex }) => {
-            // console.log(
-            //     "结束拖动", tableData3.value, ',"C表数据"');
-        },
-    });
-};
 // 设置表格row的class
 const tableRowClassName = ({ row }) => {
     if (row.disabled) {
@@ -335,13 +328,76 @@ const tableRowClassName = ({ row }) => {
 };
 onMounted(() => {
     initSortable('t1')
-    initSortable2('t2')
-    initSortable3('t3')
+    initSortable('t2')
+    initSortable('t3')
+    initSortable('t4')
+    initSortable('t5')
+    initSortable('t6')
+    initSortable('t7')
 })
 
 </script>
  <style>
  .move {
      cursor: move;
+ }
+ 
+ .home {
+     height: 80vh;
+ }
+ 
+ .t1 {
+     position: absolute;
+     top: 50px;
+     height: 500px;
+     width: 300px;
+ }
+ 
+ .t2 {
+     position: absolute;
+     top: 50px;
+     right: 50px;
+     height: 500px;
+     width: 300px;
+ }
+ 
+ .t3 {
+     position: absolute;
+     top: 50px;
+     left: 370px;
+     height: 200px;
+     width: 300px;
+ }
+ 
+ .t4 {
+     position: absolute;
+     top: 280px;
+     left: 370px;
+     height: 200px;
+     width: 300px;
+ }
+ 
+ .t5 {
+     position: absolute;
+     top: 510px;
+     left: 370px;
+     height: 200px;
+     width: 300px;
+ }
+ 
+ .t6 {
+     position: absolute;
+     top: 600px;
+     height: 180px;
+     left: 35px;
+     width: 300px;
+ }
+ 
+ .t7 {
+     position: absolute;
+     top: 600px;
+     right: 50px;
+     height: 180px;
+     width: 300px;
  }
  </style>

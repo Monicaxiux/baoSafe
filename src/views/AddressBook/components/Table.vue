@@ -48,8 +48,9 @@
             </el-table-column> -->
             <el-table-column fixed="right" label="操作" width="160">
                 <template #default="scope">
-                    <el-button size="small" :disabled="scope.row.userType == '常驻外协用户'" type="primary"
-                        @click="handleEdit(scope.$index, scope.row)">
+                    <el-button size="small"
+                        :disabled="scope.row.userType == '常驻外协用户' || scope.row.username == 'admin0' || scope.row.username == 'admin1' || scope.row.username == 'admin2' || scope.row.username == 'admin3'"
+                        type="primary" @click="handleEdit(scope.$index, scope.row)">
                         <el-icon>
                             <EditPen />
                         </el-icon>

@@ -13,7 +13,7 @@
         </el-form-item>
         <el-form-item label="部门" v-if="!userType">
             <el-select style="width: 150px;margin-right: 20px;" :disabled="data.parameter.userType == 2"
-                @change="change" v-model="data.parameter.baoDepartment" placeholder="请选择部门">
+                @change="change" v-model="data.parameter.baoDepartment" clearable placeholder="请选择部门">
                 <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId" :label="item.baoDepartmentName"
                     :value="item.baoDepartmentId" />
             </el-select>
@@ -61,15 +61,18 @@ type Props = {
 const props = defineProps<Props>()
 const baoFactoryList: any = ref([])
 const change = (val) => {
-    props.select(props.data)
-    let eiInfo = new EiInfo
-    props.data.parameter.baoFactory = ''
-    eiInfo.parameter = {
-        departmentId: val
+    if (val) {
+        props.select(props.data)
+        let eiInfo = new EiInfo
+        props.data.parameter.baoFactory = ''
+        eiInfo.parameter = {
+            departmentId: val
+        }
+        selectFactory(eiInfo).then((res: any) => {
+            baoFactoryList.value = res.result.factorySelect
+        })
     }
-    selectFactory(eiInfo).then((res: any) => {
-        baoFactoryList.value = res.result.factorySelect
-    })
+
 }
 const typeChange = (val) => {
     switch (val) {

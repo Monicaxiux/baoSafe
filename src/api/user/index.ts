@@ -193,6 +193,15 @@ export const selectExpira = ((eilnfo: any) => {
     })
 })
 
+// 查询作业证历史记录
+export const selectHistory = ((eilnfo: any) => {
+    return request({
+        url: '/license/record/history',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
 // 修改作业证
 export const licenseUpdate = ((eilnfo: any) => {
     return request({
