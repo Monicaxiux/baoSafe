@@ -92,13 +92,16 @@ const projectId = ref(0)
 const safeEduId = ref(0)
 // dom初始化完成请求数据操纵dom
 onMounted(() => {
-    // selectUserList(eilnfo);//查询用户列表
+    eilnfo.parameter = {}
+    selectUserList();//查询用户列表
     selectDepartment().then((res: any) => {
         departmentSelect.value = res.result.departmentSelect
     })
 })
 const selectUserList = () => {
     loading.value = true
+
+    eilnfo.userInfo = store.userInfo
     selectSafety(eilnfo).then((res: any) => {
         loading.value = false
         //将用户信息列表数据传入子组件
@@ -123,24 +126,19 @@ const approval = (index, row: any) => {
             type: 'warning',
         })
     } else {
-        if (store.userInfo.userAuth == 2 && row.safetyEducation1.checkStatus == '待审批') {
+        if (store.userInfo.userAuth == 1 && row.safetyEducation.safeLevel != '一级安全教育') {
             ElNotification({
-                message: '上级审核未通过或不具备审批权限',
+                message: '当前用户只具备一级审批权限',
                 type: 'warning',
             })
-        } else if (store.userInfo.userAuth == 3 && (row.safetyEducation2.checkStatus == '待审批' || row.safetyEducation2.checkStatus == '未申请')) {
+        } else if (store.userInfo.userAuth == 2 && row.safetyEducation.safeLevel != '二级安全教育') {
             ElNotification({
-                message: '上级审核未通过或不具备审批权限',
+                message: '当前用户只具备二级审批权限',
                 type: 'warning',
             })
-        } else if (row.safetyEducation1.checkStatus == '通过' && row.safetyEducation2.checkStatus == '通过' && row.safetyEducation3.checkStatus == '通过') {
+        } else if (store.userInfo.userAuth == 3 && row.safetyEducation.safeLevel != '三级安全教育') {
             ElNotification({
-                message: '当前项目已经完成安全教育',
-                type: 'warning',
-            })
-        } else if (store.userInfo.userAuth == 2 && row.safetyEducation2.checkStatus == '通过') {
-            ElNotification({
-                message: '当前已完成二级安全教育',
+                message: '当前用户只具备三级审批权限',
                 type: 'warning',
             })
         } else {
@@ -151,24 +149,23 @@ const approval = (index, row: any) => {
             let s: any = 0
             switch (store.userInfo.userAuth) {
                 case 1:
-                    if (row.safetyEducation1.checkStatus == "通过") {
-                        s = row.safetyEducation2.manageAreaId
-                        safeEduId.value = row.safetyEducation2.id
+                    if (row.safetyEducation.checkStatus == "通过"&&row.safetyEducation.safeLevel == '二级安全教育') {
+                        s = row.safetyEducation.manageAreaId
+                        safeEduId.value = row.safetyEducation.id
                         manageAreaType = 3
                     } else {
                         s = 1
-                        safeEduId.value = row.safetyEducation1.id
+                        safeEduId.value = row.safetyEducation.id
                         manageAreaType = 2
                     }
-
                     break;
                 case 2:
-                    s = row.safetyEducation2.manageAreaId
-                    safeEduId.value = row.safetyEducation2.id
+                    s = row.safetyEducation.manageAreaId
+                    safeEduId.value = row.safetyEducation.id
                     manageAreaType = 3
                     break;
                 case 3:
-                    safeEduId.value = row.safetyEducation3.id
+                    safeEduId.value = row.safetyEducation.id
                     break;
             }
             let eiInfo = new EiInfo

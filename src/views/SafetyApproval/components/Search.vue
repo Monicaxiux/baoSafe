@@ -72,6 +72,10 @@ const manageArea3List: any = ref([
 const eiInfo = reactive(new EiInfo)
 const educationLevel = [
     {
+        id: 0,
+        value: '无'
+    },
+    {
         id: 1,
         value: '一级'
     },
@@ -85,17 +89,16 @@ const educationLevel = [
     },
 ]
 const change = (val: any) => {
+       props.data.parameter.manageArea2 = 0
+            props.data.parameter.manageArea3 = 0
     switch (val) {
         case 1:
             disabled2.value = true
             disabled3.value = true
-            props.data.parameter.manageArea2 = ''
-            props.data.parameter.manageArea3 = ''
             break;
         case 2:
             disabled2.value = false
             disabled3.value = true
-            props.data.parameter.manageArea3 = ''
             eiInfo.parameter = {
                 manageAreaType: 2,
                 previousKey: 1
@@ -118,7 +121,7 @@ const change = (val: any) => {
     }
 }
 const change2 = (val: any) => {
-    props.data.parameter.manageArea3 = ''
+    props.data.parameter.manageArea3 = 0
     eiInfo.parameter = {
         manageAreaType: 3,
         previousKey: val

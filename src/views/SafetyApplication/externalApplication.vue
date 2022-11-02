@@ -54,7 +54,8 @@
         </div>
     </el-card>
     <Dialog :success="success" :userType="true" :handleEditT="handleEditT" :title="title" :dialogType="dialogType"
-        :url="url" :dialogVisible="dialogVisible" :departmentSelect="departmentSelect" :handleClose="handleClose">
+        :url="url" :url2="url2" :dialogVisible="dialogVisible" :departmentSelect="departmentSelect"
+        :handleClose="handleClose">
     </Dialog>
 </template>
 <script lang="ts" setup>
@@ -81,6 +82,7 @@ const dialogType = ref(1)
 const buttonStatus = ref(true)
 const submitStatus = ref(true)
 const url = ref(`/assist/read/excel?userOnly=1&uploadUserId=${store.userInfo.id}`)
+const url2 = ref(`/assist/upload/project/file/before/create?userInfoId=${store.userInfo.id}`)
 const title = ref('')
 const multiple: any = ref([])//多选选中内容
 const params = reactive({
@@ -198,6 +200,11 @@ const select = (i: any) => {
                         })
                     }).catch(() => { })
             }
+            break;
+        case 5:
+            dialogVisible.value = true
+            dialogType.value = 3
+            title.value = '上传附件'
             break;
     }
 }

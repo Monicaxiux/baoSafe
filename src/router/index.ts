@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import { piniaData } from '@/store';//引入pinia状态管理
+import Login from '@/views/User/login.vue'
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -110,13 +111,18 @@ const routes: Array<RouteRecordRaw> = [
 				path: '/test',
 				name: 'test',
 				component: () => import('../views/test.vue'),
+			},
+			{
+				path: '/SynergyInside',
+				name: 'SynergyInside',
+				component: () => import('../views/SynergyInside/Inside.vue'),
 			}
 		]
 	},
 	{
 		path: '/',//登录
 		name: 'login',
-		component: () => import('../views/User/login.vue')
+		component: Login
 	},
 	{
 		path: '/404',

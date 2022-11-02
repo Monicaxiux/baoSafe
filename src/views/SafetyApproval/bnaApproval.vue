@@ -52,9 +52,10 @@ import { selectBnaSafety, selectBnaVerify, selectVerify } from '@/api/user';//ap
 import { getBase64 } from '@/utils/regexp'
 import { selectDepartment } from '@/api/areas'
 import { ElNotification } from 'element-plus'
-import { piniaData } from '@/store';//引入pinia状态管理
+
 import { selectAddress } from '@/api/safety'
 import jrQrcode from "jr-qrcode";
+import { piniaData } from '@/store';//引入pinia状态管理
 
 const store = piniaData();
 
@@ -90,13 +91,15 @@ watch(from, (newValue, oldValue) => {
 })
 // dom初始化完成请求数据操纵dom
 onMounted(() => {
-
+    eilnfo.parameter = {}
+    selectUserList();
 })
 const handleClose = () => {
     dialog.value = false
 }
 const selectUserList = () => {
     loading.value = true
+    eilnfo.userInfo = store.userInfo
     selectBnaSafety(eilnfo).then((res: any) => {
         loading.value = false
         //将用户信息列表数据传入子组件
@@ -114,33 +117,22 @@ const approval = (index, row: any) => {
             type: 'warning',
         })
     } else {
-        if (store.userInfo.userAuth == 2 && row.safetyEducation1.checkStatus == '待审批' || row.safetyEducation1.checkStatus == '') {
+        if (store.userInfo.userAuth == 1 && row.safetyEducation.safeLevel != '一级安全教育') {
             ElNotification({
-                message: '上级审核未通过或不具备审批权限',
+                message: '当前用户只具备一级审批权限',
                 type: 'warning',
             })
-        } else if (store.userInfo.userAuth == 3 && (row.safetyEducation2.checkStatus == '待审批' || row.safetyEducation2.checkStatus == '未申请')) {
+        } else if (store.userInfo.userAuth == 2 && row.safetyEducation.safeLevel != '二级安全教育') {
             ElNotification({
-                message: '上级审核未通过或不具备审批权限',
+                message: '当前用户只具备二级审批权限',
                 type: 'warning',
             })
-        } else if (row.safetyEducation1.checkStatus == '通过' && row.safetyEducation2.checkStatus == '通过' && row.safetyEducation3.checkStatus == '通过') {
+        } else if (store.userInfo.userAuth == 3 && row.safetyEducation.safeLevel != '三级安全教育') {
             ElNotification({
-                message: '当前项目已经完成安全教育',
-                type: 'warning',
-            })
-        } else if (store.userInfo.userAuth == 1 && row.safetyEducation1.checkStatus == '通过') {
-            ElNotification({
-                message: '当前已完成一级安全教育',
-                type: 'warning',
-            })
-        } else if (store.userInfo.userAuth == 2 && row.safetyEducation2.checkStatus == '通过') {
-            ElNotification({
-                message: '当前已完成二级安全教育',
+                message: '当前用户只具备三级审批权限',
                 type: 'warning',
             })
         } else {
-            console.log(row);
             // 清空表单
             for (let i in from) { from[i] = '' }
             tableDatax.value = []
@@ -150,16 +142,16 @@ const approval = (index, row: any) => {
             switch (store.userInfo.userAuth) {
                 case 1:
                     s = 1
-                    safeEduId.value = row.safetyEducation1.safeId
+                    safeEduId.value = row.safetyEducation.safeId
                     manageAreaType = 2
                     break;
                 case 2:
-                    s = row.safetyEducation2.manageAreaId
-                    safeEduId.value = row.safetyEducation2.safeId
+                    s = row.safetyEducation.manageAreaId
+                    safeEduId.value = row.safetyEducation.safeId
                     manageAreaType = 3
                     break;
                 case 3:
-                    safeEduId.value = row.safetyEducation3.safeId
+                    safeEduId.value = row.safetyEducation.safeId
                     break;
             }
             let eiInfo = new EiInfo
@@ -171,6 +163,7 @@ const approval = (index, row: any) => {
                 manageAreaList.value = res.result.manageArea
             })
         }
+
     }
 }
 const getQrCode = (i: number, row: any) => {

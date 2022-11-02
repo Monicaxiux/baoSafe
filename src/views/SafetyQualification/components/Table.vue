@@ -152,6 +152,10 @@
                         <el-button size="small" type="primary" @click="licenseEdit(scope.$index, scope.row, 1)">
                             审核登记表
                         </el-button>
+                        <el-button v-if="scope.row.filesPath.length != 0" size="small" type="primary"
+                            @click="licenseEdit(scope.$index, scope.row, 3)">
+                            下载附件
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table-column>

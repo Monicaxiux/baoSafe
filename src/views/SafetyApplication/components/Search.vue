@@ -17,6 +17,12 @@
                 </el-icon>
                 模板导入
             </el-button>
+            <el-button v-if="userType" @click="select(5)" :disabled="buttonStatus" type="primary">
+                <el-icon>
+                    <FolderOpened />
+                </el-icon>
+                附件上传
+            </el-button>
             <el-button @click="select(3)" :disabled="buttonStatus" type="danger">
                 <el-icon>
                     <Delete />

@@ -1,7 +1,7 @@
 //登陆参数
 export class LoginUser {
-    loginName: string = 'Admin0'
-    password: string = '0'
+    loginName: string = ''
+    password: string = ''
 }
 //eiInfo参数
 export class EiInfo {
@@ -23,7 +23,7 @@ export class bna {
     userType: number = 1
     username: string = ''
     icCardWorkNumber: string = ''
-    safeLevel: number = 1
+    safeLevel: number = 0
     manageArea2: number = 0
     manageArea3: number = 0
     pageNum: number = 1

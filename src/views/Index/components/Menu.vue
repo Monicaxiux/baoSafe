@@ -74,9 +74,13 @@ const menus = ref([
                 name: '安全教育申报'
             },
             {
+                path: '/SynergyInside',
+                name: '协力内部安全教育'
+            },
+            {
                 path: '/bnaApproval',
                 name: '安全教育审核'
-            },
+            }
         ]
     },
     {

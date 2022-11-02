@@ -4,7 +4,11 @@
         :on-success="success">
         <el-button type="primary">点击上传</el-button>
     </el-upload>
-    <el-upload v-if="dialogType != 1" v-model:file-list="fileList" name="imgFiles" class="upload-demo"
+    <el-upload v-if="dialogType == 2" v-model:file-list="fileList" name="imgFiles" class="upload-demo"
+        :action="uplodUrl + url" :on-remove="handleRemove" multiple :before-upload="beforeUpload" :on-success="success">
+        <el-button type="primary">点击上传</el-button>
+    </el-upload>
+    <el-upload v-if="dialogType == 3" v-model:file-list="fileList" name="files" class="upload-demo"
         :action="uplodUrl + url" :on-remove="handleRemove" multiple :before-upload="beforeUpload" :on-success="success">
         <el-button type="primary">点击上传</el-button>
     </el-upload>
@@ -31,12 +35,13 @@ const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
 //上传之前过滤文件
 const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     //判断是文件上传还是表格上传
-    if (props.dialogType != 1) {
+    if (props.dialogType == 2) {
         return isImg(file)
-    } else {
+    } else if (props.dialogType == 1) {
         return isXlsx(file)
     }
 }
 </script>
 <style scoped>
+
 </style>

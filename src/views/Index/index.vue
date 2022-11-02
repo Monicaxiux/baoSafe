@@ -18,7 +18,7 @@
                                 </div>
                                 <template #dropdown>
                                     <el-dropdown-menu style="width: 128px;">
-                                        <el-dropdown-item>修改密码</el-dropdown-item>
+                                        <!-- <el-dropdown-item>修改密码</el-dropdown-item> -->
                                         <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
                                     </el-dropdown-menu>
                                 </template>

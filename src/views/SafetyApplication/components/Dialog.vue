@@ -26,7 +26,24 @@
                 </div>
             </el-card>
         </el-card>
-        <template v-if="dialogType != 1" #footer>
+        <el-card v-if="dialogType == 3" class="card" shadow="never">
+            <br>
+            <UploadFile :success="success" :dialogType="dialogType" :url="url2">
+            </UploadFile>
+            <el-button @click="download">示例模板</el-button>
+            <br><br><br>
+            <el-card style="width:100%" shadow="hover">
+                <h3>提交步骤</h3>
+                <br />
+                <div class="uploadTS">
+                    <b style="color: black">1.请下载示例模板按照规范上传</b><br />
+                    <b style="color: black">2.上传后请确认信息正确无误，再点击确认提交</b><br />
+                    <b>注意：只能上传xlsx/xls文件，且不超过500mb</b>
+                    <br />
+                </div>
+            </el-card>
+        </el-card>
+        <template v-if="dialogType == 2" #footer>
             <span class="dialog-footer">
                 <el-button @click="handleClose">取消</el-button>
                 <el-button type="primary" @click="handleEditT(multiple)">确定</el-button>
@@ -52,6 +69,7 @@ type Props = {
     departmentSelect: any,
     handleClose: Function,
     url: string,
+    url2: string,
     title: string,
     userType: boolean,
     success: Function

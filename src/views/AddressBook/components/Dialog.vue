@@ -38,6 +38,12 @@
                     <el-form-item label="年龄">
                         <el-input class="input" v-model="userInfo.age" clearable placeholder="请输入员工年龄" />
                     </el-form-item>
+                    <el-form-item label="性别">
+                        <el-radio-group v-model="userInfo.sex" class="ml-4">
+                            <el-radio label="男">男</el-radio>
+                            <el-radio label="女">女</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
                     <el-form-item label="联系电话">
                         <el-input class="input" v-model="userInfo.phone" clearable placeholder="请输入联系电话" />
                     </el-form-item>

@@ -71,6 +71,7 @@
 import Table from './components/Table.vue'
 import Pagination from '@/components/Pagination.vue'//分页组件
 import Search from './components/Search.vue'
+import MyImg from '@/components/ImaPreview.vue'
 import { ref, reactive } from 'vue'
 import { EiInfo, expiration } from '@/types';
 import { selectExpira, licenseUpdate, licenseInsert, selectHistory } from '@/api/user'
@@ -287,4 +288,5 @@ const imageUrlToBase64 = (url: any) => {
 }
 </script>
 <style scoped>
+
 </style>

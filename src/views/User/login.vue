@@ -35,7 +35,7 @@
         <div class="overlay">
           <span class="iconfont icon-QRcode qrCode"></span>
           <div class="qrCodeImg">
-            <img class="img-qr" style="border-radius: 10%;" src="../../assets/qrCode.png">
+            <!-- <img class="img-qr" style="border-radius: 10%;" src="../../assets/qrCode.png"> -->
           </div>
           <div class="overlay-panel overlay-left">
             <br><br>
@@ -158,4 +158,5 @@ const internalButton = () => {
 }
 </script>
 <style scoped src="@/assets/css/login.css">
+
 </style>

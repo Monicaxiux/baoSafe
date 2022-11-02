@@ -53,6 +53,18 @@ const licenseEdit = (i: number, row: any, type: number) => {
             filePic.value = row.filePic
             dialogVisible.value = true
             break;
+        case 3:
+            ElNotification({
+                message: '下载中，请稍后...',
+                type: 'success',
+            })
+            for(let i=0;i<row.filesPath.length;i++){
+                setTimeout(() => {
+                    window.open(row.filesPath[i]) 
+                },2000)
+                console.log(row.filesPath[i]);
+            }
+            break;
     }
 
 }
@@ -61,4 +73,5 @@ const handleClose = () => {
 }
 </script>
 <style>
+
 </style>

@@ -35,15 +35,17 @@
                 <el-form-item label="考卷照片">
                     <UploadImage :upload="uploadUserPic" :url="from.examPic"></UploadImage>
                 </el-form-item>
-
+                <div v-if="store.userInfo.userAuth!=3">
                 <el-divider />
                 <h1>安全教育下级区域</h1>
-                <el-form-item label="下级区域">
+                <el-form-item  label="下级区域">
                     <el-select style="width: 150px;margin-right: 20px;" v-model="from.nextSafeManageArea"
                         placeholder="请选择下级区域">
                         <el-option v-for="item in manageAreaList" :key="item.id" :label="item.value" :value="item.id" />
                     </el-select>
                 </el-form-item>
+                </div>
+               
             </el-card>
             <el-card style="width: 50%;">
                 <el-table max-height="400" border :data="tableDatax" class="tablex">
@@ -76,7 +78,9 @@ import { getBase64 } from '@/utils/regexp'
 import MyImg from '@/components/ImaPreview.vue'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, EditPen } from '@element-plus/icons-vue'//引入elementui 图标
+import { piniaData } from '@/store';//引入pinia状态管理
 
+const store = piniaData();
 // 定义Props默认数据类型
 type Props = {
     data: any,//搜索参数
