@@ -107,11 +107,11 @@ const routes: Array<RouteRecordRaw> = [
 				name: 'selectLicense',
 				component: () => import('../views/Certificate/selectLicense.vue'),
 			},
-			{
-				path: '/test',
-				name: 'test',
-				component: () => import('../views/test.vue'),
-			},
+			// {
+			// 	path: '/test',
+			// 	name: 'test',
+			// 	component: () => import('../views/test.vue'),
+			// },
 			{
 				path: '/SynergyInside',
 				name: 'SynergyInside',
@@ -141,22 +141,22 @@ const router = createRouter({
 })
 
 // 路由全局守卫：登录拦截 本地没有用户信息, 请重新登录
-router.beforeEach((to, from, next) => {
-	const store = piniaData()
-	// 判断有没有登录
-	if (!store.userInfo.id) {
-		if (to.name == "login") {
-			next();
-		} else {
-			ElNotification({
-				message: '请先登录！',
-				type: 'error',
-			})
-			router.push('/')
-		}
-	} else {
-		next();
-	}
-});
+// router.beforeEach((to, from, next) => {
+// 	const store = piniaData()
+// 	// 判断有没有登录
+// 	if (!store.userInfo.id) {
+// 		if (to.name == "login") {
+// 			next();
+// 		} else {
+// 			ElNotification({
+// 				message: '请先登录！',
+// 				type: 'error',
+// 			})
+// 			router.push('/')
+// 		}
+// 	} else {
+// 		next();
+// 	}
+// });
 
 export default router

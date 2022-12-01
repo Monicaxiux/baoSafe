@@ -149,6 +149,9 @@
                 <el-table-column label="结束时间" prop="workCycleEnd" />
                 <el-table-column label="操作">
                     <template #default="scope">
+                        <el-button size="small" type="primary" @click="licenseEdit(scope.$index, scope.row, 4)">
+                            查看人员
+                        </el-button>
                         <el-button size="small" type="primary" @click="licenseEdit(scope.$index, scope.row, 1)">
                             审核登记表
                         </el-button>

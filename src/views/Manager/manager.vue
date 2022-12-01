@@ -18,7 +18,6 @@ import { selectManager, updateUserAuth } from '@/api/user';//api方法
 import { selectDepartment } from '@/api/areas';//api方法
 import { ref, onMounted, reactive } from 'vue';
 import { piniaData } from '@/store';//引入pinia状态管理
-import { th } from 'element-plus/es/locale';
 import { ElMessageBox, ElNotification } from 'element-plus';
 import { selectAddress } from '@/api/safety';
 //pinia状态管理
@@ -187,4 +186,5 @@ const handleEditT = (i) => {
 }
 </script>
 <style scoped>
+
 </style>

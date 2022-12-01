@@ -7,3 +7,11 @@ export const selectAddress = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+// 查询协力人员安全教育
+export const selectSynerg = ((eilnfo: any) => {
+    return request({
+        url: '/assist/company/inside/safe',
+        method: 'post',
+        data: eilnfo
+    })
+})

@@ -15,12 +15,6 @@
                         :value="item.baoFactoryId" />
                 </el-select>
             </el-form-item>
-            <el-form-item label="工号">
-                <el-input class="input" v-model="data.parameter.icCardWorkNumber" clearable placeholder="请输入工号" />
-            </el-form-item>
-            <el-form-item label="姓名">
-                <el-input class="input" v-model="data.parameter.username" clearable placeholder="请输入姓名" />
-            </el-form-item>
         </template>
         <template v-if="!userType">
             <el-form-item label="所在公司">
@@ -33,6 +27,12 @@
                 <el-input class="input" v-model="data.parameter.projectName" clearable placeholder="项目名称" />
             </el-form-item>
         </template>
+        <el-form-item label="工号">
+            <el-input class="input" v-model="data.parameter.icCardWorkNumber" clearable placeholder="请输入工号" />
+        </el-form-item>
+        <el-form-item label="姓名">
+            <el-input class="input" v-model="data.parameter.username" clearable placeholder="请输入姓名" />
+        </el-form-item>
         <el-button type="primary" class="button" @click="(data.parameter.pageNum = 1), select(data)">
             <el-icon class="i">
                 <Search />

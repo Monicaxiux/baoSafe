@@ -262,3 +262,12 @@ export const updexpiryLimit = ((eilnfo: any) => {
         method: 'post'
     })
 })
+
+// 查询项目中的人员
+export const selectProjectUser = ((eilnfo: any) => {
+    return request({
+        url: '/assist/query/project/user/info',
+        method: 'post',
+        data: eilnfo
+    })
+})

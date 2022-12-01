@@ -80,7 +80,7 @@ const download = () => {
         type: 'success',
     }),
         window.location.href =
-        "https://safeedu.bnasafe.com/download/assist/excel";
+        "http://10.3.18.222:8189/download/assist/excel";
 }
 //是否展示分页
 const hide = ref(false);
