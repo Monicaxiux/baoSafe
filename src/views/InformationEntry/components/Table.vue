@@ -2,7 +2,7 @@
     <div>
         <el-table border v-loading="loading" max-height="620" :data="tableData" class="tablex">
             <el-table-column prop="userType" label="人员类型" width="100" />
-            <el-table-column prop="company" label="所在公司" width="200" />
+            <el-table-column prop="company" label="公司" width="200" />
             <el-table-column prop="department" label="所在部门" width="200" />
             <el-table-column prop="factory" label="所在分厂" width="200" />
             <el-table-column prop="recentJob" label="当前岗位" width="220" />
@@ -78,4 +78,5 @@ type Props = {
 const props = defineProps<Props>()
 </script>
 <style scoped src="@/assets/css/table.css">
+
 </style>

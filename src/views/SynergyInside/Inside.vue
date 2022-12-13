@@ -30,7 +30,7 @@
 
   <el-table v-loading="loading" border max-height="620" :data="tableData" class="tablex">
     <el-table-column prop="assistCompany" label="协力公司" width="100" />
-    <el-table-column prop="actualCompany" label="所在公司" width="200" />
+    <!-- <el-table-column prop="actualCompany" label="公司" width="200" /> -->
     <el-table-column prop="username" label="姓名" />
     <el-table-column prop="sex" label="性别" />
     <el-table-column prop="age" label="年龄" />
@@ -77,7 +77,8 @@
   <el-dialog v-model="dialogVisible" title="上传表格" width="20%">
     <el-card class="card" shadow="never">
       <br />
-      <UploadFile :dialogType="1" :success="success" url="/assist/read/company/safe/excel"></UploadFile>
+      <UploadFile :fileList="fileList" :dialogType="1" :success="success" url="/assist/read/company/safe/excel">
+      </UploadFile>
       <el-button @click="download">示例模板</el-button>
       <br /><br /><br />
       <el-card style="width: 100%" shadow="hover">
@@ -112,6 +113,7 @@ const form: any = reactive({
 });
 const hide = ref(false);
 const dataCount = ref(0);
+const fileList = ref([])
 const loading = ref(false);
 const dialogVisible = ref(false);
 const select = () => {
@@ -144,13 +146,21 @@ const getData = () => {
 };
 const tableData = ref([]);
 const success = (res) => {
-  form.projectNumber = res.result.parameter.projectNumber
-  form.projectName = res.result.parameter.projectName
-  form.assistCompany = res.result.parameter.assistCompany
-  ElNotification({
-    message: "上传成功",
-    type: "success",
-  });
+  fileList.value = []
+  if (res.sys.status != -1) {
+    form.projectNumber = res.result.parameter.projectNumber
+    form.projectName = res.result.parameter.projectName
+    form.assistCompany = res.result.parameter.assistCompany
+    ElNotification({
+      message: "上传成功",
+      type: "success",
+    });
+  } else {
+    ElNotification({
+      message: "上传失败，请检查表格是否正确！",
+      type: "error",
+    });
+  }
   dialogVisible.value = false;
   getData();
 };

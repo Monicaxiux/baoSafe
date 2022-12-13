@@ -4,8 +4,8 @@
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eiInfo.parameter.pageNum" :options="eiInfo"
         :render="selectUserList">
     </Pagination>
-    <Dialog :success="success" :dialogVisible="dialogVisible" :title="title" :dialogType="dialogType" :url="url"
-        :handleEditT="handleEditT"></Dialog>
+    <Dialog :fileList="fileList" :success="success" :dialogVisible="dialogVisible" :title="title"
+        :dialogType="dialogType" :url="url" :handleEditT="handleEditT"></Dialog>
 </template>
 <script lang="ts" setup>
 import Search from './components/Search.vue'
@@ -30,6 +30,7 @@ const url = ref('')
 const title = ref('')
 const params = reactive({ pageNum: 1 })
 const eiInfo = reactive(new EiInfo)
+const fileList = ref([])
 eiInfo.parameter = params
 const select = (i) => {
     switch (i) {
@@ -99,10 +100,13 @@ const success = (val: any) => {
     // })
     if (val.sys.status != 1) {
         ElNotification({
-            message: val.sys.msg,
+            message: val.sys.msg + val.result.failList,
             type: 'error',
         })
+        fileList.value = []
     }
+    fileList.value = []
+
     selectUserList();
     dialogVisible.value = false
 }

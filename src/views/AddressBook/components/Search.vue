@@ -6,7 +6,7 @@
                 <el-option v-for="item in userTypeList" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
         </el-form-item>
-        <el-form-item label="所在公司" v-if="!userType">
+        <el-form-item label="公司" v-if="!userType">
             <el-input class="input" :disabled="data.parameter.userType == 1" v-model="data.parameter.baoCompany"
                 clearable placeholder="请输入所在公司" />
         </el-form-item>

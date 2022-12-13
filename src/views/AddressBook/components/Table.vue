@@ -2,7 +2,7 @@
     <div>
         <el-table v-loading="loading" :data="tableData" class="tablex">
             <template v-if="!userType && userx == 1">
-                <el-table-column fixed prop="baoCompany" label="所在公司" width="200" />
+                <!-- <el-table-column fixed prop="baoCompany" label="公司" width="200" /> -->
                 <el-table-column prop="baoDepartment" label="所在部门" width="200" />
                 <el-table-column prop="baoFactory" label="所在分厂" width="170" />
                 <el-table-column prop="icCardWorkNumber" label="工号" />

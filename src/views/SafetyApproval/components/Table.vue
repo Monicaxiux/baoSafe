@@ -2,7 +2,7 @@
     <div>
         <el-table v-loading="loading" max-height="650" :data="tableData" class="tablex">
             <template v-if="!userType">
-                <el-table-column fixed prop="baoCompany" label="所在公司" width="160" />
+                <el-table-column fixed prop="baoCompany" label="公司" width="160" />
                 <el-table-column prop="baoDepartment" label="所在部门" width="160" />
                 <el-table-column prop="baoFactory" label="所在分厂" />
                 <el-table-column prop="recentJob" label="当前岗位" />
@@ -50,7 +50,8 @@
                         </el-icon>
                         审批
                     </el-button>
-                    <el-button size="small" v-if="scope.row.safetyEducation.safeLevel == '三级安全教育' && scope.row.safetyEducation.checkStatus == '通过'"
+                    <el-button size="small"
+                        v-if="scope.row.safetyEducation.safeLevel == '三级安全教育' && scope.row.safetyEducation.checkStatus == '通过'"
                         type="primary" @click="getQrCode(scope.$index, scope.row)">
                         <el-icon>
                             <Picture />

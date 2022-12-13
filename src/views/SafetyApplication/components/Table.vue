@@ -5,7 +5,7 @@
             <el-table-column :label="tableType ? '安全教育保卫名单' : '员工清单'">
                 <el-table-column type="selection" v-if="!tableType" reserve-selection width="55" />
                 <template v-if="!userType">
-                    <el-table-column fixed prop="baoCompany" label="所在公司" width="220" />
+                    <!-- <el-table-column fixed prop="baoCompany" label="公司" width="220" /> -->
                     <el-table-column prop="baoDepartment" label="所在部门" width="220" />
                     <el-table-column prop="baoFactory" label="所在分厂" width="170" />
                     <el-table-column prop="recentJob" label="当前岗位" width="220" />

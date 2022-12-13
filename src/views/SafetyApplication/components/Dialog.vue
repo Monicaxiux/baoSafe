@@ -12,7 +12,7 @@
         </div>
         <el-card v-if="dialogType == 1" class="card" shadow="never">
             <br>
-            <UploadFile :success="success" :dialogType="dialogType" :url="url"></UploadFile>
+            <UploadFile :fileList="fileList" :success="success" :dialogType="dialogType" :url="url"></UploadFile>
             <el-button @click="download">示例模板</el-button>
             <br><br><br>
             <el-card style="width:100%" shadow="hover">
@@ -28,7 +28,7 @@
         </el-card>
         <el-card v-if="dialogType == 3" class="card" shadow="never">
             <br>
-            <UploadFile :success="success" :dialogType="dialogType" :url="url2">
+            <UploadFile :fileList="fileList" :success="success" :dialogType="dialogType" :url="url2">
             </UploadFile>
             <el-button @click="download">示例模板</el-button>
             <br><br><br>
@@ -73,7 +73,8 @@ type Props = {
     title: string,
     userType: boolean,
     success: Function,
-    change: Function
+    change: Function,
+    fileList: any
 }
 const baoFactoryList = ref([])
 

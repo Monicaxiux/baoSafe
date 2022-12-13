@@ -57,9 +57,9 @@
             </div>
         </div>
     </el-card>
-    <Dialog :success="success" :userType="true" :handleEditT="handleEditT" :title="title" :dialogType="dialogType"
-        :url="url" :url2="url2" :dialogVisible="dialogVisible" :departmentSelect="departmentSelect"
-        :handleClose="handleClose">
+    <Dialog :success="success" :fileList="fileList" :userType="true" :handleEditT="handleEditT" :title="title"
+        :dialogType="dialogType" :url="url" :url2="url2" :dialogVisible="dialogVisible"
+        :departmentSelect="departmentSelect" :handleClose="handleClose">
     </Dialog>
 </template>
 <script lang="ts" setup>
@@ -77,6 +77,7 @@ import { ElNotification } from 'element-plus'
 
 //pinia状态管理
 const store = piniaData();
+const fileList = ref([])
 const form = reactive(new project)
 const loading = ref(false)
 const departmentSelect = ref([])
@@ -108,6 +109,7 @@ const success = () => {
         message: '导入成功！',
         type: 'success',
     })
+    fileList.value = []
     dialogVisible.value = false
     getProjectUsers(eilnfox)
 }
@@ -161,6 +163,9 @@ const select = (i: any) => {
             dialogVisible.value = true
             dialogType.value = 1
             title.value = '模板导入安全教育人员'
+            fileList.value = []
+            console.log(fileList.value);
+
             break;
         case 3:
             ElMessageBox.confirm('确定全部移除?')

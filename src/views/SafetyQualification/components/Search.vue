@@ -17,8 +17,8 @@
             </el-form-item>
         </template>
         <template v-if="!userType">
-            <el-form-item label="所在公司">
-                <el-input class="input" v-model="data.parameter.assistCompany" clearable placeholder="所在公司" />
+            <el-form-item label="公司">
+                <el-input class="input" v-model="data.parameter.assistCompany" clearable placeholder="公司" />
             </el-form-item>
             <el-form-item label="项目/合同 编号">
                 <el-input class="input" v-model="data.parameter.projectNumber" clearable placeholder="项目编号/合同编号" />

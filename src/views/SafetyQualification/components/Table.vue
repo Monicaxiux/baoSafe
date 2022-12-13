@@ -2,7 +2,7 @@
     <div>
         <el-table v-if="userType" v-loading="loading" max-height="650" :data="tableData" class="tablex">
             <el-table-column fixed prop="userType" label="人员类型" width="200" />
-            <el-table-column fixed prop="baoCompany" label="所在公司" width="200" />
+            <!-- <el-table-column fixed prop="baoCompany" label="公司" width="200" /> -->
             <el-table-column prop="baoDepartment" label="所在部门" width="200" />
             <el-table-column prop="baoFactory" label="所在分厂" width="170" />
             <el-table-column prop="recentJob" label="当前岗位" width="220" />

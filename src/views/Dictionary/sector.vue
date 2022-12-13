@@ -36,9 +36,10 @@
             </el-row>
             <div v-for="(item, i) in baoFactoryVO.baoFactoryVOList">
                 <el-row style="align-items: center;flex-wrap:inherit;">
-                    <el-input clearable placeholder="分厂名称" v-model="item.baoFactoryName">
+                    <el-input clearable placeholder="分厂名称" :disabled="item.isStatus" v-model="item.baoFactoryName">
                     </el-input>
-                    &nbsp;&nbsp;<el-button @click="delF(i)">删除</el-button><br /><br />
+                    &nbsp;&nbsp;<el-button @click="delF(i)"><a v-if="!item.isStatus">删除</a><a
+                            v-if="item.isStatus">启用</a></el-button><br /><br />
                 </el-row>
             </div>
             <div style="margin-top: 20px; text-align: right">
@@ -61,7 +62,8 @@ const baoFactoryVO: any = ref({
     baoFactoryVOList: [
         {
             baoFactoryId: 0,
-            baoFactoryName: ""
+            baoFactoryName: "",
+            isStatus: false
         }
     ]
 });
@@ -78,7 +80,8 @@ const updData = (row) => {
             baoDepartmentName: "",
             baoFactoryVOList: [{
                 baoFactoryId: 0,
-                baoFactoryName: ""
+                baoFactoryName: "",
+                isStatus: false
             }]
         }
     }
@@ -88,19 +91,29 @@ const updData = (row) => {
 const addF = () => {
     baoFactoryVO.value.baoFactoryVOList.push({
         baoFactoryId: 0,
-        baoFactoryName: ""
+        baoFactoryName: "",
+        isStatus: false
     })
 }
 const delF = (i) => {
     console.log(i);
-    baoFactoryVO.value.baoFactoryVOList.splice(i, 1);
-
+    baoFactoryVO.value.baoFactoryVOList[i].isStatus = !baoFactoryVO.value.baoFactoryVOList[i].isStatus
+    if (baoFactoryVO.value.baoFactoryVOList[i].isStatus) {
+        baoFactoryVO.value.baoFactoryVOList[i].baoFactoryId = -1
+    } else {
+        baoFactoryVO.value.baoFactoryVOList[i].baoFactoryId = 1
+    }
+    console.log(baoFactoryVO.value.baoFactoryVOList[i]);
+    // baoFactoryVO.value.baoFactoryVOList.splice(i, 1);
 }
 const upd = () => {
     console.log(baoFactoryVO.value);
     if (baoFactoryVO.value.baoDepartmentName) {
         let eiInfo = new EiInfo;
         eiInfo.parameter = baoFactoryVO.value;
+        for (let i = 0; i < baoFactoryVO.value.baoFactoryVOList.length; i++) {
+            delete baoFactoryVO.value.baoFactoryVOList[i].isStatus
+        }
         addUpdDepAndFac(eiInfo).then((res: any) => {
             if (res.sys.status != -1) {
                 ElNotification({
@@ -117,9 +130,6 @@ const upd = () => {
             type: 'error',
         })
     }
-
-}
-const add = () => {
 
 }
 const getData = () => {

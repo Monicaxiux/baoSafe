@@ -2,7 +2,7 @@
   <el-dialog v-model="dialogVisible" :title="title" width="20%" :before-close="handleClose">
     <el-card class="card" shadow="never">
       <br />
-      <UploadFile :success="success" :dialogType="dialogType" :url="url"></UploadFile>
+      <UploadFile :fileList="fileList" :success="success" :dialogType="dialogType" :url="url"></UploadFile>
       <el-button v-if="dialogType == 1" @click="download">示例模板</el-button>
       <br /><br /><br />
       <el-card style="width: 100%" shadow="hover">
@@ -36,14 +36,17 @@ type Props = {
   url: string;
   title: string;
   success: Function;
+  fileList: any
 };
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>();
+const uoload: any = ref(null);
 const handleClose = (done: () => void) => {
   ElMessageBox.confirm("确定取消上传?")
     .then(() => {
       props.handleEditT();
       console.log(props.dialogVisible);
+
     })
     .catch(() => {
       // catch error
