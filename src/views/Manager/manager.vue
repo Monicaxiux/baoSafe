@@ -149,34 +149,42 @@ const handleEditT = (i) => {
             }
             // eiInfo.parameter.authArea.push(1)
             eiInfo.userInfo = store.userInfo
-            updateUserAuth(eiInfo).then((res: any) => {
-                selectUserList()
-                if (res.sys.status != -1) {
-                    ElNotification({
-                        message: res.sys.msg,
-                        type: 'success',
-                    })
-                } else {
-                    ElMessageBox.confirm('该区域已有其他人负责，是否强制修改?')
-                        .then(() => {
-                            eiInfo.parameter.force = 1
-                            updateUserAuth(eiInfo).then((res: any) => {
-                                selectUserList()
-                                if (res.sys.status != -1) {
-                                    ElNotification({
-                                        message: res.sys.msg,
-                                        type: 'success',
-                                    })
-                                }
-                            })
-                        }).catch(() => {
-
+            if (from.userAuth == "" || eiInfo.parameter.userAuth == "") {
+                ElNotification({
+                    message: '请选择权限!',
+                    type: 'error',
+                })
+            } else {
+                updateUserAuth(eiInfo).then((res: any) => {
+                    selectUserList()
+                    if (res.sys.status != -1) {
+                        ElNotification({
+                            message: res.sys.msg,
+                            type: 'success',
                         })
-                }
+                    } else {
+                        ElMessageBox.confirm('该区域已有其他人负责，是否强制修改?')
+                            .then(() => {
+                                eiInfo.parameter.force = 1
+                                updateUserAuth(eiInfo).then((res: any) => {
+                                    selectUserList()
+                                    if (res.sys.status != -1) {
+                                        ElNotification({
+                                            message: res.sys.msg,
+                                            type: 'success',
+                                        })
+                                    }
+                                })
+                            }).catch(() => {
 
-                dialogVisible.value = false
+                            })
+                    }
 
-            })
+                    dialogVisible.value = false
+
+                })
+            }
+
             break;
         case 2:
             dialogVisible.value = false

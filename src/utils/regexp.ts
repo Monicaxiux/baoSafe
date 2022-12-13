@@ -52,12 +52,12 @@ export const isImg = (file) => {
 
 // xlsx类型文件判断
 export const isXlsx = (file) => {
-    const isXlsx =
-        file.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    if (!isXlsx) {
+    console.log(file.type);
+    const isXlsx = file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    const isXls = file.type === "application/vnd.ms-excel"
+    if (!isXlsx && !isXls) {
         ElNotification({
-            message: '请上传.xlsx表格文件',
+            message: '请上传.xlsx/.xls表格文件',
             type: 'warning',
         })
         return false;
@@ -94,10 +94,10 @@ export const validateProject = (rule: any, value: any, callback: any) => {
         callback();
     }
 }
-// 验证项目编码
+// 验证项目编号
 export const validateProjectNumber = (rule: any, value: any, callback: any) => {
     if (value === '') {
-        callback(new Error('请输入项目编码！'))
+        callback(new Error('请输入项目编号！'))
     } else {
         callback();
     }

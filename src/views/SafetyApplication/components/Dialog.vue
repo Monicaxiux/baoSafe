@@ -1,8 +1,8 @@
 <template>
     <el-dialog v-model="dialogVisible" :title="title" :width="dialogType == 2 ? 1100 : 380" :before-close="handleClose">
         <div v-if="dialogType == 2" shadow="never">
-            <Search :userType="userType" :searchType="2" :select="selectUserList" :submitStatus="true"
-                :buttonStatus="true" :data="eilnfo" :departmentSelect="departmentSelect"></Search>
+            <Search :userType="userType" :change="change" :baoFactoryList="baoFactoryList" :searchType="2"
+                :select="selectUserList" :submitStatus="true" :buttonStatus="true" :data="eilnfo"></Search>
             <Table :userType="userType" :tableType="false" :tableData="tableData" :loading="loading" :handleDelete="[]"
                 :handleChange="handleChange">
             </Table>
@@ -72,8 +72,11 @@ type Props = {
     url2: string,
     title: string,
     userType: boolean,
-    success: Function
+    success: Function,
+    change: Function
 }
+const baoFactoryList = ref([])
+
 const download = () => {
     ElNotification({
         message: "正在下载示例模板，请稍等...",
@@ -82,6 +85,7 @@ const download = () => {
         window.location.href =
         "http://10.3.18.222:8189/download/assist/excel";
 }
+
 //是否展示分页
 const hide = ref(false);
 //总页数

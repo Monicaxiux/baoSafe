@@ -55,6 +55,7 @@ export class externalInfo {
 }
 // BNA编辑/新增
 export class bnaInfo {
+    M: any = ""
     baoDepartment: any = ""
     baoFactory: string = ""
     recentJob: string = ""
@@ -73,6 +74,7 @@ export class bnaInfo {
 //项目信息
 export class project {
     projectNumber: string = ""
+    contractNumber: string = ""
     projectName: string = ""
     projectType: string = ""
     assistCompany: string = ""
@@ -147,7 +149,8 @@ export class examScore {
 
 //查询即将过期证书
 export class expiration {
-    baoDepartment: any = ''
+    userType: any = 1
+    baoDepartment: any = 1
     baoFactory: any = ''
     licenseName: any = ''
     licenseNumber: any = ''

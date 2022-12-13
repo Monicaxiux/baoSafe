@@ -66,7 +66,14 @@ export const selectDepAndFac = (() => {
         method: 'post'
     })
 })
-
+//修改/新增部门与分厂
+export const addUpdDepAndFac = ((eiInfo: any) => {
+    return request({
+        url: '/area/insert/update/department/factory',
+        method: 'post',
+        data: eiInfo
+    })
+})
 //查询全部安全教育区域
 export const selectAll = (() => {
     return request({

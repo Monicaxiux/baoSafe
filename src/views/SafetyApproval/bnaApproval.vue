@@ -117,52 +117,52 @@ const approval = (index, row: any) => {
             type: 'warning',
         })
     } else {
-        if (store.userInfo.userAuth == 1 && row.safetyEducation.safeLevel != '一级安全教育') {
-            ElNotification({
-                message: '当前用户只具备一级审批权限',
-                type: 'warning',
-            })
-        } else if (store.userInfo.userAuth == 2 && row.safetyEducation.safeLevel != '二级安全教育') {
-            ElNotification({
-                message: '当前用户只具备二级审批权限',
-                type: 'warning',
-            })
-        } else if (store.userInfo.userAuth == 3 && row.safetyEducation.safeLevel != '三级安全教育') {
-            ElNotification({
-                message: '当前用户只具备三级审批权限',
-                type: 'warning',
-            })
-        } else {
-            // 清空表单
-            for (let i in from) { from[i] = '' }
-            tableDatax.value = []
-            dialogVisible.value = true
-            let manageAreaType: any = 0
-            let s: any = 0
-            switch (store.userInfo.userAuth) {
-                case 1:
-                    s = 1
-                    safeEduId.value = row.safetyEducation.safeId
-                    manageAreaType = 2
-                    break;
-                case 2:
-                    s = row.safetyEducation.manageAreaId
-                    safeEduId.value = row.safetyEducation.safeId
-                    manageAreaType = 3
-                    break;
-                case 3:
-                    safeEduId.value = row.safetyEducation.safeId
-                    break;
-            }
-            let eiInfo = new EiInfo
-            eiInfo.parameter = {
-                previousKey: s,
-                manageAreaType: manageAreaType
-            }
-            selectAddress(eiInfo).then((res: any) => {
-                manageAreaList.value = res.result.manageArea
-            })
+        // if (store.userInfo.userAuth == 1 && row.safetyEducation.safeLevel != '一级安全教育') {
+        //     ElNotification({
+        //         message: '当前用户只具备一级审批权限',
+        //         type: 'warning',
+        //     })
+        // } else if (store.userInfo.userAuth == 2 && row.safetyEducation.safeLevel != '二级安全教育') {
+        //     ElNotification({
+        //         message: '当前用户只具备二级审批权限',
+        //         type: 'warning',
+        //     })
+        // } else if (store.userInfo.userAuth == 3 && row.safetyEducation.safeLevel != '三级安全教育') {
+        //     ElNotification({
+        //         message: '当前用户只具备三级审批权限',
+        //         type: 'warning',
+        //     })
+        // } else {
+        // 清空表单
+        for (let i in from) { from[i] = '' }
+        tableDatax.value = []
+        dialogVisible.value = true
+        let manageAreaType: any = 0
+        let s: any = 0
+        switch (store.userInfo.userAuth) {
+            case 1:
+                s = 1
+                safeEduId.value = row.safetyEducation.safeId
+                manageAreaType = 2
+                break;
+            case 2:
+                s = row.safetyEducation.manageAreaId
+                safeEduId.value = row.safetyEducation.safeId
+                manageAreaType = 3
+                break;
+            case 3:
+                safeEduId.value = row.safetyEducation.safeId
+                break;
         }
+        let eiInfo = new EiInfo
+        eiInfo.parameter = {
+            previousKey: s,
+            manageAreaType: manageAreaType
+        }
+        selectAddress(eiInfo).then((res: any) => {
+            manageAreaList.value = res.result.manageArea
+        })
+        // }
 
     }
 }
@@ -183,9 +183,12 @@ const handle = (i: any) => {
             dialog.value = true
             break;
         case 2:
-            if (from.trainStartDate != '' && from.trainEndDate != '' && from.examScore != '' && from.examDate != '' && from.nextSafeManageArea != '' && tableDatax.value.length != 0) {
-                if (store.userInfo.userAuth == 3) {
-                    submitApproval()
+            if (from.trainStartDate != '' && from.trainEndDate != '' && from.examScore != '' && from.examDate != '' && tableDatax.value.length != 0) {
+                if (store.userInfo.userAuth != 3 && from.nextSafeManageArea == '') {
+                    ElNotification({
+                        message: '请填写完整并添加考卷照片！',
+                        type: 'warning',
+                    })
                 } else {
                     submitApproval()
                     // nextSafeManageArea.value = 0
@@ -262,7 +265,8 @@ const submitApproval = () => {
                 nextSafeManageArea: from.nextSafeManageArea,
             }
             eiInfo.userInfo = {
-                id: store.userInfo.id
+                id: store.userInfo.id,
+                auth: store.userInfo.userAuth
             }
             console.log(eiInfo.parameter);
 
@@ -272,6 +276,7 @@ const submitApproval = () => {
                         message: "安全教育审批完成",
                         type: 'success',
                     })
+                    store.countVerifySafeEduInternal = res.result.countVerifySafeEduInternal
                 }
                 dialogVisible.value = false
                 selectUserList()

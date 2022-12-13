@@ -126,57 +126,57 @@ const approval = (index, row: any) => {
             type: 'warning',
         })
     } else {
-        if (store.userInfo.userAuth == 1 && row.safetyEducation.safeLevel != '一级安全教育') {
-            ElNotification({
-                message: '当前用户只具备一级审批权限',
-                type: 'warning',
-            })
-        } else if (store.userInfo.userAuth == 2 && row.safetyEducation.safeLevel != '二级安全教育') {
-            ElNotification({
-                message: '当前用户只具备二级审批权限',
-                type: 'warning',
-            })
-        } else if (store.userInfo.userAuth == 3 && row.safetyEducation.safeLevel != '三级安全教育') {
-            ElNotification({
-                message: '当前用户只具备三级审批权限',
-                type: 'warning',
-            })
-        } else {
-            projectId.value = row.projectId
-            console.log(row);
-            dialogVisible.value = true
-            let manageAreaType: any = 0
-            let s: any = 0
-            switch (store.userInfo.userAuth) {
-                case 1:
-                    if (row.safetyEducation.checkStatus == "通过"&&row.safetyEducation.safeLevel == '二级安全教育') {
-                        s = row.safetyEducation.manageAreaId
-                        safeEduId.value = row.safetyEducation.id
-                        manageAreaType = 3
-                    } else {
-                        s = 1
-                        safeEduId.value = row.safetyEducation.id
-                        manageAreaType = 2
-                    }
-                    break;
-                case 2:
+        // if (store.userInfo.userAuth == 1 && row.safetyEducation.safeLevel != '一级安全教育') {
+        //     ElNotification({
+        //         message: '当前用户只具备一级审批权限',
+        //         type: 'warning',
+        //     })
+        // } else if (store.userInfo.userAuth == 2 && row.safetyEducation.safeLevel != '二级安全教育') {
+        //     ElNotification({
+        //         message: '当前用户只具备二级审批权限',
+        //         type: 'warning',
+        //     })
+        // } else if (store.userInfo.userAuth == 3 && row.safetyEducation.safeLevel != '三级安全教育') {
+        //     ElNotification({
+        //         message: '当前用户只具备三级审批权限',
+        //         type: 'warning',
+        //     })
+        // } else {
+        projectId.value = row.projectId
+        console.log(row);
+        dialogVisible.value = true
+        let manageAreaType: any = 0
+        let s: any = 0
+        switch (store.userInfo.userAuth) {
+            case 1:
+                if (row.safetyEducation.checkStatus == "通过" && row.safetyEducation.safeLevel == '二级安全教育') {
                     s = row.safetyEducation.manageAreaId
                     safeEduId.value = row.safetyEducation.id
                     manageAreaType = 3
-                    break;
-                case 3:
+                } else {
+                    s = 1
                     safeEduId.value = row.safetyEducation.id
-                    break;
-            }
-            let eiInfo = new EiInfo
-            eiInfo.parameter = {
-                previousKey: s,
-                manageAreaType: manageAreaType
-            }
-            selectAddress(eiInfo).then((res: any) => {
-                manageAreaList.value = res.result.manageArea
-            })
+                    manageAreaType = 2
+                }
+                break;
+            case 2:
+                s = row.safetyEducation.manageAreaId
+                safeEduId.value = row.safetyEducation.id
+                manageAreaType = 3
+                break;
+            case 3:
+                safeEduId.value = row.safetyEducation.id
+                break;
         }
+        let eiInfo = new EiInfo
+        eiInfo.parameter = {
+            previousKey: s,
+            manageAreaType: manageAreaType
+        }
+        selectAddress(eiInfo).then((res: any) => {
+            manageAreaList.value = res.result.manageArea
+        })
+        // }
 
     }
 
@@ -277,7 +277,8 @@ const submitApproval = () => {
                 filePic: filePic.value
             }
             eiInfo.userInfo = {
-                id: store.userInfo.id
+                id: store.userInfo.id,
+                auth: store.userInfo.userAuth
             }
             selectVerify(eiInfo).then((res: any) => {
                 if (res.sys.status != -1) {
@@ -285,6 +286,7 @@ const submitApproval = () => {
                         message: "安全教育审批完成",
                         type: 'success',
                     })
+                    store.countVerifySafeEduExternal = res.result.countVerifySafeEduExternal
                 }
                 dialog.value = false
                 dialogVisible.value = false

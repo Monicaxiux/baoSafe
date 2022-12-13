@@ -1,17 +1,8 @@
 <template>
-  <el-dialog
-    v-model="dialogVisible"
-    :title="title"
-    width="20%"
-    :before-close="handleClose"
-  >
+  <el-dialog v-model="dialogVisible" :title="title" width="20%" :before-close="handleClose">
     <el-card class="card" shadow="never">
       <br />
-      <UploadFile
-        :success="success"
-        :dialogType="dialogType"
-        :url="url"
-      ></UploadFile>
+      <UploadFile :success="success" :dialogType="dialogType" :url="url"></UploadFile>
       <el-button v-if="dialogType == 1" @click="download">示例模板</el-button>
       <br /><br /><br />
       <el-card style="width: 100%" shadow="hover">
@@ -24,8 +15,7 @@
         </div>
         <div v-if="dialogType == 1" class="uploadTS">
           <b style="color: black">1.请下载示例模板按照规范上传</b><br />
-          <b style="color: black">2.上传后请确认信息正确无误，再点击确认提交</b
-          ><br />
+          <b style="color: black">2.上传后请确认信息正确无误，再点击确认提交</b><br />
           <b>注意：只能上传xlsx/xls文件，且不超过500mb</b>
           <br />
         </div>

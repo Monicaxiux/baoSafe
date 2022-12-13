@@ -38,6 +38,10 @@
                     <el-form-item label="年龄">
                         <el-input class="input" v-model="userInfo.age" clearable placeholder="请输入员工年龄" />
                     </el-form-item>
+                    <el-form-item label="进厂年月">
+                        <el-date-picker value-format="YYYY-MM" v-model="userInfo.M" type="month"
+                            placeholder="请选择进厂年月" />
+                    </el-form-item>
                     <el-form-item label="性别">
                         <el-radio-group v-model="userInfo.sex" class="ml-4">
                             <el-radio label="男">男</el-radio>

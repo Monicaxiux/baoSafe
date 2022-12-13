@@ -1,110 +1,47 @@
 <template>
-  <Search
-    :select="selectUserList"
-    :add="add"
-    :data="eilnfo"
-    :searchType="1"
-  ></Search>
-  <Table
-    :type="true"
-    :handleEdit="handleEdit"
-    :handleChange="handleChange"
-    :loading="loading"
-    :multipleSelection="multipleSelection"
-    :tableType="true"
-    :tableData="tableData"
-    :license="license"
-  ></Table>
-  <Pagination
-    :hide="hide"
-    :pagesize="10"
-    :total="dataCount"
-    :currentpage="eilnfo.parameter.pageNum"
-    :options="eilnfo"
-    :render="selectUserList"
-  >
+  <Search :select="selectUserList" :add="add" :data="eilnfo" :searchType="1"></Search>
+  {{ msgTitle }}<el-tag class="tag" @click="(eilnfo.parameter.baoCompany = i, selectUserList(true))"
+    v-for="i in resButton">{{
+        i
+    }}</el-tag>
+  <br><br>
+  <Table :type="true" :handleEdit="handleEdit" :handleChange="handleChange" :loading="loading"
+    :multipleSelection="multipleSelection" :tableType="true" :tableData="tableData" :license="license"></Table>
+  <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
+    :render="selectUserList">
   </Pagination>
-  <el-dialog
-    v-model="dialogVisible"
-    :title="dialogType == 1 ? '编辑证书' : '添加证书'"
-    width="40%"
-    :before-close="handleClose"
-  >
-    <el-card shadow="hover" style="width: 330px">
+  <el-dialog v-model="dialogVisible" :title="dialogType == 1 ? '编辑证书' : '添加证书'" width="40%" :before-close="handleClose">
+    <el-card shadow="hover">
       <h1>作业证信息</h1>
-      <el-form
-        :model="userInfo"
-        status-icon
-        class="demo-ruleForm from"
-        label-width="70px"
-      >
+      <el-form :model="userInfo" status-icon class="demo-ruleForm from" label-width="70px">
         <el-form-item v-if="dialogType != 1" label="IC卡号">
-          <el-input
-            class="input"
-            v-model="userInfo.icCardWorkNumberExact"
-            clearable
-            placeholder="请输入IC卡号"
-          />
+          <el-input class="input" v-model="userInfo.icCardWorkNumberExact" clearable placeholder="请输入IC卡号" />
         </el-form-item>
         <el-form-item v-if="dialogType != 1" label="证书类型">
-          <el-select
-            style="width: 100%"
-            v-model="userInfo.licenseType"
-            placeholder="请选择作业证类型"
-          >
-            <el-option
-              v-for="item in licenseTypeList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
+          <el-select style="width: 100%" v-model="userInfo.licenseType" placeholder="请选择作业证类型">
+            <el-option v-for="item in licenseTypeList" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item label="证书编号">
-          <el-input
-            class="input"
-            v-model="userInfo.licenseNumber"
-            clearable
-            placeholder="请输入证书编号"
-          />
+          <el-input class="input" v-model="userInfo.licenseNumber" clearable placeholder="请输入证书编号" />
         </el-form-item>
         <el-form-item label="证书名称">
-          <el-input
-            class="input"
-            v-model="userInfo.licenseName"
-            clearable
-            placeholder="请输入证书名称"
-          />
+          <el-input class="input" v-model="userInfo.licenseName" clearable placeholder="请输入证书名称" />
         </el-form-item>
         <el-form-item label="取证日期">
-          <el-date-picker
-            v-model="userInfo.receiveDate"
-            value-format="YYYY-MM-DD"
-            type="date"
-            placeholder="请选择取证日期"
-          />
+          <el-date-picker style="width: 100%;" v-model="userInfo.receiveDate" value-format="YYYY-MM-DD" type="date"
+            placeholder="请选择取证日期" />
         </el-form-item>
         <el-form-item label="复证日期">
-          <el-date-picker
-            v-model="userInfo.restoreDate"
-            value-format="YYYY-MM-DD"
-            type="date"
-            placeholder="请选择复证日期"
-          />
+          <el-date-picker style="width: 100%;" v-model="userInfo.restoreDate" value-format="YYYY-MM-DD" type="date"
+            placeholder="请选择复证日期" />
         </el-form-item>
         <el-form-item label="到期日期">
-          <el-date-picker
-            v-model="userInfo.expiryDate"
-            value-format="YYYY-MM-DD"
-            type="date"
-            placeholder="请选择到期日期"
-          />
+          <el-date-picker style="width: 100%;" v-model="userInfo.expiryDate" value-format="YYYY-MM-DD" type="date"
+            placeholder="请选择到期日期" />
         </el-form-item>
         <el-form-item label="证书照片">
-          <UploadImage
-            :upload="uploadUserPic"
-            :url="userInfo.licensePic"
-          ></UploadImage>
+          <UploadImage :uploadType="true" :upload="uploadUserPic" :url="userInfo.licensePic"></UploadImage>
         </el-form-item>
       </el-form>
     </el-card>
@@ -115,19 +52,8 @@
       </span>
     </template>
   </el-dialog>
-  <el-dialog
-    v-model="dialogVisible2"
-    title="历史记录"
-    width="80%"
-    :before-close="handleClose2"
-  >
-    <el-table
-      border
-      v-loading="loading"
-      max-height="600"
-      :data="tableDataHistory"
-      class="tablex"
-    >
+  <el-dialog v-model="dialogVisible2" title="历史记录" width="80%" :before-close="handleClose2">
+    <el-table border v-loading="loading" max-height="600" :data="tableDataHistory" class="tablex">
       <el-table-column prop="licenseName" label="证书名称" width="200" />
       <el-table-column prop="licenseNumber" label="证书编号" width="200" />
       <el-table-column prop="licenseType" label="证书类型" width="200" />
@@ -157,15 +83,19 @@ import {
   licenseUpdate,
   licenseInsert,
   selectHistory,
+  selectHistoryPic
 } from "@/api/user";
 import { ElNotification } from "element-plus";
 import UploadImage from "@/components/UploadImage.vue";
 import { getBase64 } from "@/utils/regexp";
 import { piniaData } from "@/store"; //引入pinia状态管理
+import { title } from "process";
 //pinia状态管理
 const store = piniaData();
 const quer = reactive(new expiration());
 const eilnfo = reactive(new EiInfo());
+const resButton = ref([])
+const msgTitle = ref('');
 eilnfo.parameter = quer;
 const tableData = ref([]);
 const tableDataHistory = ref([]);
@@ -204,30 +134,47 @@ const licenseTypeList = ref([
   },
 ]);
 
-const license = () => {};
+const license = () => { };
 // 多选框选中事件
 const handleChange = (val: any) => {
   multipleSelection.value = val.map((item) => item.licenseId);
 };
-const selectUserList = () => {
-  eilnfo.parameter.overdue = 0;
-  loading.value = false;
-  selectExpira(eilnfo).then((res: any) => {
+const selectUserList = (n) => {
+  if (!n) {
+    console.log(n);
+    tableData.value = []
+    dataCount.value = 0
+    hide.value = false
+    msgTitle.value = ''
+  } else {
+    eilnfo.parameter.overdue = 0;
     loading.value = false;
-    //将用户信息列表数据传入子组件
-    tableData.value = res.result.result == undefined ? [] : res.result.result;
-    // 分页总页数
-    dataCount.value =
-      res.result.dataCount == undefined ? 0 : res.result.dataCount;
-    // 如果只有一页则不展示分页
-    hide.value = dataCount.value < 11 ? false : true;
-  });
+    selectExpira(eilnfo).then((res: any) => {
+      loading.value = false;
+      if (res.sys.status == 2) {
+        msgTitle.value = res.sys.msg;
+        resButton.value = res.result.result;
+        tableData.value = []
+        dataCount.value = 0
+        hide.value = false
+      } else {
+        msgTitle.value = res.sys.msg;
+        //将用户信息列表数据传入子组件
+        tableData.value = res.result.result == undefined ? [] : res.result.result;
+        // 分页总页数
+        dataCount.value = res.result.dataCount == undefined ? 0 : res.result.dataCount;
+        // 如果只有一页则不展示分页
+        hide.value = dataCount.value < 11 ? false : true;
+      }
+    });
+  }
+
 };
 
 //自定义上传方法
 const uploadUserPic = (f) => {
   getBase64(f.file).then((res: any) => {
-    userInfo.value.licensePic = res;
+    userInfo.value.licensePic.push(res);
   });
 };
 
@@ -235,20 +182,29 @@ const uploadUserPic = (f) => {
 const download = () => {
   multipleSelection.value.length != 0
     ? (ElNotification({
-        message: "正在导出作业证表格，请稍等...",
-        type: "success",
-      }),
-      (window.location.href = `http://10.3.18.222:8189/download/soon/overdue/license/excel?licenseId=${multipleSelection.value}`))
+      message: "正在导出作业证表格，请稍等...",
+      type: "success",
+    }),
+      // (window.location.href = `http://10.3.18.222:8189/download/soon/overdue/license/excel?licenseId=${multipleSelection.value}`))
+      (window.location.href = `http://10.3.18.222:8189:8189/download/soon/overdue/license/excel?licenseId=${multipleSelection.value}`))
     : ElNotification({
-        message: "请选择要导出的证书",
-        type: "warning",
-      });
+      message: "请选择要导出的证书",
+      type: "warning",
+    });
 };
 const handleEdit = (index, row, i) => {
   switch (i) {
     case 1:
       dialogType.value = 1;
+      let eiInfox = new EiInfo();
+      eiInfox.parameter = {
+        licenseNumber: row.licenseNumber,
+        licenseName: row.licenseName,
+      };
       userInfo.value = JSON.parse(JSON.stringify(row));
+      selectHistoryPic(eiInfox).then((res: any) => {
+        userInfo.value.licensePic = res.result.result;
+      })
       dialogVisible.value = true;
       break;
     case 2:
@@ -296,7 +252,7 @@ const handleEditT = () => {
         } else {
         }
         dialogVisible.value = false;
-        selectUserList();
+        selectUserList(true);
       });
     } else {
       ElNotification({
@@ -307,7 +263,14 @@ const handleEditT = () => {
   } else {
     delete eiInfo.parameter.licenseType;
     delete eiInfo.parameter.icCardWorkNumberExact;
-    console.log(eiInfo);
+    // for (let i = 0; i < eiInfo.parameter.licensePic.length; i++) {
+    //   if (isBase64(eiInfo.parameter.licensePic[i])) {
+    //   } else {
+    //     let a = imageUrlToBase64(eiInfo.parameter.licensePic[i])
+    //     console.log(a);
+    //     // eiInfo.parameter.licensePic[i] = imageUrlToBase64(eiInfo.parameter.licensePic[i])
+    //   }
+    // }
     licenseUpdate(eiInfo).then((res: any) => {
       if (res.sys.status != -1) {
         ElNotification({
@@ -317,7 +280,7 @@ const handleEditT = () => {
       } else {
       }
       dialogVisible.value = false;
-      selectUserList();
+      selectUserList(true);
     });
   }
 };
@@ -343,6 +306,16 @@ const add = () => {
   dialogType.value = 2;
   dialogVisible.value = true;
 };
+//判断是否是base64
+const isBase64 = (str) => {
+  if (str === '' || str.trim() === '') { return false; }
+  try {
+    return btoa(atob(str)) == str;
+  } catch (err) {
+    return false;
+  }
+}
+//将路径图片转换为base64
 const imageUrlToBase64 = (url: any) => {
   let homeImage = new Image();
   let dataURL;
@@ -364,4 +337,8 @@ const imageUrlToBase64 = (url: any) => {
 };
 </script>
 <style scoped>
+.tag {
+  margin: 0 5px;
+  cursor: pointer;
+}
 </style>

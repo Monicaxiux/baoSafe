@@ -202,6 +202,15 @@ export const selectHistory = ((eilnfo: any) => {
     })
 })
 
+// 查询单个作业证照片
+export const selectHistoryPic = ((eilnfo: any) => {
+    return request({
+        url: '/license/query/pic/before/update',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
 // 修改作业证
 export const licenseUpdate = ((eilnfo: any) => {
     return request({

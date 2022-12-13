@@ -1,6 +1,5 @@
 <template>
     <el-form :model="data.parameter" status-icon class="demo-ruleForm from">
-
         <el-form-item label="人员类型" v-if="!userType">
             <el-select style="width: 150px;margin-right: 20px;" @change="typeChange" v-model="data.parameter.userType"
                 placeholder="请选择人员类型">

@@ -12,8 +12,12 @@
                     <h1>项目信息</h1>
                     <!-- <Project :change="change" :form="form"></Project> -->
                     <el-form status-icon class="demo-ruleForm from" label-width="70px">
-                        <el-form-item label="项目编码" prop="projectNumber">
-                            <el-input class="input" v-model="form.projectNumber" clearable placeholder="请输入项目编码" />
+                        <h6 style="color: red;">注意：如果没有项目编号，则输入合同编号</h6>
+                        <el-form-item label="项目编号" prop="projectNumber">
+                            <el-input class="input" v-model="form.projectNumber" clearable placeholder="请输入项目编号" />
+                        </el-form-item>
+                        <el-form-item label="合同编号" prop="contractNumber">
+                            <el-input class="input" v-model="form.contractNumber" clearable placeholder="请输入合同编号" />
                         </el-form-item>
                         <el-form-item label="项目名称" prop="projectName">
                             <el-input class="input" v-model="form.projectName" clearable placeholder="请输入项目名称" />
@@ -176,7 +180,7 @@ const select = (i: any) => {
                 }).catch(() => { })
             break;
         case 4:
-            if (!isForm(form)) {
+            if (form.projectNumber == "" && form.contractNumber == "") {
                 ElNotification({
                     message: '请将项目信息填写完整！',
                     type: 'warning',

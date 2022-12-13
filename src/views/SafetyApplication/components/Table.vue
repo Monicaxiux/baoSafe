@@ -12,13 +12,13 @@
                 </template>
                 <template v-if="userType">
                     <el-table-column fixed prop="assistCompany" label="协力单位" width="240" />
-                    <el-table-column prop="actualCompany" label="所在单位" width="240" />
+                    <!-- <el-table-column prop="actualCompany" label="所在单位" width="240" /> -->
                 </template>
                 <el-table-column prop="icCardWorkNumber" :label="userType ? 'IC卡号' : '工号'" width="200" />
-                <el-table-column prop="username" label="员工姓名" width="100" />
-                <el-table-column prop="sex" label="性别" width="60" />
-                <el-table-column prop="age" label="年龄" />
-                <el-table-column v-if="tableType" fixed="right" label="操作" width="100">
+                <el-table-column prop="username" label="员工姓名" />
+                <!-- <el-table-column prop="sex" label="性别" width="60" /> -->
+                <!-- <el-table-column prop="age" label="年龄" /> -->
+                <el-table-column v-if="tableType" fixed="right" label="操作">
                     <template #default="scope">
                         <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">
                             <el-icon>
@@ -51,4 +51,5 @@ type Props = {
 const props = defineProps<Props>()
 </script>
 <style scoped src="@/assets/css/table.css">
+
 </style>

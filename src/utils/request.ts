@@ -21,7 +21,7 @@ request.interceptors.request.use((config: AxiosRequestConfig) => {
 //响应拦截器
 request.interceptors.response.use((response: AxiosResponse) => {
   //请求状态码异常提示
-  response.data.sys.status != 1 ? (
+  response.data.sys.status == -1 ? (
     ElNotification({
       message: `${response.data.sys.msg}`,
       type: 'error',

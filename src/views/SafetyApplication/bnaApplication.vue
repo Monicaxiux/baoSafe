@@ -28,12 +28,7 @@ const eiInfo = reactive(new EiInfo)
 const url = ref('')
 const title = ref('')
 const multiple: any = ref([])//多选选中内容
-onMounted(() => {
-    // 查询部门下拉框
-    selectDepartment().then((res: any) => {
-        departmentSelect.value = res.result.departmentSelect
-    })
-})
+
 const success = () => {
     console.log('上传成功');
 }
@@ -125,4 +120,5 @@ const handleClose = () => {
 }
 </script>
 <style scoped >
+
 </style>

@@ -21,7 +21,6 @@
             </div>
         </el-upload>
     </div>
-
 </template>
 
 <script lang="ts" setup>
@@ -41,7 +40,6 @@ const props = defineProps<Props>()
 //上传之前过滤文件
 const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     return isImg(file)
-
 }
 
 </script>

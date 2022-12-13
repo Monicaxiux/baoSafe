@@ -46,10 +46,10 @@
           <div class="overlay-panel overlay-right">
             <br><br><br>
             <h1>没有帐号？</h1>
-            <p>立即注册加入我们，和我们一起开始旅程吧</p>
-            <button class="buttonxx" @click="externalButton()" id="signUp">协力人员注册</button>
+            <p>请联系宝日安保组系统管理员，一起体验吧</p>
+            <!-- <button class="buttonxx" @click="externalButton()" id="signUp">协力人员注册</button>
             <br>
-            <button class="buttonxx" @click="internalButton()" id="signUp">BNA人员注册</button>
+            <button class="buttonxx" @click="internalButton()" id="signUp">BNA人员注册</button> -->
           </div>
         </div>
       </div>
@@ -106,7 +106,6 @@ const logins = () => {
           store.expiredAlarm = res.result.expiredAlarm,
           store.countVerifySafeEduInternal = res.result.countVerifySafeEduInternal,
           store.countVerifySafeEduExternal = res.result.countVerifySafeEduExternal,
-
           store.active == '/' ? (
             //登陆成功跳转对应页面
             router.replace({ path: '/bnaPartners' }),

@@ -126,10 +126,11 @@ const logOut = () => {
                 message: '当前账号已退出',
                 type: 'warning',
             })
+            // 返回登录界面
+            // router.push({ path: "/" })
             // 初始化pinia数据
             store.$reset();
-            // 返回登录界面
-            router.push({ path: "/" })
+            window.location.href = "/"
         })
         .catch(() => {
 
@@ -143,7 +144,7 @@ const initWebSocket = () => {
     //判断当前浏览器是否支持WebSocket
     if ("WebSocket" in window) {
         //改成你的地址
-        websocket = new WebSocket("wss://safeedu.bnasafe.com//websocket");
+        websocket = new WebSocket("wss:/10.3.18.222:8189/websocket");
     } else {
         console.log("当前浏览器 Not support websocket");
     }
@@ -181,4 +182,5 @@ const initWebSocket = () => {
 </script>
 
 <style scoped src="@/assets/css/index.css">
+
 </style>

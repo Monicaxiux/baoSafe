@@ -20,8 +20,8 @@
             <el-form-item label="所在公司">
                 <el-input class="input" v-model="data.parameter.assistCompany" clearable placeholder="所在公司" />
             </el-form-item>
-            <el-form-item label="项目编码">
-                <el-input class="input" v-model="data.parameter.projectNumber" clearable placeholder="项目编码" />
+            <el-form-item label="项目/合同 编号">
+                <el-input class="input" v-model="data.parameter.projectNumber" clearable placeholder="项目编号/合同编号" />
             </el-form-item>
             <el-form-item label="项目名称">
                 <el-input class="input" v-model="data.parameter.projectName" clearable placeholder="项目名称" />
@@ -61,6 +61,7 @@ onMounted(() => {
     selectDepartment().then((res: any) => {
         departmentList.value = res.result.departmentSelect
     })
+    change(1);
 })
 const change = (val) => {
     props.data.parameter.baoFactory = ''

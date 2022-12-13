@@ -11,7 +11,7 @@
             <el-table-column prop="expiryDate" label="到期日期" width="110" />
             <el-table-column label="证书照片" width="90">
                 <template #default="scope">
-                    <MyImg :imgUrl="scope.row.licensePic"></MyImg>
+                    <MyImg :imgUrl="scope.row.licensePic[0]"></MyImg>
                 </template>
             </el-table-column>
             <el-table-column v-if="type" label="操作" width="190">
@@ -46,4 +46,5 @@ type Props = {
 const props = defineProps<Props>()
 </script>
 <style scoped src="@/assets/css/table.css">
+
 </style>

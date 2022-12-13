@@ -1,10 +1,10 @@
 <template>
     <el-form :model="data.parameter" status-icon class="demo-ruleForm from">
-        <!-- <el-form-item label="所在区域">
+        <el-form-item label="所在区域">
             <el-select class="select" @change="change1" v-model="data.parameter.areaId" placeholder="所在区域">
                 <el-option v-for="item in manageArea1List" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item label="项目编号" prop="projectNumber" v-if="userType == 1 || userType == 3">
             <el-input class="input" v-model="data.parameter.projectNumber" clearable placeholder="请输入项目编号" />
         </el-form-item>
@@ -59,19 +59,19 @@ const eiInfo = reactive(new EiInfo)
 const manageArea1List: any = ref([
     {
         id: 0,
-        name: '无'
+        name: '全部'
     }
 ])
 const manageArea2List: any = ref([
     {
         id: 0,
-        name: '无'
+        name: '全部'
     }
 ])
 const manageArea3List: any = ref([
     {
         id: 0,
-        name: '无'
+        name: '全部'
     }
 ])
 const areaId = ref(0)

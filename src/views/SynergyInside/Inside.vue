@@ -1,51 +1,24 @@
 <template>
   <el-form :model="form" status-icon class="demo-ruleForm from">
     <el-form-item label="协力公司">
-      <el-input
-        class="input"
-        v-model="form.assistCompany"
-        clearable
-        placeholder="请输入协力公司"
-      />
+      <el-input class="input" v-model="form.assistCompany" clearable placeholder="请输入协力公司" />
     </el-form-item>
     <el-form-item label="项目编号">
-      <el-input
-        class="input"
-        v-model="form.projectNumber"
-        clearable
-        placeholder="请输入项目编号"
-      />
+      <el-input class="input" v-model="form.projectNumber" clearable placeholder="请输入项目编号" />
     </el-form-item>
     <el-form-item label="项目名称">
-      <el-input
-        class="input"
-        v-model="form.projectName"
-        clearable
-        placeholder="请输入项目名称"
-      />
+      <el-input class="input" v-model="form.projectName" clearable placeholder="请输入项目名称" />
     </el-form-item>
     <el-form-item label="IC卡号">
-      <el-input
-        class="input"
-        v-model="form.icCardWorkNumber"
-        clearable
-        placeholder="请输入IC卡号"
-      />
+      <el-input class="input" v-model="form.icCardWorkNumber" clearable placeholder="请输入IC卡号" />
     </el-form-item>
     <el-form-item label="员工姓名">
-      <el-input
-        class="input"
-        v-model="form.username"
-        clearable
-        placeholder="请输入员工姓名"
-      />
+      <el-input class="input" v-model="form.username" clearable placeholder="请输入员工姓名" />
     </el-form-item>
-    <el-button
-      type="primary"
-      class="button"
-      @click="(form.pageNum = 1), getData()"
-    >
-      <el-icon class="i"> <Search /> </el-icon>查询
+    <el-button type="primary" class="button" @click="(form.pageNum = 1), getData()">
+      <el-icon class="i">
+        <Search />
+      </el-icon>查询
     </el-button>
     <el-button @click="select()" type="primary">
       <el-icon>
@@ -54,15 +27,8 @@
       上传表格
     </el-button>
   </el-form>
-  <br />
-  <br />
-  <el-table
-    v-loading="loading"
-    border
-    max-height="620"
-    :data="tableData"
-    class="tablex"
-  >
+
+  <el-table v-loading="loading" border max-height="620" :data="tableData" class="tablex">
     <el-table-column prop="assistCompany" label="协力公司" width="100" />
     <el-table-column prop="actualCompany" label="所在公司" width="200" />
     <el-table-column prop="username" label="姓名" />
@@ -74,11 +40,7 @@
     <el-table-column prop="projectName" label="项目名称" width="150" />
 
     <el-table-column prop="projectType" label="项目性质" width="100" />
-    <el-table-column
-      prop="safetyEducationCharge"
-      label="安全教育负责人"
-      width="150"
-    />
+    <el-table-column prop="safetyEducationCharge" label="安全教育负责人" width="150" />
     <el-table-column prop="contactPerson" label="联系人" width="100" />
     <el-table-column label="作业周期">
       <el-table-column prop="workCycleStart" label="起始时间" width="110" />
@@ -108,26 +70,14 @@
     </el-table-column>
   </el-table>
   <br />
-  <el-pagination
-    v-if="hide"
-    background
-    @size-change="handleSizeChange"
-    @current-change="handlePageChange"
-    :page-sizes="[10, 30, 100]"
-    :current-page="form.pageNum"
-    :page-size="10"
-    layout="total,prev, pager, next, jumper"
-    :total="dataCount"
-  >
+  <el-pagination v-if="hide" background @size-change="handleSizeChange" @current-change="handlePageChange"
+    :page-sizes="[10, 30, 100]" :current-page="form.pageNum" :page-size="10" layout="total,prev, pager, next, jumper"
+    :total="dataCount">
   </el-pagination>
   <el-dialog v-model="dialogVisible" title="上传表格" width="20%">
     <el-card class="card" shadow="never">
       <br />
-      <UploadFile
-        :dialogType="1"
-        :success="success"
-        url="/assist/read/company/safe/excel"
-      ></UploadFile>
+      <UploadFile :dialogType="1" :success="success" url="/assist/read/company/safe/excel"></UploadFile>
       <el-button @click="download">示例模板</el-button>
       <br /><br /><br />
       <el-card style="width: 100%" shadow="hover">
@@ -135,8 +85,7 @@
         <br />
         <div class="uploadTS">
           <b style="color: black">1.请下载示例模板按照规范上传</b><br />
-          <b style="color: black">2.上传后请确认信息正确无误，再点击确认提交</b
-          ><br />
+          <b style="color: black">2.上传后请确认信息正确无误，再点击确认提交</b><br />
           <b>注意：只能上传xlsx/xls文件，且不超过500mb</b>
           <br />
         </div>
@@ -196,8 +145,8 @@ const getData = () => {
 const tableData = ref([]);
 const success = (res) => {
   form.projectNumber = res.result.parameter.projectNumber
-  form.projectName =  res.result.parameter.projectName
-  form.assistCompany =   res.result.parameter.assistCompany
+  form.projectName = res.result.parameter.projectName
+  form.assistCompany = res.result.parameter.assistCompany
   ElNotification({
     message: "上传成功",
     type: "success",
@@ -235,10 +184,12 @@ const download = () => {
   justify-content: center;
   flex-wrap: wrap;
 }
+
 .input {
   width: 150px;
   margin-right: 20px;
 }
+
 .from {
   display: flex;
 }

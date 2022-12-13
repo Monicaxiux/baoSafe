@@ -2,8 +2,8 @@
     <Search :select="selectUserList" :data="eilnfo" :userType="userType" :departmentSelect="departmentSelect"
         :handleAdd="handleAdd">
     </Search>
-    <Table :handleEdit="handleEdit" :userType="userType" :loading="loading" :handleDelete="handleDelete"
-        :tableData="tableData">
+    <Table :handleEdit="handleEdit" :userx="eilnfo.parameter.userType" :userType="userType" :loading="loading"
+        :handleDelete="handleDelete" :tableData="tableData">
     </Table>
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
         :render="selectUserList">
@@ -51,6 +51,7 @@ const baoFactoryList = ref([])
 const eilnfo = reactive(new EiInfo);
 //将分页搜索参数赋予eilnfo的parameter模块
 eilnfo.parameter = query
+
 const userInfo = ref(new bnaInfo)
 // dom初始化完成请求数据操纵dom
 onMounted(() => {
@@ -92,6 +93,9 @@ const handleEdit = (index, row) => {
     // 查询数据，回滚页面
     selectUpData(eilnfo).then((res: any) => {
         userInfo.value = res.result.userLicense
+        userInfo.value.M = res.result.userLicense.enterFactoryYear + '-' + res.result.userLicense.enterFactoryMonth
+        console.log(userInfo.value.M);
+
         let eiInfo = new EiInfo
         eiInfo.parameter = {
             departmentId: userInfo.value.baoDepartment
@@ -119,15 +123,25 @@ const handleEditT = () => {
     } else {
         let eiInfo = new EiInfo
         eiInfo.parameter = userInfo.value
+        eiInfo.parameter.enterFactoryYear = userInfo.value.M.match(/(\S*)-/)[1]
+        eiInfo.parameter.enterFactoryMonth = userInfo.value.M.match(/-(\S*)/)[1]
         eiInfo.userInfo = store.userInfo
         switch (dialogType.value) {
             case 1:
                 updateUser(eiInfo).then((res: any) => {
+                    ElNotification({
+                        message: `${res.sys.msg}`,
+                        type: 'success',
+                    })
                     selectUserList(eilnfo)
                 })
                 break;
             case 2:
                 addUser(eiInfo).then((res: any) => {
+                    ElNotification({
+                        message: `${res.sys.msg}`,
+                        type: 'success',
+                    })
                     selectUserList(eilnfo)
                 })
                 break;

@@ -38,10 +38,18 @@
         </div>
         <el-form v-if="searchType == 2" :model="data.parameter" status-icon class="demo-ruleForm from">
             <el-form-item v-if="!userType" label="部门">
-                <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
+                <el-select style="width: 150px;margin-right: 20px;" @change="change"
                     v-model="data.parameter.baoDepartment" placeholder="请选择部门">
                     <el-option v-for="item in departmentSelect" :key="item.baoDepartmentId"
                         :label="item.baoDepartmentName" :value="item.baoDepartmentId" />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="分厂">
+                <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
+                    :disabled="data.parameter.userType == 2" v-model="data.parameter.baoFactory" clearable
+                    placeholder="请选择分厂">
+                    <el-option v-for="item in baoFactoryList" :key="item.baoFactoryId" :label="item.baoFactoryName"
+                        :value="item.baoFactoryId" />
                 </el-select>
             </el-form-item>
             <el-form-item label="协力单位" v-if="userType">
@@ -65,6 +73,9 @@
 <script setup lang="ts">
 import { Search, Delete, FolderOpened, Check, EditPen } from '@element-plus/icons-vue'//引入elementui 图标
 import { piniaData } from '@/store';//引入pinia状态管理
+import { selectDepartment, selectFactory } from '@/api/areas';
+import { onMounted, ref } from 'vue';
+import { EiInfo } from '@/types';
 //pinia状态管理
 const store = piniaData();
 // 定义Props默认数据类型
@@ -74,11 +85,32 @@ type Props = {
     submitStatus: boolean,
     searchType: number,
     data: any,
-    departmentSelect: any,
     userType: boolean
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
+const departmentSelect: any = ref([])
+const baoFactoryList: any = ref([])
+onMounted(() => {
+    // 查询部门下拉框
+    selectDepartment().then((res: any) => {
+        departmentSelect.value = res.result.departmentSelect
+    })
+})
+const change = (val) => {
+    if (val) {
+        props.select(props.data)
+        let eiInfo = new EiInfo
+        props.data.parameter.baoFactory = ''
+        eiInfo.parameter = {
+            departmentId: val
+        }
+        selectFactory(eiInfo).then((res: any) => {
+            baoFactoryList.value = res.result.factorySelect
+        })
+    }
+
+}
 </script>
 
 <style scoped>

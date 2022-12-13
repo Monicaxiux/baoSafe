@@ -158,10 +158,10 @@ const menus = ref([
                 path: '/manager',
                 name: '权限管理'
             },
-            {
-                path: '/dicArea',
-                name: '区域管理'
-            },
+            // {
+            //     path: '/dicArea',
+            //     name: '区域管理'
+            // },
             {
                 path: '/sector',
                 name: '部门分厂管理'
@@ -180,4 +180,5 @@ const onIsCollapse = () => {
 
 </script>
 <style scoped src="@/assets/css/menu.css">
+
 </style>

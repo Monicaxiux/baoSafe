@@ -1,7 +1,10 @@
 <template>
     <el-form :model="form" ref="form" status-icon class="demo-ruleForm from" label-width="70px">
-        <el-form-item label="项目编码" prop="projectNumber">
-            <el-input class="input" v-model="form.projectNumber" clearable placeholder="请输入项目编码" />
+        <el-form-item label="项目编号" prop="projectNumber">
+            <el-input class="input" v-model="form.projectNumber" clearable placeholder="请输入项目编号" />
+        </el-form-item>
+        <el-form-item label="合同编号" prop="projectNumber">
+            <el-input class="input" v-model="form.contractNumber" clearable placeholder="请输入合同编号" />
         </el-form-item>
         <el-form-item label="项目名称" prop="projectName">
             <el-input class="input" v-model="form.projectName" clearable placeholder="请输入项目名称" />
@@ -36,4 +39,5 @@ const props = defineProps<Props>()
 // const time = ref([])
 </script>
 <style scoped>
+
 </style>

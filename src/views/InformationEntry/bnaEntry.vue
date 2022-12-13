@@ -10,7 +10,7 @@
 <script lang="ts" setup>
 import Search from './components/Search.vue'
 import Dialog from './components/Dialog.vue'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, UploadUserFile } from 'element-plus'
 import Table from './components/Table.vue'//员工表格
 import { ElNotification } from 'element-plus'
 import Pagination from '@/components/Pagination.vue'//分页组件
@@ -47,7 +47,7 @@ const select = (i) => {
             break;
         case 3:
             dialogVisible.value = true
-            dialogType.value = 3
+            dialogType.value = 2
             url.value = '/internal/upload/user/pic'
             title.value = '上传个人照片'
             break;
@@ -93,10 +93,16 @@ onMounted(() => {
 })
 //文件导入成功
 const success = (val: any) => {
-    ElNotification({
-        message: val.sys.msg,
-        type: 'success',
-    })
+    // ElNotification({
+    //     message: val.sys.msg,
+    //     type: 'success',
+    // })
+    if (val.sys.status != 1) {
+        ElNotification({
+            message: val.sys.msg,
+            type: 'error',
+        })
+    }
     selectUserList();
     dialogVisible.value = false
 }
@@ -119,4 +125,5 @@ const selectUserList = () => {
 }
 </script>
 <style scoped>
+
 </style>

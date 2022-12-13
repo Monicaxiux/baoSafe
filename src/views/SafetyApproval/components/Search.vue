@@ -60,20 +60,20 @@ const disabled3 = ref(true)
 const manageArea2List: any = ref([
     {
         id: 0,
-        value: '无'
+        value: '全部'
     }
 ])
 const manageArea3List: any = ref([
     {
         id: 0,
-        value: '无'
+        value: '全部'
     }
 ])
 const eiInfo = reactive(new EiInfo)
 const educationLevel = [
     {
         id: 0,
-        value: '无'
+        value: '全部'
     },
     {
         id: 1,
@@ -89,8 +89,8 @@ const educationLevel = [
     },
 ]
 const change = (val: any) => {
-       props.data.parameter.manageArea2 = 0
-            props.data.parameter.manageArea3 = 0
+    props.data.parameter.manageArea2 = 0
+    props.data.parameter.manageArea3 = 0
     switch (val) {
         case 1:
             disabled2.value = true
