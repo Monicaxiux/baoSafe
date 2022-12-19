@@ -5,8 +5,9 @@
         i
     }}</el-tag>
   <br><br>
-  <Table :type="true" :handleEdit="handleEdit" :handleChange="handleChange" :loading="loading"
-    :multipleSelection="multipleSelection" :tableType="true" :tableData="tableData" :license="license"></Table>
+  <Table :type="true" :handleEdit="handleEdit" :licenseEdit="licenseEdit" :handleChange="handleChange"
+    :loading="loading" :multipleSelection="multipleSelection" :tableType="true" :tableData="tableData"
+    :license="license"></Table>
   <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
     :render="selectUserList">
   </Pagination>
@@ -65,10 +66,16 @@
       <el-table-column prop="modifyTime" label="操作日期" width="170" />
       <el-table-column label="证书照片" width="90">
         <template #default="scope">
-          <MyImg :imgUrl="scope.row.licensePic"></MyImg>
+          <!-- <MyImg :imgUrl="scope.row.licensePic"></MyImg> -->
+          <el-button v-if="scope.row.licensePic != '' && scope.row.licensePic"
+            @click="licenseEdit(scope.row.licensePic)" size="small" type="primary" plain>查看照片
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
+  </el-dialog>
+  <el-dialog v-model="dialogVisibleimg" title="查看作业证照片" width="30%" :before-close="handleClose3">
+    <MyImg v-for="(item) in filePic" :imgUrl="item"></MyImg>
   </el-dialog>
 </template>
 <script lang="ts" setup>
@@ -96,6 +103,7 @@ const quer = reactive(new expiration());
 const eilnfo = reactive(new EiInfo());
 const resButton = ref([])
 const msgTitle = ref('');
+
 eilnfo.parameter = quer;
 const tableData = ref([]);
 const tableDataHistory = ref([]);
@@ -105,6 +113,9 @@ const hide = ref(false);
 const multipleSelection = ref([]);
 const dialogVisible = ref(false);
 const dialogVisible2 = ref(false);
+const dialogVisibleimg = ref(false);
+const filePic: any = ref([])
+
 const dialogType = ref(1);
 const userInfo: any = ref({
   icCardWorkNumberExact: "",
@@ -139,6 +150,11 @@ const license = () => { };
 const handleChange = (val: any) => {
   multipleSelection.value = val.map((item) => item.licenseId);
 };
+
+const licenseEdit = (row: any) => {
+  filePic.value = row
+  dialogVisibleimg.value = true
+}
 const selectUserList = (n) => {
   if (!n) {
     console.log(n);
@@ -234,7 +250,7 @@ const handleEditT = () => {
     restoreDate: userInfo.value.restoreDate,
     licensePic: userInfo.value.licensePic,
     userId: userInfo.value.userId,
-    licenseType: userInfo.value.licenseType,
+    // licenseType: userInfo.value.licenseType,
   };
   eiInfo.userInfo = {
     username: store.userInfo.username,
@@ -261,6 +277,9 @@ const handleEditT = () => {
       });
     }
   } else {
+    if (eiInfo.parameter.licensePic.length == 0) {
+      eiInfo.parameter.licensePic.push('noPic')
+    }
     delete eiInfo.parameter.licenseType;
     delete eiInfo.parameter.icCardWorkNumberExact;
     // for (let i = 0; i < eiInfo.parameter.licensePic.length; i++) {
@@ -289,6 +308,9 @@ const handleClose = () => {
 };
 const handleClose2 = () => {
   dialogVisible2.value = false;
+};
+const handleClose3 = () => {
+  dialogVisibleimg.value = false;
 };
 const isForm = (obj) => {
   for (let key in obj) {

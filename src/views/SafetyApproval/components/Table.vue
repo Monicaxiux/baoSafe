@@ -2,10 +2,10 @@
     <div>
         <el-table v-loading="loading" max-height="650" :data="tableData" class="tablex">
             <template v-if="!userType">
-                <el-table-column fixed prop="baoCompany" label="公司" width="160" />
-                <el-table-column prop="baoDepartment" label="所在部门" width="160" />
-                <el-table-column prop="baoFactory" label="所在分厂" />
-                <el-table-column prop="recentJob" label="当前岗位" />
+                <!-- <el-table-column fixed prop="baoCompany" label="公司" width="160" /> -->
+                <!-- <el-table-column prop="baoDepartment" label="所在部门" width="160" /> -->
+                <!-- <el-table-column prop="baoFactory" label="所在分厂" /> -->
+                <!-- <el-table-column prop="recentJob" label="当前岗位" /> -->
                 <el-table-column prop="icCardWorkNumber" label="工号" />
                 <el-table-column prop="username" label="员工姓名" width="100" />
                 <el-table-column label="安全教育">
@@ -23,13 +23,13 @@
                 </el-table-column>
             </template>
             <template v-if="userType">
-                <el-table-column fixed prop="assistCompany" label="公司" width="140" />
+                <el-table-column fixed prop="assistCompany" label="协力公司" width="140" />
                 <el-table-column fixed prop="projectNumber" label="项目编号" width="140" />
                 <el-table-column prop="projectName" label="项目名称" width="440" />
                 <el-table-column prop="projectType" label="项目类型" width="140" />
                 <el-table-column prop="safetyEducationCharge" label="负责人" width="140" />
                 <el-table-column prop="projectCreateTime" label="项目创建时间" width="260" />
-                <el-table-column prop="licenseArea" label="项目状态" width="140" />
+                <el-table-column prop="safeStatus" label="项目状态" width="140" />
                 <el-table-column prop="workCycle" label="项目周期" width="260" />
                 <el-table-column prop="contactPerson" label="联系人" width="140" />
                 <el-table-column label="安全教育">

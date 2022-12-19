@@ -57,6 +57,7 @@ watch(() => props.projectId, (newValue, oldValue) => {
     if (props.dialogType != 1) {
 
     } else {
+        eiInfo.parameter.pageNum = 1
         selectUserList();
     }
 })

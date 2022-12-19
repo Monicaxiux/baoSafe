@@ -6,12 +6,12 @@
                 <el-option v-for="item in userTypeList" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
         </el-form-item>
-        <el-form-item label="证书类型">
+        <!-- <el-form-item label="证书类型">
             <el-select style="width: 150px;margin-right: 20px;" @change="select(data)"
                 v-model="data.parameter.licenseType" placeholder="请选择作业证类型">
                 <el-option v-for="item in licenseTypeList" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="部门" v-if="(data.parameter.userType == 1)">
             <el-select style="width: 150px;margin-right: 20px;" @change="change" clearable
                 v-model="data.parameter.baoDepartment" placeholder="请选择部门">
@@ -100,10 +100,10 @@ const typeChange = (val) => {
     if (props.data.parameter.baoCompany || val != 2) {
         props.select(props.data)
     } else if (val != 1) {
-        ElNotification({
-            message: `请输入协力公司`,
-            type: 'error',
-        })
+        // ElNotification({
+        //     message: `请输入协力公司`,
+        //     type: 'error',
+        // })
         props.select(false)
     }
 }

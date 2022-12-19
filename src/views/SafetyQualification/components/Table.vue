@@ -1,15 +1,15 @@
 <template>
     <div>
         <el-table v-if="userType" v-loading="loading" max-height="650" :data="tableData" class="tablex">
-            <el-table-column fixed prop="userType" label="人员类型" width="200" />
+            <!-- <el-table-column fixed prop="userType" label="人员类型" width="200" /> -->
             <!-- <el-table-column fixed prop="baoCompany" label="公司" width="200" /> -->
-            <el-table-column prop="baoDepartment" label="所在部门" width="200" />
-            <el-table-column prop="baoFactory" label="所在分厂" width="170" />
-            <el-table-column prop="recentJob" label="当前岗位" width="220" />
+            <!-- <el-table-column prop="baoDepartment" label="所在部门" width="200" /> -->
+            <!-- <el-table-column prop="baoFactory" label="所在分厂" width="170" /> -->
+            <!-- <el-table-column prop="recentJob" label="当前岗位" width="220" /> -->
             <el-table-column prop="icCardWorkNumber" label="工号" width="100" />
             <el-table-column prop="username" label="员工姓名" width="100" />
-            <el-table-column prop="enterFactoryYear" label="进厂年" width="100" />
-            <el-table-column prop="enterFactoryMonth" label="进厂月" width="100" />
+            <!-- <el-table-column prop="enterFactoryYear" label="进厂年" width="100" /> -->
+            <!-- <el-table-column prop="enterFactoryMonth" label="进厂月" width="100" /> -->
             <el-table-column label="一级安全教育">
                 <el-table-column prop="safeEdu1.trainStartDate" label="培训起始日期" width="110"></el-table-column>
                 <el-table-column prop="safeEdu1.trainEndDate" label="培训结束日期" width="110"></el-table-column>
@@ -21,7 +21,10 @@
                 <el-table-column prop="safeEdu1.manageArea" label="区域" width="90"></el-table-column>
                 <el-table-column label="考卷照片" width="90">
                     <template #default="scope">
-                        <MyImg v-if="scope.row.safeEdu1 != null" :imgUrl="scope.row.safeEdu1.examPaper[0]"></MyImg>
+                        <!-- <MyImg v-if="scope.row.safeEdu1 != null" :imgUrl="scope.row.safeEdu1.examPaper[0]"></MyImg> -->
+                        <el-button v-if="scope.row.safeEdu1.examPaper != '' && scope.row.safeEdu1.examPaper"
+                            @click="licenseEdit(scope.row.safeEdu1.examPaper)" size="small" type="primary" plain>查看考卷
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table-column>
@@ -36,7 +39,10 @@
                 <el-table-column prop="safeEdu2.manageArea" label="区域" width="90"></el-table-column>
                 <el-table-column label="考卷照片" width="90">
                     <template #default="scope">
-                        <MyImg v-if="scope.row.safeEdu2 != null" :imgUrl="scope.row.safeEdu2.examPaper[0]"></MyImg>
+                        <!-- <MyImg v-if="scope.row.safeEdu2 != null" :imgUrl="scope.row.safeEdu2.examPaper[0]"></MyImg> -->
+                        <el-button v-if="scope.row.safeEdu2.examPaper != '' && scope.row.safeEdu2.examPaper"
+                            @click="licenseEdit(scope.row.safeEdu2.examPaper)" size="small" type="primary" plain>查看考卷
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table-column>
@@ -51,7 +57,10 @@
                 <el-table-column prop="safeEdu3.manageArea" label="区域" width="90"></el-table-column>
                 <el-table-column label="考卷照片" width="90">
                     <template #default="scope">
-                        <MyImg v-if="scope.row.safeEdu3 != null" :imgUrl="scope.row.safeEdu3.examPaper[0]"></MyImg>
+                        <!-- <MyImg v-if="scope.row.safeEdu3 != null" :imgUrl="scope.row.safeEdu3.examPaper[0]"></MyImg> -->
+                        <el-button v-if="scope.row.safeEdu3.examPaper != '' && scope.row.safeEdu3.examPaper"
+                            @click="licenseEdit(scope.row.safeEdu3.examPaper)" size="small" type="primary" plain>查看考卷
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table-column>
@@ -149,17 +158,19 @@
                 <el-table-column label="结束时间" prop="workCycleEnd" />
                 <el-table-column label="操作">
                     <template #default="scope">
-                        <el-button size="small" type="primary" @click="licenseEdit(scope.$index, scope.row, 4)">
+                        <el-button class="bt" size="small" type="primary"
+                            @click="licenseEdit(scope.$index, scope.row, 4)">
                             查看人员
                         </el-button>
-                        <el-button size="small" type="primary" @click="licenseEdit(scope.$index, scope.row, 1)">
+                        <el-button class="bt" size="small" type="primary"
+                            @click="licenseEdit(scope.$index, scope.row, 1)">
                             审核登记表
                         </el-button>
-                        <el-button size="small" type="primary" @click="licenseEdit(scope.$index, scope.row, 1)">
-                            审核登记表
-
+                        <el-button class="bt" size="small" type="primary"
+                            @click="licenseEdit(scope.$index, scope.row, 5)">
+                            人员名单
                         </el-button>
-                        <el-button v-if="scope.row.filesPath.length != 0" size="small" type="primary"
+                        <el-button class="bt" v-if="scope.row.filesPath.length != 0" size="small" type="primary"
                             @click="licenseEdit(scope.$index, scope.row, 3)">
                             下载附件
                         </el-button>
@@ -186,6 +197,10 @@ const props = defineProps<Props>()
 <style scoped>
 :deep(.el-table thead) {
     color: #323232;
+}
+
+.bt {
+    margin: 5px;
 }
 
 @media screen and (max-width: 1500px) {

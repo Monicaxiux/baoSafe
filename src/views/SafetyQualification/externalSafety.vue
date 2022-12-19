@@ -1,6 +1,11 @@
 <template>
     <Search :select="selectUserList" :userType="false" :data="eilnfo"></Search>
     <Table :licenseEdit="licenseEdit" :tableData="tableData" :loading="loading" :userType="false"></Table>
+    <br />
+    <el-pagination background @size-change="handleSizeChange" @current-change="handlePageChange"
+        :page-sizes="[10, 30, 100]" :current-page="data.pageNum" :page-size="10" layout="total,prev, pager, next"
+        :total="dataCount">
+    </el-pagination>
     <el-dialog v-model="dialogVisible" title="查看附件" width="30%" :before-close="handleClose">
         <MyImg v-for="(item) in filePic" :imgUrl="item"></MyImg>
     </el-dialog>
@@ -21,7 +26,7 @@
             <el-table-column fixed prop="username" label="员工姓名" />
         </el-table>
         <br>
-        <el-pagination v-if="hide2" background @size-change="handleSizeChange" @current-change="handlePageChange"
+        <el-pagination v-if="hide2" background @size-change="handleSizeChange2" @current-change="handlePageChange2"
             :page-sizes="[10, 30, 100]" :current-page="data.pageNum" :page-size="10"
             layout="total,prev, pager, next, jumper" :total="dataCount2">
         </el-pagination>
@@ -63,6 +68,8 @@ const selectUserList = () => {
         dataCount.value = res.result.dataCount == undefined ? 0 : res.result.dataCount
         // 如果只有一页则不展示分页
         hide.value = dataCount.value < 11 ? false : true
+        console.log("来了");
+
     })
 }
 const loading = ref(false)
@@ -74,9 +81,13 @@ const licenseEdit = (i: number, row: any, type: number) => {
                 type: 'success',
             })
             window.location.href = `${uplodUrl}/download/safe/word/1?projectId=${row.projectId}`
-            setTimeout(() => {
-                window.location.href = `${uplodUrl}/download/safe/word/2?projectId=${row.projectId}`
-            }, 2000)
+            break;
+        case 5:
+            ElNotification({
+                message: '下载中，请稍后...',
+                type: 'success',
+            })
+            window.location.href = `${uplodUrl}/download/safe/word/2?projectId=${row.projectId}`
             break;
         case 2:
             console.log(row.filePic);
@@ -116,6 +127,15 @@ const licenseEdit = (i: number, row: any, type: number) => {
 // 分页导航
 const handlePageChange = (val) => {
     data.pageNum = val;
+    selectUserList();
+};
+const handleSizeChange = (val) => {
+    data.pageNum = val;
+    selectUserList();
+}
+// 分页导航
+const handlePageChange2 = (val) => {
+    data.pageNum = val;
     let eiInfo = new EiInfo();
     eiInfo.parameter = data
     selectProjectUser(eiInfo).then((res: any) => {
@@ -129,7 +149,7 @@ const handlePageChange = (val) => {
     })
 };
 //切换分页条数
-const handleSizeChange = (val) => {
+const handleSizeChange2 = (val) => {
     data.pageNum = val;
     let eiInfo = new EiInfo();
     eiInfo.parameter = data

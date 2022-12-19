@@ -154,6 +154,6 @@ export class expiration {
     baoFactory: any = ''
     licenseName: any = ''
     licenseNumber: any = ''
-    licenseType: any = 1
+    // licenseType: any = 1
     pageNum: any = 1
 }

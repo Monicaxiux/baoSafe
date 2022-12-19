@@ -8,6 +8,7 @@
         </div>
         <div v-if="url != [] && uploadType" v-for="(i, item) in url" :key="i" class="img">
             <MyImg :imgUrl="url[item]"></MyImg>
+            <el-button size="small" @click="delImg(item)" type="danger">删除</el-button>
         </div>
         <div v-if="url == [] && uploadType" class="img_hidd">
 
@@ -37,6 +38,10 @@ type Props = {
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
+const delImg = (i) => {
+    console.log(i);
+    props.url.splice(i, 1)
+}
 //上传之前过滤文件
 const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     return isImg(file)

@@ -3,7 +3,7 @@
         <el-table v-loading="loading" max-height="650" border :data="tableData" class="tablex">
             <template v-if="tableType == 2">
                 <el-table-column fixed prop="locationInfo" label="位置" />
-                <el-table-column fixed prop="assistCompany" label="所在单位" width="160" />
+                <el-table-column fixed prop="assistCompany" label="公司" width="160" />
                 <el-table-column prop="icCardWorkNumber" label="IC卡号" width="160" />
                 <el-table-column prop="username" label="姓名" width="140" />
                 <el-table-column prop="signTime" label="记录时间" width="200" />
@@ -51,4 +51,5 @@ type Props = {
 const props = defineProps<Props>()
 </script>
 <style scoped src="@/assets/css/table.css">
+
 </style>

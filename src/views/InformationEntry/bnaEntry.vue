@@ -39,24 +39,28 @@ const select = (i) => {
             dialogType.value = 1
             url.value = '/internal/read/excel'
             title.value = '上传安全教育表格'
+            fileList.value = []
             break;
         case 2:
             dialogVisible.value = true
             dialogType.value = 2
             url.value = '/internal/upload/ic/pic'
             title.value = '上传IC卡照片'
+            fileList.value = []
             break;
         case 3:
             dialogVisible.value = true
             dialogType.value = 2
             url.value = '/internal/upload/user/pic'
             title.value = '上传个人照片'
+            fileList.value = []
             break;
         case 4:
             dialogVisible.value = true
             dialogType.value = 4
             url.value = '/e'
             title.value = '上传考卷照片'
+            fileList.value = []
             break;
         case 5:
             ElMessageBox.confirm('确认提交数据?')
@@ -106,9 +110,10 @@ const success = (val: any) => {
         fileList.value = []
     }
     fileList.value = []
-
-    selectUserList();
     dialogVisible.value = false
+    setTimeout(() => {
+        selectUserList();
+    }, 600)
 }
 const selectUserList = () => {
     loading.value = true

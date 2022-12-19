@@ -18,7 +18,10 @@
             <el-table-column prop="restoreDate" label="到期日期" width="130" />
             <el-table-column label="证书照片" width="90">
                 <template #default="scope">
-                    <MyImg :imgUrl="scope.row.licensePic"></MyImg>
+                    <!-- <MyImg :imgUrl="scope.row.licensePic"></MyImg> -->
+                    <el-button v-if="scope.row.licensePic != '' && scope.row.licensePic"
+                        @click="licenseEdit(scope.row.licensePic)" size="small" type="primary" plain>查看照片
+                    </el-button>
                 </template>
             </el-table-column>
         </template>
@@ -46,8 +49,9 @@ type Props = {
     license: Function,//确认
     tableType: boolean,
     loading: boolean,
-    multipleSelection: any
+    multipleSelection: any,
     handleChange: Function,
+    licenseEdit: any
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()

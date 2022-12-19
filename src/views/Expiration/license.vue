@@ -5,8 +5,8 @@
         i
     }}</el-tag>
   <br><br>
-  <Table :handleChange="handleChange" :loading="loading" :multipleSelection="multipleSelection" :tableType="true"
-    :tableData="tableData" :license="license"></Table>
+  <Table :licenseEdit="licenseEdit" :handleChange="handleChange" :loading="loading"
+    :multipleSelection="multipleSelection" :tableType="true" :tableData="tableData" :license="license"></Table>
   <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
     :render="selectUserList">
   </Pagination>
@@ -22,8 +22,12 @@
       </span>
     </template>
   </el-dialog>
+  <el-dialog v-model="dialogVisibleimg" title="查看作业证照片" width="30%" :before-close="handleClose2">
+    <MyImg v-for="(item) in filePic" :imgUrl="item"></MyImg>
+  </el-dialog>
 </template>
 <script lang="ts" setup>
+import MyImg from '@/components/ImaPreview.vue'
 import Table from "./components/Table.vue";
 import Pagination from "@/components/Pagination.vue"; //分页组件
 import Search from "./components/Search.vue";
@@ -44,10 +48,16 @@ const expiryLimit = ref(null);
 const multipleSelection = ref([]);
 const resButton = ref([])
 const msgTitle = ref('');
+const dialogVisibleimg = ref(false);
 const license = () => { };
 const Limit = () => {
   dialogVisible.value = true;
 };
+const filePic: any = ref([])
+const licenseEdit = (row: any) => {
+  filePic.value = row
+  dialogVisibleimg.value = true
+}
 const handleEditTLis = () => {
   if (expiryLimit.value) {
     updexpiryLimit(expiryLimit.value).then((res) => {
@@ -115,6 +125,9 @@ const download = () => {
 };
 const handleClose = () => {
   dialogVisible.value = false;
+};
+const handleClose2 = () => {
+  dialogVisibleimg.value = false;
 };
 </script>
 <style scoped>

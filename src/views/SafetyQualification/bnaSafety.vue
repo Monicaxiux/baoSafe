@@ -1,13 +1,17 @@
 <template>
     <Search :userType="true" :select="selectUserList" :data="eilnfo"></Search>
-    <Table :licenseEdit="[]" :userType="true" :loading="loading" :tableData="tableData"></Table>
+    <Table :licenseEdit="licenseEdit" :userType="true" :loading="loading" :tableData="tableData"></Table>
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eilnfo.parameter.pageNum" :options="eilnfo"
         :render="selectUserList">
     </Pagination>
+    <el-dialog v-model="dialogVisible" title="查看考卷照片" width="30%" :before-close="handleClose">
+        <MyImg v-for="(item) in filePic" :imgUrl="item"></MyImg>
+    </el-dialog>
 </template>
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
 import Search from './components/Search.vue'
+import MyImg from '@/components/ImaPreview.vue'
 import Dialog from './components/Dialog.vue'
 import Table from './components/Table.vue'
 import Pagination from '@/components/Pagination.vue'//导入分页组件
@@ -18,6 +22,8 @@ import { selectBnasafe, } from '@/api/user';//引入api方法
 const query = reactive(new bnaSafety);
 //分厂搜索参数
 const queryAddress = reactive(new address);
+const dialogVisible = ref(false)
+const filePic: any = ref([])
 //eilnfo格式参数
 const eilnfo = reactive(new EiInfo);
 eilnfo.parameter = query
@@ -31,6 +37,13 @@ const hide = ref(false);
 onMounted(() => {
     // select();
 })
+const handleClose = () => {
+    dialogVisible.value = false
+}
+const licenseEdit = (row: any) => {
+    filePic.value = row
+    dialogVisible.value = true
+}
 //加载
 const select = () => {
     eilnfo.parameter = queryAddress
@@ -53,4 +66,5 @@ const selectUserList = () => {
 }
 </script>
 <style>
+
 </style>

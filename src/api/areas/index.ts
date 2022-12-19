@@ -81,3 +81,11 @@ export const selectAll = (() => {
         method: 'post'
     })
 })
+//新增/编辑安全教育区域
+export const addUpdManage = ((eiInfo: any) => {
+    return request({
+        url: '/area/insert/update/delete/safe/manage',
+        method: 'post',
+        data: eiInfo
+    })
+})

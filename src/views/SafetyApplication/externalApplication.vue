@@ -29,11 +29,11 @@
                             <el-input class="input" v-model="form.assistCompany" clearable placeholder="请输入协力公司" />
                         </el-form-item>
                         <el-form-item label="负责人" prop="contactPerson">
-                            <el-input class="input" v-model="form.contactPerson" clearable placeholder="请输入安全负责人" />
+                            <el-input class="input" v-model="form.safetyEducationCharge" clearable
+                                placeholder="请输入安全负责人" />
                         </el-form-item>
                         <el-form-item label="联系电话" prop="safetyEducationCharge">
-                            <el-input class="input" v-model="form.safetyEducationCharge" clearable
-                                placeholder="请输入联系电话" />
+                            <el-input class="input" v-model="form.contactPerson" clearable placeholder="请输入联系电话" />
                         </el-form-item>
                         <el-form-item label="项目周期" prop="projectCycle">
                             <el-date-picker v-model="form.time" @change="change" value-format="YYYY-MM-DD"
@@ -198,11 +198,14 @@ const select = (i: any) => {
                         eiInfo.userInfo = {
                             id: store.userInfo.id
                         }
-                        createProject(eiInfo).then((res) => {
-                            ElNotification({
-                                message: '项目创建成功',
-                                type: 'success',
-                            })
+                        createProject(eiInfo).then((res: any) => {
+                            if (res.sys.status != -1) {
+                                ElNotification({
+                                    message: '项目创建成功',
+                                    type: 'success',
+                                })
+                            }
+
                             getProjectUsers(eilnfox)
                             // 清空表单
                             for (let i in form) { form[i] = '' }
@@ -214,6 +217,7 @@ const select = (i: any) => {
             dialogVisible.value = true
             dialogType.value = 3
             title.value = '上传附件'
+            fileList.value = []
             break;
     }
 }

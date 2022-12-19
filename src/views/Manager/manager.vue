@@ -149,7 +149,9 @@ const handleEditT = (i) => {
             }
             // eiInfo.parameter.authArea.push(1)
             eiInfo.userInfo = store.userInfo
-            if (from.userAuth == "" || eiInfo.parameter.userAuth == "") {
+            console.log(from.userAuth);
+
+            if (from.userAuth == 1) {
                 ElNotification({
                     message: '请选择权限!',
                     type: 'error',
@@ -163,21 +165,25 @@ const handleEditT = (i) => {
                             type: 'success',
                         })
                     } else {
-                        ElMessageBox.confirm('该区域已有其他人负责，是否强制修改?')
-                            .then(() => {
-                                eiInfo.parameter.force = 1
-                                updateUserAuth(eiInfo).then((res: any) => {
-                                    selectUserList()
-                                    if (res.sys.status != -1) {
-                                        ElNotification({
-                                            message: res.sys.msg,
-                                            type: 'success',
-                                        })
-                                    }
-                                })
-                            }).catch(() => {
+                        // ElNotification({
+                        //     message: res.sys.msg,
+                        //     type: 'error',
+                        // })
+                        // ElMessageBox.confirm('该区域已有其他人负责，是否强制修改?')
+                        //     .then(() => {
+                        //         eiInfo.parameter.force = 1
+                        //         updateUserAuth(eiInfo).then((res: any) => {
+                        //             selectUserList()
+                        //             if (res.sys.status != -1) {
+                        //                 ElNotification({
+                        //                     message: res.sys.msg,
+                        //                     type: 'success',
+                        //                 })
+                        //             }
+                        //         })
+                        //     }).catch(() => {
 
-                            })
+                        //     })
                     }
 
                     dialogVisible.value = false

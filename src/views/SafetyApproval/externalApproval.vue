@@ -8,7 +8,7 @@
     <Dialog :from="[]" :tableDatax="[]" :uploadUserPic="[]" :handleDelete="[]" :isForm="[]" :manageAreaList="[]"
         :projectId="projectId" :dialogType="1" :dialogVisible="dialogVisible" :handle="handle">
     </Dialog>
-    <el-dialog v-model="dialog" title="请选择下级区域" width="60%" :before-close="close">
+    <el-dialog v-model="dialog" title="请选择下级区域" width="40%" :before-close="close">
         <el-form-item label="下级区域">
             <el-select style="width: 150px;margin-right: 20px;" multiple v-model="nextSafeManageArea"
                 placeholder="请选择下级区域">
@@ -35,7 +35,7 @@
                     <h1 style="font-size: 30px">宝日智慧安全</h1>
                     <br />
                     <img :src="item.base64img" />
-                    <div class="qrText">2022</div>
+                    <div class="qrText">{{ year }}</div>
                     <div style="margin-top: -50px;">
                         <h2>姓名:{{ item.username }}</h2>
                         <h2>IC卡号:{{ item.icCardWorkNumber }}</h2>
@@ -67,6 +67,7 @@ import request from '@/utils/request'
 const store = piniaData();
 //部门下拉框
 const departmentSelect = ref([])
+const year = ref()
 //分页搜索参数
 const query = reactive(new selectApproval);
 //eilnfo格式参数
@@ -92,6 +93,8 @@ const projectId = ref(0)
 const safeEduId = ref(0)
 // dom初始化完成请求数据操纵dom
 onMounted(() => {
+    var date = new Date;
+    year.value = date.getFullYear();
     eilnfo.parameter = {}
     selectUserList();//查询用户列表
     selectDepartment().then((res: any) => {
@@ -126,6 +129,7 @@ const approval = (index, row: any) => {
             type: 'warning',
         })
     } else {
+
         // if (store.userInfo.userAuth == 1 && row.safetyEducation.safeLevel != '一级安全教育') {
         //     ElNotification({
         //         message: '当前用户只具备一级审批权限',
@@ -147,8 +151,8 @@ const approval = (index, row: any) => {
         dialogVisible.value = true
         let manageAreaType: any = 0
         let s: any = 0
-        switch (store.userInfo.userAuth) {
-            case 1:
+        switch (row.safetyEducation.safeLevel) {
+            case "一级安全教育":
                 if (row.safetyEducation.checkStatus == "通过" && row.safetyEducation.safeLevel == '二级安全教育') {
                     s = row.safetyEducation.manageAreaId
                     safeEduId.value = row.safetyEducation.id
@@ -158,14 +162,17 @@ const approval = (index, row: any) => {
                     safeEduId.value = row.safetyEducation.id
                     manageAreaType = 2
                 }
+                store.safeLevel = "一级安全教育"
                 break;
-            case 2:
+            case "二级安全教育":
                 s = row.safetyEducation.manageAreaId
                 safeEduId.value = row.safetyEducation.id
                 manageAreaType = 3
+                store.safeLevel = "二级安全教育"
                 break;
-            case 3:
+            case "三级安全教育":
                 safeEduId.value = row.safetyEducation.id
+                store.safeLevel = "三级安全教育"
                 break;
         }
         let eiInfo = new EiInfo
@@ -253,7 +260,8 @@ const handle = (i: any) => {
                 })
             break;
         case 2:
-            if (store.userInfo.userAuth == 3) {
+
+            if (store.userInfo.userAuth == 3 || store.safeLevel == "三级安全教育") {
                 submitApproval()
             } else {
                 nextSafeManageArea.value = []
@@ -267,35 +275,43 @@ const handle = (i: any) => {
     }
 }
 const submitApproval = () => {
-    ElMessageBox.confirm('确定通过审核?')
-        .then(() => {
-            let eiInfo = new EiInfo
-            eiInfo.parameter = {
-                result: 1,
-                safeEduId: safeEduId.value,
-                nextSafeManageArea: nextSafeManageArea.value,
-                filePic: filePic.value
-            }
-            eiInfo.userInfo = {
-                id: store.userInfo.id,
-                auth: store.userInfo.userAuth
-            }
-            selectVerify(eiInfo).then((res: any) => {
-                if (res.sys.status != -1) {
-                    ElNotification({
-                        message: "安全教育审批完成",
-                        type: 'success',
-                    })
-                    store.countVerifySafeEduExternal = res.result.countVerifySafeEduExternal
+    if (nextSafeManageArea.value.length == 0 && store.userInfo.userAuth != 3 && store.safeLevel != "三级安全教育") {
+        ElNotification({
+            message: "请选择下级区域",
+            type: 'error',
+        })
+    } else {
+        ElMessageBox.confirm('确定通过审核?')
+            .then(() => {
+                let eiInfo = new EiInfo
+                eiInfo.parameter = {
+                    result: 1,
+                    safeEduId: safeEduId.value,
+                    nextSafeManageArea: nextSafeManageArea.value,
+                    filePic: filePic.value
                 }
-                dialog.value = false
-                dialogVisible.value = false
-                selectUserList()
+                eiInfo.userInfo = {
+                    id: store.userInfo.id,
+                    auth: store.userInfo.userAuth
+                }
+                selectVerify(eiInfo).then((res: any) => {
+                    if (res.sys.status != -1) {
+                        ElNotification({
+                            message: "安全教育审批完成",
+                            type: 'success',
+                        })
+                        store.countVerifySafeEduExternal = res.result.countVerifySafeEduExternal
+                    }
+                    dialog.value = false
+                    dialogVisible.value = false
+                    selectUserList()
+                })
+
             })
-        })
-        .catch(() => {
-            // catch error
-        })
+            .catch(() => {
+                // catch error
+            })
+    }
 }
 </script>
 <style scoped>

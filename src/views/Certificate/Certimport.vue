@@ -1,16 +1,21 @@
 <template>
     <Search :data="[]" :add="null" :searchType="2" :select="select"></Search>
-    <Table :type="false" :handleEdit="null" :loading="loading" :tableData="tableData"></Table>
+    <Table :licenseEdit="licenseEdit" :type="false" :handleEdit="null" :loading="loading" :tableData="tableData">
+    </Table>
     <Pagination :hide="hide" :pagesize="10" :total="dataCount" :currentpage="eiInfo.parameter.pageNum" :options="eiInfo"
         :render="selectUserList">
     </Pagination>
     <Dialog :success="success" :fileList="fileList" :dialogVisible="dialogVisible" :title="title"
         :dialogType="dialogType" :url="url" :handleEditT="handleEditT"></Dialog>
+    <el-dialog v-model="dialogVisibleimg" title="查看作业证照片" width="30%" :before-close="handleClose">
+        <MyImg v-for="(item) in filePic" :imgUrl="item"></MyImg>
+    </el-dialog>
 </template>
 <script lang="ts" setup>
 import Search from './components/Search.vue'
 import Dialog from './components/Dialog.vue'
 import { ElMessageBox } from 'element-plus'
+import MyImg from "@/components/ImaPreview.vue";
 import Table from './components/Table.vue'//员工表格
 import { ElNotification } from 'element-plus'
 import Pagination from '@/components/Pagination.vue'//分页组件
@@ -32,6 +37,16 @@ const params = reactive({ pageNum: 1 })
 const eiInfo = reactive(new EiInfo)
 const fileList = ref([])
 eiInfo.parameter = params
+const dialogVisibleimg = ref(false);
+const filePic: any = ref([])
+
+const handleClose = () => {
+    dialogVisibleimg.value = false;
+};
+const licenseEdit = (row: any) => {
+    filePic.value = row
+    dialogVisibleimg.value = true
+}
 const select = (i) => {
     switch (i) {
         case 1:
@@ -39,12 +54,14 @@ const select = (i) => {
             dialogType.value = 1
             url.value = '/license/read/excel'
             title.value = '上传作业证表格'
+            fileList.value = []
             break;
         case 2:
             dialogVisible.value = true
             dialogType.value = 2
             url.value = '/license/upload/license/pic'
             title.value = '上传作业证照片'
+            fileList.value = []
             break;
         case 3:
             ElMessageBox.confirm('确认提交数据?')
@@ -85,8 +102,12 @@ const success = (val: any) => {
         type: 'success',
     })
     fileList.value = []
-    selectUserList();
+    setTimeout(() => {
+        selectUserList();
+    }, 600)
     dialogVisible.value = false
+    selectUserList();
+
 }
 const selectUserList = () => {
     loading.value = true

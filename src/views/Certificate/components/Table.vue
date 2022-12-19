@@ -11,7 +11,10 @@
             <el-table-column prop="expiryDate" label="到期日期" width="110" />
             <el-table-column label="证书照片" width="90">
                 <template #default="scope">
-                    <MyImg :imgUrl="scope.row.licensePic[0]"></MyImg>
+                    <!-- <MyImg v-if="type" :imgUrl="scope.row.licensePic[0]"></MyImg> -->
+                    <el-button v-if="scope.row.licensePic != '' && scope.row.licensePic"
+                        @click="licenseEdit(scope.row.licensePic)" size="small" type="primary" plain>查看照片
+                    </el-button>
                 </template>
             </el-table-column>
             <el-table-column v-if="type" label="操作" width="190">
@@ -40,6 +43,7 @@ type Props = {
     tableData: Array<any>,//表格数据
     loading: boolean,
     handleEdit: any,
+    licenseEdit: any,
     type: any
 }
 // 使用defineProps接收父组件的传递值

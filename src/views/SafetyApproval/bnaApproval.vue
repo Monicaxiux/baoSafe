@@ -29,9 +29,9 @@
                 <div style="text-align: center" class="qrDiv">
                     <h1 style="font-size: 27px">BNA安全</h1>
                     <img :src="qrImgB64" />
-                    <div class="qrText">2022</div>
+                    <div class="qrText">{{ year }}</div>
                     <div style="margin-top: -50px;line-height: 17px;font-size: 13px;">
-                        <h2>部门:{{ baoDepartment }}</h2>
+                        <h2>分厂:{{ baoDepartment }}</h2>
                         <h2>姓名:{{ userName }}</h2>
                         <h2>工号:{{ icCardWorkNumber }}</h2>
                     </div>
@@ -85,12 +85,16 @@ const baoDepartment = ref('')
 const icCardWorkNumber = ref('')
 const userName = ref('')
 const qrImgB64 = ref('')
+const year = ref()
+
 // 监听表格数据来开启提交按钮
 watch(from, (newValue, oldValue) => {
     newValue.examPic != '' ? addExam() : false
 })
 // dom初始化完成请求数据操纵dom
 onMounted(() => {
+    var date = new Date;
+    year.value = date.getFullYear();
     eilnfo.parameter = {}
     selectUserList();
 })
@@ -174,7 +178,7 @@ const getQrCode = (i: number, row: any) => {
 
     userName.value = row.username;
     icCardWorkNumber.value = row.icCardWorkNumber;
-    baoDepartment.value = row.baoDepartment;
+    baoDepartment.value = row.baoFactory;
     qrImgDialog.value = true;
 }
 const handle = (i: any) => {

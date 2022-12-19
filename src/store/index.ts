@@ -14,7 +14,8 @@ export const piniaData = defineStore("piniaData", {
             fileStatus: <boolean>true,
             lsfileStatus: <boolean>true,
             countVerifySafeEduInternal: <any>0,
-            countVerifySafeEduExternal: <any>0
+            countVerifySafeEduExternal: <any>0,
+            safeLevel: <any>""
         };
     },
     getters: {},

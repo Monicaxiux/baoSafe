@@ -16,10 +16,10 @@
             <el-input class="input" v-model="form.assistCompany" clearable placeholder="请输入协力公司" />
         </el-form-item>
         <el-form-item label="负责人" prop="contactPerson">
-            <el-input class="input" v-model="form.contactPerson" clearable placeholder="请输入安全负责人" />
+            <el-input class="input" v-model="form.safetyEducationCharge" clearable placeholder="请输入安全负责人" />
         </el-form-item>
         <el-form-item label="联系电话" prop="safetyEducationCharge">
-            <el-input class="input" v-model="form.safetyEducationCharge" clearable placeholder="请输入联系电话" />
+            <el-input class="input" v-model="form.contactPerson" clearable placeholder="请输入联系电话" />
         </el-form-item>
         <el-form-item label="项目周期" prop="projectCycle">
             <el-date-picker v-model="form.time" @change="change" value-format="YYYY-MM-DD" type="daterange"
