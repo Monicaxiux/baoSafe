@@ -32,13 +32,13 @@
         <div style="text-align: center" id="printTest">
             <div style="text-align: center" v-for="item in qrImgB64" :key="item.id">
                 <div style="text-align: center" class="qrDiv">
-                    <h1 style="font-size: 30px">宝日智慧安全</h1>
-                    <br />
+                    <h1 style="font-size: 30px;margin: 0;">宝日智慧安全</h1>
+                    <!-- <br /> -->
                     <img :src="item.base64img" />
                     <div class="qrText">{{ year }}</div>
-                    <div style="margin-top: -50px;">
+                    <div style="margin-top: -85px;">
                         <h2>姓名:{{ item.username }}</h2>
-                        <h2>IC卡号:{{ item.icCardWorkNumber }}</h2>
+                        <h2>IC卡号:{{ item.icCardWorkNumber }}</h2 >
                     </div>
                 </div>
             </div>
@@ -62,6 +62,7 @@ import { piniaData } from '@/store';//引入pinia状态管理
 import { ElNotification } from 'element-plus'
 import jrQrcode from "jr-qrcode";
 import request from '@/utils/request'
+import { ElLoading } from 'element-plus'
 
 //pinia状态管理
 const store = piniaData();
@@ -199,11 +200,17 @@ const close = () => {
         })
 }
 const getQrCode = (i: number, row: any) => {
+    qrImgB64.value=[];
     const eiInfo = new EiInfo();
     eiInfo.parameter = {
         projectId: row.projectId,
-        pageNum: 1,
+        pageNum: -1,
     };
+    const loading = ElLoading.service({
+        lock: true,
+        text: 'Loading',
+        background: 'rgba(0, 0, 0, 0.7)',
+    })
     request.post("/assist/safety/status/each/user", eiInfo).then((res: any) => {
         let idList: any = [];
         for (let i = 0; i < res.result.safeList.length; i++) {
@@ -225,6 +232,7 @@ const getQrCode = (i: number, row: any) => {
                 base64img: base64img.value[i],
             });
         }
+        loading.close();
         qrImgDialog.value = true
     });
 
@@ -319,11 +327,13 @@ const submitApproval = () => {
     width: 400px;
     border-radius: 14px;
     margin: 0 auto;
-    padding-top: 50px;
+    /* padding-top: 50px; */
     padding-bottom: 20px;
     margin-bottom: 30px;
 }
-
+h2{
+    margin: 0;
+}
 .qrText {
     width: 70px;
     text-align: center;

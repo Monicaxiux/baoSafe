@@ -26,7 +26,6 @@
                                                                 <el-button type="danger"
                                                                     @click="slot(scoped.row, 3, 3)">删除</el-button>
                                                             </template>
-
                                                         </el-table-column>
                                                     </el-table>
                                                 </div>
@@ -94,7 +93,7 @@ const slot = (row: any, i, e) => {
             modify.value = 1
             break;
         case 2:
-            title.value = `编辑${e}区域`
+            title.value = `编辑${e}级区域`
             value.value = form.value.manageArea1Value || form.value.manageArea2Value || form.value.manageArea3Value
             Dialog.value = true;
             modify.value = 2
@@ -114,7 +113,8 @@ const slot = (row: any, i, e) => {
 }
 //操作
 const eitl = (i) => {
-    if (value.value && i != 3) {
+    console.log(value.value, i, 'asdasdas');
+    if (value.value || i == 3) {
         let eiInfo = new EiInfo;
         eiInfo.parameter = {
             manageAreaType: manageAreaType.value,

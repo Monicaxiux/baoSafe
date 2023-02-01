@@ -152,12 +152,12 @@ const success = (res) => {
     form.projectName = res.result.parameter.projectName
     form.assistCompany = res.result.parameter.assistCompany
     ElNotification({
-      message: "上传成功",
+      message: res.sys.msg,
       type: "success",
     });
   } else {
     ElNotification({
-      message: "上传失败，请检查表格是否正确！",
+      message: res.sys.msg,
       type: "error",
     });
   }

@@ -154,9 +154,10 @@
                 <el-table-column label="项目名称" prop="projectName" />
                 <el-table-column label="协力单位" prop="assistCompany" />
                 <el-table-column label="负责人" prop="safetyEducationCharge" />
+                <el-table-column label="创建时间" prop="createDate" />
                 <el-table-column label="开始时间" prop="workCycleStart" />
                 <el-table-column label="结束时间" prop="workCycleEnd" />
-                <el-table-column label="操作">
+                <el-table-column label="操作" width="460">
                     <template #default="scope">
                         <el-button class="bt" size="small" type="primary"
                             @click="licenseEdit(scope.$index, scope.row, 4)">
@@ -174,6 +175,18 @@
                             @click="licenseEdit(scope.$index, scope.row, 3)">
                             下载附件
                         </el-button>
+                        <el-button class="bt" size="small"
+                            v-if="scope.row.safeStatus==2"
+                            type="primary" @click="getQrCode(scope.$index, scope.row)">
+                            <el-icon>
+                                <Picture />
+                            </el-icon>
+                            二维码
+                        </el-button>
+                        <el-button class="bt" size="small" type="danger"
+                            @click="licenseEdit(scope.$index, scope.row, 6)">
+                            删除
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table-column>
@@ -183,12 +196,14 @@
 
 <script lang="ts" setup>
 import MyImg from '@/components/ImaPreview.vue'
+import { Delete, EditPen, Picture } from '@element-plus/icons-vue'//引入elementui 图标
 
 // 定义Props默认数据类型
 type Props = {
     tableData: Array<any>,//表格数据
     loading: boolean,
     userType: boolean,
+    getQrCode: Function,
     licenseEdit: any
 }
 // 使用defineProps接收父组件的传递值

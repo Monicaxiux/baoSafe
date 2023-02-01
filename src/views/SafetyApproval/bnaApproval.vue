@@ -27,10 +27,10 @@
         <div id="printTest">
             <div>
                 <div style="text-align: center" class="qrDiv">
-                    <h1 style="font-size: 27px">BNA安全</h1>
+                    <h1 style="font-size: 27px;margin: 0;">BNA安全</h1>
                     <img :src="qrImgB64" />
                     <div class="qrText">{{ year }}</div>
-                    <div style="margin-top: -50px;line-height: 17px;font-size: 13px;">
+                    <div style="margin-top: -76px;line-height: 17px;font-size: 13px;">
                         <h2>分厂:{{ baoDepartment }}</h2>
                         <h2>姓名:{{ userName }}</h2>
                         <h2>工号:{{ icCardWorkNumber }}</h2>
@@ -143,18 +143,20 @@ const approval = (index, row: any) => {
         dialogVisible.value = true
         let manageAreaType: any = 0
         let s: any = 0
-        switch (store.userInfo.userAuth) {
-            case 1:
+        console.log(row);
+        
+        switch (row.safetyEducation.safeLevel) {
+            case "一级安全教育":
                 s = 1
                 safeEduId.value = row.safetyEducation.safeId
                 manageAreaType = 2
                 break;
-            case 2:
+            case "二级安全教育":
                 s = row.safetyEducation.manageAreaId
                 safeEduId.value = row.safetyEducation.safeId
                 manageAreaType = 3
                 break;
-            case 3:
+            case "三级安全教育":
                 safeEduId.value = row.safetyEducation.safeId
                 break;
         }
@@ -187,6 +189,7 @@ const handle = (i: any) => {
             dialog.value = true
             break;
         case 2:
+            console.log(from);
             if (from.trainStartDate != '' && from.trainEndDate != '' && from.examScore != '' && from.examDate != '' && tableDatax.value.length != 0) {
                 if (store.userInfo.userAuth != 3 && from.nextSafeManageArea == '') {
                     ElNotification({
@@ -198,6 +201,7 @@ const handle = (i: any) => {
                     // nextSafeManageArea.value = 0
                 }
             } else {
+                console.log('来了3');
                 ElNotification({
                     message: '请填写完整并添加考卷照片！',
                     type: 'warning',
@@ -339,9 +343,9 @@ const isForm = (obj) => {
     width: 400px;
     border-radius: 14px;
     margin: 0 auto;
-    padding-top: 50px;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
+    /* padding-top: 50px; */
+    /* padding-bottom: 20px; */
+    /* margin-bottom: 30px; */
 }
 
 .qrText {

@@ -18,7 +18,7 @@
                                 </div>
                                 <template #dropdown>
                                     <el-dropdown-menu style="width: 128px;">
-                                        <!-- <el-dropdown-item>修改密码</el-dropdown-item> -->
+                                        <el-dropdown-item @click="pudPass">修改密码</el-dropdown-item>
                                         <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
                                     </el-dropdown-menu>
                                 </template>
@@ -45,6 +45,8 @@ import screenfull from 'screenfull'//引入全屏插件
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { onMounted } from 'vue';
 import { isUserAuth } from '@/utils/regexp'
+import { pudUserPassword } from '@/api/user'
+import { EiInfo } from '@/types';
 
 const store = piniaData()
 //路由
@@ -62,6 +64,39 @@ const clickRig = () => {
     // }
     // console.log('qwe');
 
+}
+// 修改密码
+const pudPass = () => {
+    let eiInfo=new EiInfo;
+    ElMessageBox.prompt('', '修改密码', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    inputPattern:
+        /^.{6,18}$/,
+    inputErrorMessage: '请输入至少6位字符，最多18位字符密码',
+  })
+    .then(({ value }) => {
+        eiInfo.parameter={
+            id: store.userInfo.id,
+            icCardWorkNumber: store.userInfo.icCardWorkNumber,
+            password: value
+        }
+        pudUserPassword(eiInfo).then((res:any)=>{
+            if(res.sys.status==1){
+                ElMessage({
+                    type: 'success',
+                    message: `修改成功！您的新密码是：${value}，请重新登录`,
+                })
+                setTimeout(()=>{
+                    logOut();
+                },2000)
+            }
+        })
+      
+    })
+    .catch(() => {
+      
+    })
 }
 
 // 添加Tab标签

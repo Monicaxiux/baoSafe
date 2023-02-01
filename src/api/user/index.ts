@@ -280,3 +280,12 @@ export const selectProjectUser = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+
+// 修改密码
+export const pudUserPassword = ((eilnfo: any) => {
+    return request({
+        url: '/user/change/password',
+        method: 'post',
+        data: eilnfo
+    })
+})

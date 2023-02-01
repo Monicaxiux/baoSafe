@@ -50,14 +50,14 @@
                         </el-icon>
                         审批
                     </el-button>
-                    <el-button size="small"
+                    <!-- <el-button size="small"
                         v-if="scope.row.safetyEducation.safeLevel == '三级安全教育' && scope.row.safetyEducation.checkStatus == '通过'"
                         type="primary" @click="getQrCode(scope.$index, scope.row)">
                         <el-icon>
                             <Picture />
                         </el-icon>
                         二维码
-                    </el-button>
+                    </el-button> -->
                 </template>
             </el-table-column>
         </el-table>
@@ -72,7 +72,7 @@ type Props = {
     loading: boolean,
     getQrCode: Function,
     approval: Function,
-    userType: boolean
+    userType: boolean,
 }
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()

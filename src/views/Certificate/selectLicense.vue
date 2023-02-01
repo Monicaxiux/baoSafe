@@ -2,7 +2,7 @@
   <Search :select="selectUserList" :add="add" :data="eilnfo" :searchType="1"></Search>
   {{ msgTitle }}<el-tag class="tag" @click="(eilnfo.parameter.baoCompany = i, selectUserList(true))"
     v-for="i in resButton">{{
-        i
+      i
     }}</el-tag>
   <br><br>
   <Table :type="true" :handleEdit="handleEdit" :licenseEdit="licenseEdit" :handleChange="handleChange"
@@ -124,7 +124,7 @@ const userInfo: any = ref({
   receiveDate: "",
   restoreDate: "",
   expiryDate: "",
-  licensePic: "",
+  licensePic: [],
 });
 const licenseTypeList = ref([
   {
@@ -209,6 +209,8 @@ const download = () => {
     });
 };
 const handleEdit = (index, row, i) => {
+  console.log(dialogType.value);
+
   switch (i) {
     case 1:
       dialogType.value = 1;
@@ -256,9 +258,9 @@ const handleEditT = () => {
     username: store.userInfo.username,
   };
   if (dialogType.value != 1) {
-    eiInfo.parameter.icCardWorkNumberExact =
-      userInfo.value.icCardWorkNumberExact;
-    if (isForm(userInfo.value)) {
+    eiInfo.parameter.icCardWorkNumberExact = userInfo.value.icCardWorkNumberExact;
+    if (userInfo.value.icCardWorkNumberExact && userInfo.value.licenseNumber && userInfo.value.licenseName && userInfo.value.receiveDate && userInfo.value.restoreDate && userInfo.value.expiryDate && userInfo.value.licensePic.length != 0) {
+      eiInfo.parameter.id = 0
       licenseInsert(eiInfo).then((res: any) => {
         if (res.sys.status != -1) {
           ElNotification({
@@ -312,19 +314,21 @@ const handleClose2 = () => {
 const handleClose3 = () => {
   dialogVisibleimg.value = false;
 };
-const isForm = (obj) => {
-  for (let key in obj) {
-    if (!obj[key]) {
-      return false;
-    }
-  }
-  return true;
-};
+// const isForm = (obj) => {
+//   for (let key in obj) {
+//     console.log(obj[key]);
+//     if (!obj[key] || obj.licensePic.length==0) {
+//       return false;
+//     }
+//   }
+//   return true;
+// };
 const add = () => {
   // 清空表单
   for (let i in userInfo.value) {
     userInfo.value[i] = "";
   }
+  userInfo.value.licensePic = []
   dialogType.value = 2;
   dialogVisible.value = true;
 };

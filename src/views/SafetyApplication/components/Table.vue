@@ -11,7 +11,7 @@
                     <el-table-column prop="recentJob" label="当前岗位" width="220" />
                 </template>
                 <template v-if="userType">
-                    <el-table-column fixed prop="assistCompany" label="协力单位" width="240" />
+                    <!-- <el-table-column fixed prop="assistCompany" label="协力单位" width="240" /> -->
                     <!-- <el-table-column prop="actualCompany" label="所在单位" width="240" /> -->
                 </template>
                 <el-table-column prop="icCardWorkNumber" :label="userType ? 'IC卡号' : '工号'" width="200" />

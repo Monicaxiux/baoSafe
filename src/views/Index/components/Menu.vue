@@ -27,7 +27,7 @@
                 <el-icon v-if="i.name != '证书过期查询' && i.name != '安全教育审核' && i.name != '年度安全教育审核'">
                     <Grid />
                 </el-icon>
-                <div v-if="i.name == '证书过期查询' || i.name == '安全教育审核' || i.name == '年度安全教育审核'" class="db_title"></div>
+                <div v-if="i.name == '证书过期查询' ||   i.name == '安全教育审核' || i.name == '年度安全教育审核'" class="db_title"></div>
                 {{ i.name }}
             </el-menu-item>
         </el-sub-menu>

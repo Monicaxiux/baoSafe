@@ -74,7 +74,6 @@ import Pagination from '@/components/Pagination.vue'//分页组件
 import { piniaData } from '@/store';//引入pinia状态管理
 import { beforeProjectUser, getProjectUser, deleteProjectUser, createProject } from '@/api/user'
 import { ElNotification } from 'element-plus'
-
 //pinia状态管理
 const store = piniaData();
 const fileList = ref([])
@@ -86,7 +85,7 @@ const dialogVisible = ref(false)
 const dialogType = ref(1)
 const buttonStatus = ref(true)
 const submitStatus = ref(true)
-const url = ref(`/assist/read/excel?userOnly=1&uploadUserId=${store.userInfo.id}`)
+const url = ref(`/assist/read/excel?userOnly=1&uploadUserId=${store.userInfo.id}&assistCompany=${form.assistCompany}`)
 const url2 = ref(`/assist/upload/project/file/before/create?userInfoId=${store.userInfo.id}`)
 const title = ref('')
 const multiple: any = ref([])//多选选中内容
@@ -104,9 +103,9 @@ onMounted(() => {
     getProjectUsers(eilnfox)
 })
 //文件导入成功
-const success = () => {
+const success = (res:any) => {
     ElNotification({
-        message: '导入成功！',
+        message: res.sys.msg,
         type: 'success',
     })
     fileList.value = []
@@ -160,12 +159,19 @@ const select = (i: any) => {
             title.value = '选择安全教育人员'
             break;
         case 2:
-            dialogVisible.value = true
-            dialogType.value = 1
-            title.value = '模板导入安全教育人员'
-            fileList.value = []
-            console.log(fileList.value);
-
+            url.value=`/assist/read/excel?userOnly=1&uploadUserId=${store.userInfo.id}&assistCompany=${form.assistCompany}`
+            if(form.assistCompany && (form.projectNumber || form.contractNumber)){
+                dialogVisible.value = true
+                dialogType.value = 1
+                title.value = '模板导入安全教育人员'
+                fileList.value = []
+                console.log(fileList.value);
+            }else{
+                ElNotification({
+                    message: '请将项目信息填写完整！',
+                    type: 'warning',
+                })
+            }
             break;
         case 3:
             ElMessageBox.confirm('确定全部移除?')

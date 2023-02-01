@@ -15,3 +15,11 @@ export const selectSynerg = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+// 删除年度安全教育项目
+export const deleteProject = ((eilnfo: any) => {
+    return request({
+        url: '/assist/delete/project',
+        method: 'post',
+        data: eilnfo
+    })
+})

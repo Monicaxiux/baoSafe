@@ -151,12 +151,12 @@ const handleEditT = (i) => {
             eiInfo.userInfo = store.userInfo
             console.log(from.userAuth);
 
-            if (from.userAuth == 1) {
-                ElNotification({
-                    message: '请选择权限!',
-                    type: 'error',
-                })
-            } else {
+            // if (from.userAuth == 1) {
+            //     ElNotification({
+            //         message: '请选择权限!',
+            //         type: 'error',
+            //     })
+            // } else {
                 updateUserAuth(eiInfo).then((res: any) => {
                     selectUserList()
                     if (res.sys.status != -1) {
@@ -189,7 +189,7 @@ const handleEditT = (i) => {
                     dialogVisible.value = false
 
                 })
-            }
+            // }
 
             break;
         case 2:

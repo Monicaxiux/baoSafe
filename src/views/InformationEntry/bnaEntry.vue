@@ -74,11 +74,24 @@ const select = (i) => {
                         username: store.userInfo.username
                     }
                     internalExcel(eiInfo).then((res: any) => {
-                        ElNotification({
-                            message: res.sys.msg,
-                            type: 'success',
+                        // ElNotification({
+                        //     message: res.sys.msg,
+                        //     type: 'success',
+                        // })
+                        ElMessageBox.alert(res.sys.msg, '确认', {
+                            confirmButtonText: 'OK',
                         })
-                        selectUserList()
+                        // selectUserList()
+                        tableData.value = []
+                        // 分页总页数
+                        dataCount.value = 0
+                        // 如果只有一页则不展示分页
+                        hide.value = false;
+                        if (dataCount.value == 0) {
+                            store.fileStatus = true
+                        } else {
+                            store.fileStatus = false
+                        }
                     })
                 })
                 .catch(() => {
@@ -103,9 +116,12 @@ const success = (val: any) => {
     //     type: 'success',
     // })
     if (val.sys.status != 1) {
-        ElNotification({
-            message: val.sys.msg + val.result.failList,
-            type: 'error',
+        // ElNotification({
+        //     message: val.sys.msg + val.result.failList,
+        //     type: 'error',
+        // })
+        ElMessageBox.alert(val.sys.msg + val.result.failList, '确认', {
+            confirmButtonText: 'OK',
         })
         fileList.value = []
     }

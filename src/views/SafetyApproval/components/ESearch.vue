@@ -29,23 +29,23 @@
                         placeholder="考试日期" />
                 </el-form-item>
                 <el-form-item label="考试成绩">
-                    <el-input class="inputx" oninput="value=value.replace(/[^\d]/g,''),age=value.replace(/[^\d]/g,'')"
-                        v-model.number="from.examScore" clearable placeholder="考试成绩" />
+                    <el-input class="inputx" v-model.number="from.examScore" clearable placeholder="考试成绩" />
                 </el-form-item>
                 <el-form-item label="考卷照片">
                     <UploadImage :upload="uploadUserPic" :url="from.examPic"></UploadImage>
                 </el-form-item>
-                <div v-if="store.userInfo.userAuth!=3">
-                <el-divider />
-                <h1>安全教育下级区域</h1>
-                <el-form-item  label="下级区域">
-                    <el-select style="width: 150px;margin-right: 20px;" v-model="from.nextSafeManageArea"
-                        placeholder="请选择下级区域">
-                        <el-option v-for="item in manageAreaList" :key="item.id" :label="item.value" :value="item.id" />
-                    </el-select>
-                </el-form-item>
+                <div v-if="store.userInfo.userAuth != 3">
+                    <el-divider />
+                    <h1>安全教育下级区域</h1>
+                    <el-form-item label="下级区域">
+                        <el-select style="width: 150px;margin-right: 20px;" v-model="from.nextSafeManageArea"
+                            placeholder="请选择下级区域">
+                            <el-option v-for="item in manageAreaList" :key="item.id" :label="item.value"
+                                :value="item.id" />
+                        </el-select>
+                    </el-form-item>
                 </div>
-               
+
             </el-card>
             <el-card style="width: 50%;">
                 <el-table max-height="400" border :data="tableDatax" class="tablex">

@@ -26,6 +26,9 @@
             <el-form-item label="项目名称">
                 <el-input class="input" v-model="data.parameter.projectName" clearable placeholder="项目名称" />
             </el-form-item>
+            <el-form-item label="教育人">
+                <el-input class="input" v-model="data.parameter.eduPerson" clearable placeholder="教育人" />
+            </el-form-item>
         </template>
         <el-form-item label="工号">
             <el-input class="input" v-model="data.parameter.icCardWorkNumber" clearable placeholder="请输入工号" />

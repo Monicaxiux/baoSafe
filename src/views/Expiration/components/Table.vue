@@ -7,6 +7,7 @@
                 <template #default="scope">
                     <el-tag size="large" v-if="scope.row.expiryStatus == 1" class="ml-2" type="warning">快过期</el-tag>
                     <el-tag size="large" v-if="scope.row.expiryStatus == 2" class="ml-2" type="danger">已过期</el-tag>
+                    <el-tag size="large" v-if="scope.row.expiryStatus == 0" class="ml-2" type="success">正常</el-tag>
                 </template>
             </el-table-column>
             <el-table-column prop="username" label="员工姓名" width="130" />
@@ -14,8 +15,8 @@
             <el-table-column prop="licenseNumber" label="证书编号" />
             <el-table-column prop="licenseName" label="证书名称" width="280" />
             <el-table-column prop="receiveDate" label="取证日期" width="110" />
-            <el-table-column prop="expiryTime" label="复证日期" width="130" />
-            <el-table-column prop="restoreDate" label="到期日期" width="130" />
+            <el-table-column prop="restoreDate" label="复证日期" width="130" />
+            <el-table-column prop="expiryDate" label="到期日期" width="130" />
             <el-table-column label="证书照片" width="90">
                 <template #default="scope">
                     <!-- <MyImg :imgUrl="scope.row.licensePic"></MyImg> -->

@@ -74,6 +74,7 @@ type Props = {
     tableData: Array<any>,//表格数据
     loading: boolean,
 }
+
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
 </script>

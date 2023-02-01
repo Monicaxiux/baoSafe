@@ -97,10 +97,14 @@ const handleEditT = () => {
 }
 //文件导入成功
 const success = (val: any) => {
-    ElNotification({
-        message: val.sys.msg,
-        type: 'success',
+    // ElNotification({
+    //     message: val.sys.msg,
+    //     type: 'success',
+    // })
+    ElMessageBox.alert(val.sys.msg + val.result.failList, '提醒', {
+        confirmButtonText: '确认',
     })
+    
     fileList.value = []
     setTimeout(() => {
         selectUserList();

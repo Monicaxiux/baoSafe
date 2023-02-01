@@ -54,6 +54,7 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     width: 800px;
     /* overflow: auto; */
     flex-flow: wrap;
+    padding: 0 0 30px 0;
 }
 
 .upload {
@@ -71,7 +72,7 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
 
 .img_btn {
     width: 0;
-    height: 0;
+    /* height: 0; */
 }
 
 .img {
@@ -81,7 +82,7 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     width: 80px;
     height: 80px;
     margin-right: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 50px;
     text-align: center;
 }
 
