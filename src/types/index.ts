@@ -1,4 +1,4 @@
-//登陆参数
+//登录参数
 export class LoginUser {
     loginName: string = ''
     password: string = ''

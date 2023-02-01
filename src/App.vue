@@ -18,8 +18,6 @@
     margin: 0 5px 0 0
 }
 
-
-
 body {
     margin: 0;
     padding: 0;

@@ -1,10 +1,12 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import { ElNotification } from 'element-plus'
 import { devUrl, proUrl } from './url'
+
 const request = axios.create({
   baseURL: devUrl ,//devUrl 本地请求路径，proUrl 在线请求路径
   // timeout: 15000,//请求超时时常
 })
+
 //请求拦截器
 request.interceptors.request.use((config: AxiosRequestConfig) => {
   // if (config.headers) {
@@ -18,6 +20,7 @@ request.interceptors.request.use((config: AxiosRequestConfig) => {
   })
   return Promise.reject(error)
 })
+
 //响应拦截器
 request.interceptors.response.use((response: AxiosResponse) => {
   //请求状态码异常提示
@@ -35,4 +38,5 @@ request.interceptors.response.use((response: AxiosResponse) => {
   })
   return Promise.reject(error)
 })
+
 export default request
