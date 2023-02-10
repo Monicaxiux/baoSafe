@@ -13,21 +13,21 @@
                 <i :class="item.icon"></i>
                 <span>{{ item.title }}</span>
                 <div v-if="item.title == '安全资质证书管理' && !store.isCollapse" class="db_title">{{
-                        store.expiredAlarm.expiredLicenseNum
+                    store.expiredAlarm.expiredLicenseNum
                 }}</div>
                 <div v-if="item.title == '三级安全教育信息' && !store.isCollapse" class="db_title">{{
-                        store.countVerifySafeEduInternal
+                    store.countVerifySafeEduInternal
                 }}</div>
                 <div v-if="item.title == '年度安全教育信息' && !store.isCollapse" class="db_title">{{
-                        store.countVerifySafeEduExternal
+                    store.countVerifySafeEduExternal
                 }}</div>
             </template>
             <el-menu-item v-for="(i, ix) in item.children" :key="ix"
                 @click="store.active = i.path, addTab(i.path, i.name)" :index="i.path">
-                <el-icon v-if="i.name != '证书过期查询' && i.name != '安全教育审核' && i.name != '年度安全教育审核'">
+                <el-icon v-if="i.name != '证书过期查询' && i.name != '安全教育审批' && i.name != '年度安全教育审批'">
                     <Grid />
                 </el-icon>
-                <div v-if="i.name == '证书过期查询' ||   i.name == '安全教育审核' || i.name == '年度安全教育审核'" class="db_title"></div>
+                <div v-if="i.name == '证书过期查询' || i.name == '安全教育审批' || i.name == '年度安全教育审批'" class="db_title"></div>
                 {{ i.name }}
             </el-menu-item>
         </el-sub-menu>
@@ -79,7 +79,7 @@ const menus = ref([
             },
             {
                 path: '/bnaApproval',
-                name: '安全教育审核'
+                name: '安全教育审批'
             }
         ]
     },
@@ -102,7 +102,7 @@ const menus = ref([
             },
             {
                 path: '/externalApproval',
-                name: '年度安全教育审核'
+                name: '年度安全教育审批'
             },
             // {
             //     path: '/project',

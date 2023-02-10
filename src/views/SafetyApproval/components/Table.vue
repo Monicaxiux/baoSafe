@@ -43,7 +43,7 @@
             </template>
             <el-table-column fixed="right" label="操作" width="180">
                 <template #default="scope">
-                    <el-button size="small" v-if="scope.row.safetyEducation.checkStatus != '通过'" type="primary"
+                    <el-button size="small" v-if="scope.row.safetyEducation.checkStatus == '待审批'" type="primary"
                         @click="approval(scope.$index, scope.row)">
                         <el-icon>
                             <EditPen />

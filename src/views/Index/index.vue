@@ -18,7 +18,7 @@
                                 </div>
                                 <template #dropdown>
                                     <el-dropdown-menu style="width: 128px;">
-                                        <el-dropdown-item @click="pudPass">修改密码</el-dropdown-item>
+                                        <el-dropdown-item @click="updPass">修改密码</el-dropdown-item>
                                         <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
                                     </el-dropdown-menu>
                                 </template>
@@ -57,6 +57,9 @@ const change = (val: any) => {
 }
 onMounted(() => {
     initWebSocket()
+    if(store.changePassword==1){
+        updPass();
+    }
 })
 const clickRig = () => {
     // document.oncontextmenu = (e) => {
@@ -66,7 +69,7 @@ const clickRig = () => {
 
 }
 // 修改密码
-const pudPass = () => {
+const updPass = () => {
     let eiInfo=new EiInfo;
     ElMessageBox.prompt('', '修改密码', {
     confirmButtonText: '确定',
@@ -88,14 +91,21 @@ const pudPass = () => {
                     message: `修改成功！您的新密码是：${value}，请重新登录`,
                 })
                 setTimeout(()=>{
-                    logOut();
+                    ElNotification({
+                        message: '当前账号已退出',
+                        type: 'warning',
+                    })
+                    store.$reset();
+                    window.location.href = "/"
                 },2000)
             }
         })
       
     })
     .catch(() => {
-      
+        if(store.changePassword==1){
+            updPass();
+        }
     })
 }
 

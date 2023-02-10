@@ -17,7 +17,7 @@
                 <el-table-column prop="safeEdu1.examScore" label="考试成绩" width="90"></el-table-column>
                 <el-table-column prop="safeEdu1.chiefExaminer" label="主考人" width="70"></el-table-column>
                 <el-table-column prop="safeEdu1.chiefExaminerPhone" label="联系方式" width="110"></el-table-column>
-                <el-table-column prop="safeEdu1.checkStatus" label="审核状态" width="90"></el-table-column>
+                <el-table-column prop="safeEdu1.checkStatus" label="审批状态" width="90"></el-table-column>
                 <el-table-column prop="safeEdu1.manageArea" label="区域" width="90"></el-table-column>
                 <el-table-column label="考卷照片" width="90">
                     <template #default="scope">
@@ -35,7 +35,7 @@
                 <el-table-column prop="safeEdu2.examScore" label="考试成绩" width="90"></el-table-column>
                 <el-table-column prop="safeEdu2.chiefExaminer" label="主考人" width="70"></el-table-column>
                 <el-table-column prop="safeEdu2.chiefExaminerPhone" label="联系方式" width="110"></el-table-column>
-                <el-table-column prop="safeEdu2.checkStatus" label="审核状态" width="90"></el-table-column>
+                <el-table-column prop="safeEdu2.checkStatus" label="审批状态" width="90"></el-table-column>
                 <el-table-column prop="safeEdu2.manageArea" label="区域" width="90"></el-table-column>
                 <el-table-column label="考卷照片" width="90">
                     <template #default="scope">
@@ -53,7 +53,7 @@
                 <el-table-column prop="safeEdu3.examScore" label="考试成绩" width="90"></el-table-column>
                 <el-table-column prop="safeEdu3.chiefExaminer" label="主考人" width="70"></el-table-column>
                 <el-table-column prop="safeEdu3.chiefExaminerPhone" label="联系方式" width="110"></el-table-column>
-                <el-table-column prop="safeEdu3.checkStatus" label="审核状态" width="90"></el-table-column>
+                <el-table-column prop="safeEdu3.checkStatus" label="审批状态" width="90"></el-table-column>
                 <el-table-column prop="safeEdu3.manageArea" label="区域" width="90"></el-table-column>
                 <el-table-column label="考卷照片" width="90">
                     <template #default="scope">
@@ -68,9 +68,9 @@
         <el-table v-if="!userType" v-loading="loading" max-height="820" :data="tableData" border style="width: 100%">
             <el-table-column label="项目及安全教育信息" width="50">
                 <el-table-column type="expand">
-                    <template #default="props">
+                    <template #default="propsx">
                         <div m="4">
-                            <el-table :data="props.row.safeEdu1List" border>
+                            <el-table :data="propsx.row.safeEdu1List" border>
                                 <el-table-column width="50"></el-table-column>
                                 <el-table-column label="一级安全教育">
                                     <el-table-column type="expand">
@@ -106,6 +106,14 @@
                                                                                         size="small" type="primary"
                                                                                         plain>查看附件
                                                                                     </el-button>
+
+                                                                                    <el-button
+                                                                                        v-if="props.row.checkStatus == '待审批'"
+                                                                                        @click="licenseEdit(props.$index, props.row, 7, propsx.row)"
+                                                                                        size="small" type="danger"
+                                                                                        plain>撤销
+                                                                                    </el-button>
+
                                                                                 </template>
                                                                             </el-table-column>
                                                                         </el-table-column>
@@ -125,6 +133,15 @@
                                                                     v-if="props.row.eduDate != '' && props.row.filePic.length != 0"
                                                                     type="primary" size="small" plain>查看附件
                                                                 </el-button>
+                                                                <el-button v-if="props.row.checkStatus == '已通过'"
+                                                                    @click="licenseEdit(props.$index, props.row, 8, propsx.row, 3)"
+                                                                    size="small" type="primary" plain>申报其他区域
+                                                                </el-button>
+                                                                <el-button v-if="props.row.checkStatus == '待审批'"
+                                                                    @click="licenseEdit(props.$index, props.row, 7, propsx.row)"
+                                                                    size="small" type="danger" plain>撤销
+                                                                </el-button>
+
                                                             </template>
                                                         </el-table-column>
                                                     </el-table-column>
@@ -142,6 +159,15 @@
                                             <el-button v-if="props.row.eduDate != '' && props.row.filePic.length != 0"
                                                 @click="licenseEdit(props.$index, props.row, 2)" type="primary"
                                                 size="small" plain>查看附件</el-button>
+                                            <el-button v-if="props.row.checkStatus == '已通过'"
+                                                @click="licenseEdit(props.$index, props.row, 8, propsx.row, 2)"
+                                                size="small" type="primary" plain>申报其他区域
+                                            </el-button>
+                                            <el-button v-if="props.row.checkStatus == '待审批'"
+                                                @click="licenseEdit(props.$index, props.row, 7, propsx.row)"
+                                                size="small" type="danger" plain>撤销
+                                            </el-button>
+
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
@@ -149,7 +175,6 @@
                         </div>
                     </template>
                 </el-table-column>
-
                 <el-table-column label="项目编号" prop="projectNumber" />
                 <el-table-column label="项目名称" prop="projectName" />
                 <el-table-column label="协力单位" prop="assistCompany" />
@@ -165,7 +190,7 @@
                         </el-button>
                         <el-button class="bt" size="small" type="primary"
                             @click="licenseEdit(scope.$index, scope.row, 1)">
-                            审核登记表
+                            审批登记表
                         </el-button>
                         <el-button class="bt" size="small" type="primary"
                             @click="licenseEdit(scope.$index, scope.row, 5)">
@@ -175,9 +200,8 @@
                             @click="licenseEdit(scope.$index, scope.row, 3)">
                             下载附件
                         </el-button>
-                        <el-button class="bt" size="small"
-                            v-if="scope.row.safeStatus==2"
-                            type="primary" @click="getQrCode(scope.$index, scope.row)">
+                        <el-button class="bt" size="small" v-if="scope.row.safeStatus == 2" type="primary"
+                            @click="getQrCode(scope.$index, scope.row)">
                             <el-icon>
                                 <Picture />
                             </el-icon>

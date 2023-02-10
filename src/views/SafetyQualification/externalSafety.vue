@@ -50,6 +50,20 @@
             </div>
         </div>
     </el-dialog>
+    <el-dialog v-model="dialog" title="请选择下级区域" width="40%">
+        <el-form-item label="下级区域">
+            <el-select style="width: 150px;margin-right: 20px;" multiple v-model="nextSafeManageArea"
+                placeholder="请选择下级区域">
+                <el-option v-for="item in manageAreaList" :key="item.id" :label="item.value" :value="item.id" />
+            </el-select>
+        </el-form-item>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="dialog = false">取消</el-button>
+                <el-button type="primary" @click="submitApproval">确定</el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue'
@@ -57,6 +71,7 @@ import Search from './components/Search.vue'
 import MyImg from '@/components/ImaPreview.vue'
 import Table from './components/Table.vue'
 import { selectSafetylicense, selectProjectUser } from '@/api/user'
+import { cancelSafeEdu, addSafeEdu } from '@/api/safety'
 import {deleteProject} from '@/api/safety'
 import { EiInfo, selectSafe } from '@/types';
 import { uplodUrl } from '@/utils/url'
@@ -65,6 +80,8 @@ import { piniaData } from '@/store';//引入pinia状态管理
 import { ElLoading } from 'element-plus'
 import request from '@/utils/request'
 import jrQrcode from "jr-qrcode";
+import { selectAddress } from '@/api/safety'
+
 //pinia状态管理
 const store = piniaData();
 const data = reactive({
@@ -77,6 +94,7 @@ const tableDataUser = ref([]);
 const base64img: any = ref([])
 const qrImgB64: any = ref([])
 const dialogVisible2 = ref(false)
+const dialog=ref(false)
 const qrImgDialog = ref(false)
 const quer = reactive(new selectSafe)
 const dialogVisible = ref(false)
@@ -85,13 +103,55 @@ eilnfo.parameter = quer
 const dataCount = ref(0)
 const dataCount2 = ref(0)
 const hide = ref(false)
+const manageAreaList:any =ref([])
 const hide2 = ref(false)
 const filePic: any = ref([])
 const tableData = ref([])
+const nextSafeManageArea = ref([])
+const projectId=ref()
+const safeLevel=ref()
+const safeId=ref ()
 onMounted(()=>{
     var date = new Date;
     year.value = date.getFullYear();
 })
+
+const submitApproval = () => {
+    if (nextSafeManageArea.value.length == 0) {
+        ElNotification({
+            message: "请选择下级区域",
+            type: 'error',
+        })
+    } else {
+        ElMessageBox.confirm('确定申报该区域安全教育?')
+            .then(() => {
+                let eiInfo = new EiInfo
+                eiInfo.parameter = {
+                    safeId: safeId.value,
+                    projectId: projectId.value,
+                    safeLevel: safeLevel.value,
+                    manageArea: nextSafeManageArea.value
+                }
+                eiInfo.userInfo = {
+                    id: store.userInfo.id,
+                }
+                addSafeEdu(eiInfo).then((res: any) => {
+                    if (res.sys.status != -1) {
+                        ElNotification({
+                            message: "申报安全教育成功",
+                            type: 'success',
+                        })
+                    }
+                    dialog.value = false;
+                    selectUserList();
+                })
+
+            })
+            .catch(() => {
+                // catch error
+            })
+    }
+}
 const selectUserList = () => {
     loading.value = true
     selectSafetylicense(eilnfo).then((res: any) => {
@@ -102,8 +162,6 @@ const selectUserList = () => {
         dataCount.value = res.result.dataCount == undefined ? 0 : res.result.dataCount
         // 如果只有一页则不展示分页
         hide.value = dataCount.value < 11 ? false : true
-        console.log("来了");
-
     })
 }
 const getQrCode = (i: number, row: any) => {
@@ -127,7 +185,6 @@ const getQrCode = (i: number, row: any) => {
         for (let i = 0; i < idList.length; i++) {
             // jxIdList.push(window.btoa(idList[i]))
             jxIdList.push(idList[i]);
-
             base64img.value.push(
                 jrQrcode.getQrBase64(
                     `https://bnasafe.com?action=gogogo&id=${jxIdList[i]}`)
@@ -145,7 +202,7 @@ const getQrCode = (i: number, row: any) => {
 
 }
 const loading = ref(false)
-const licenseEdit = (i: number, row: any, type: number) => {
+const licenseEdit = (i: number, row: any, type: number, rowx:any,leve:any) => {
     let eiInfo = new EiInfo();
     switch (type) {
         case 1:
@@ -217,14 +274,62 @@ const licenseEdit = (i: number, row: any, type: number) => {
                                 message: '删除成功',
                             })
                             selectUserList();
-                            console.log(res.result.countVerifySafeEduExternal);
-                            
                             store.countVerifySafeEduExternal=res.result.countVerifySafeEduExternal;
                         }
                     })
                 }).catch(() => {
                    
                 })
+        break;
+        case 7:
+        console.log(row);
+            console.log(rowx);
+        eiInfo.parameter={
+            projectId:rowx.projectId,
+            safeId:row.id
+        }
+        eiInfo.userInfo={
+            id:store.userInfo.id
+        }
+        ElMessageBox.confirm(
+                '确定撤销该安全教育？',
+                    {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning',
+                    }
+                ).then(() => {
+                    cancelSafeEdu(eiInfo).then((res:any)=>{
+                        console.log(res);
+                        if(res.sys.status!=-1){
+                            ElMessage({
+                                type: 'success',
+                                message: '撤销安全教育成功',
+                            })
+                            selectUserList();
+                            
+                        }
+                    })
+                }).catch(() => {
+                   
+                })
+            
+                
+        break;
+        case 8:
+            console.log(row);
+            nextSafeManageArea.value=[]
+            projectId.value=rowx.projectId
+            safeLevel.value=leve
+            safeId.value=row.id
+            eiInfo.parameter = {
+                previousKey: row.manageAreaId,
+                manageAreaType: leve
+            }
+            selectAddress(eiInfo).then((res: any) => {
+                manageAreaList.value = res.result.manageArea
+            })
+            dialog.value=true;
         break;
     }
 

@@ -23,3 +23,21 @@ export const deleteProject = ((eilnfo: any) => {
         data: eilnfo
     })
 })
+
+// 为已经申请的安全教育申报其他区域的安全教育
+export const addSafeEdu = ((eilnfo: any) => {
+    return request({
+        url: '/assist/add/safe/edu',
+        method: 'post',
+        data: eilnfo
+    })
+})
+
+// 撤销已经申请的年度安全教育
+export const cancelSafeEdu = ((eilnfo: any) => {
+    return request({
+        url: '/assist/cancel/safe/edu',
+        method: 'post',
+        data: eilnfo
+    })
+})

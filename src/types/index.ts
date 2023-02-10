@@ -137,7 +137,7 @@ export class projectNum {
     pageNum: number = 1
 }
 
-//Bna审核人员
+//Bna审批人员
 export class examScore {
     examScore: any = ''
     examPic: any = ''

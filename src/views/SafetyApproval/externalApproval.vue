@@ -38,7 +38,7 @@
                     <div class="qrText">{{ year }}</div>
                     <div style="margin-top: -85px;">
                         <h2>姓名:{{ item.username }}</h2>
-                        <h2>IC卡号:{{ item.icCardWorkNumber }}</h2 >
+                        <h2>IC卡号:{{ item.icCardWorkNumber }}</h2>
                     </div>
                 </div>
             </div>
@@ -200,7 +200,7 @@ const close = () => {
         })
 }
 const getQrCode = (i: number, row: any) => {
-    qrImgB64.value=[];
+    qrImgB64.value = [];
     const eiInfo = new EiInfo();
     eiInfo.parameter = {
         projectId: row.projectId,
@@ -289,7 +289,7 @@ const submitApproval = () => {
             type: 'error',
         })
     } else {
-        ElMessageBox.confirm('确定通过审核?')
+        ElMessageBox.confirm('确定通过审批?')
             .then(() => {
                 let eiInfo = new EiInfo
                 eiInfo.parameter = {
@@ -331,9 +331,11 @@ const submitApproval = () => {
     padding-bottom: 20px;
     margin-bottom: 30px;
 }
-h2{
+
+h2 {
     margin: 0;
 }
+
 .qrText {
     width: 70px;
     text-align: center;

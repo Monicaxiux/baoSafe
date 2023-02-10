@@ -1,5 +1,5 @@
 <template>
-    <el-dialog v-model="dialogVisible" title="审核安全教育" :width="dialogType == 1 ? '80%' : '50%'"
+    <el-dialog v-model="dialogVisible" title="审批安全教育" :width="dialogType == 1 ? '80%' : '50%'"
         :before-close="handleClose">
         <ESearch :from="from" :isForm="isForm" :handleDelete="handleDelete" :uploadUserPic=uploadUserPic
             :manageAreaList="manageAreaList" :tableDatax="tableDatax" :type="dialogType" :data="eiInfo"
@@ -71,7 +71,7 @@ watch(() => props.projectId, (newValue, oldValue) => {
 //     }
 // })
 const handleClose = (done: () => void) => {
-    ElMessageBox.confirm('确定结束审核?')
+    ElMessageBox.confirm('确定结束审批?')
         .then(() => {
             props.handle(3)
         })

@@ -144,7 +144,7 @@ const approval = (index, row: any) => {
         let manageAreaType: any = 0
         let s: any = 0
         console.log(row);
-        
+
         switch (row.safetyEducation.safeLevel) {
             case "一级安全教育":
                 s = 1
@@ -255,7 +255,7 @@ const handle = (i: any) => {
     }
 }
 const submitApproval = () => {
-    ElMessageBox.confirm('确定通过审核?')
+    ElMessageBox.confirm('确定通过审批?')
         .then(() => {
             let eiInfo = new EiInfo
             let examPaperList: any = []
