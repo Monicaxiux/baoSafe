@@ -33,7 +33,7 @@
                 <el-table-column fixed prop="projectNumber" label="项目编号" />
                 <el-table-column fixed prop="projectName" label="项目名称" />
                 <el-table-column prop="notLeaveNum" label="正在作业人数" />
-                <el-table-column prop="beginTime" label="更新时间" />
+                <!-- <el-table-column prop="beginTime" label="项目开始时间" /> -->
             </template>
         </el-table>
     </div>
@@ -50,6 +50,4 @@ type Props = {
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
 </script>
-<style scoped src="@/assets/css/table.css">
-
-</style>
+<style scoped src="@/assets/css/table.css"></style>

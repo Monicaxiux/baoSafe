@@ -1,10 +1,10 @@
 <template>
     <Search :select="selectUserList" :userType="false" :data="eilnfo"></Search>
-    <Table :getQrCode="getQrCode" :licenseEdit="licenseEdit" :tableData="tableData" :loading="loading" :userType="false"></Table>
+    <Table :getQrCode="getQrCode" :licenseEdit="licenseEdit" :tableData="tableData" :loading="loading" :userType="false">
+    </Table>
     <br />
-    <el-pagination background @size-change="handleSizeChange" @current-change="handlePageChange"
-        :page-sizes="[10, 30, 100]" :current-page="data.pageNum" :page-size="10" layout="total,prev, pager, next"
-        :total="dataCount">
+    <el-pagination background @size-change="handleSizeChange" @current-change="handlePageChange" :page-sizes="[10, 30, 100]"
+        :current-page="data.pageNum" :page-size="10" layout="total,prev, pager, next" :total="dataCount">
     </el-pagination>
     <el-dialog v-model="dialogVisible" title="查看附件" width="30%" :before-close="handleClose">
         <MyImg v-for="(item) in filePic" :imgUrl="item"></MyImg>
@@ -44,7 +44,7 @@
                     <div class="qrText">{{ year }}</div>
                     <div style="margin-top: -85px;">
                         <h2>姓名:{{ item.username }}</h2>
-                        <h2>IC卡号:{{ item.icCardWorkNumber }}</h2 >
+                        <h2>IC卡号:{{ item.icCardWorkNumber }}</h2>
                     </div>
                 </div>
             </div>
@@ -52,8 +52,7 @@
     </el-dialog>
     <el-dialog v-model="dialog" title="请选择下级区域" width="40%">
         <el-form-item label="下级区域">
-            <el-select style="width: 150px;margin-right: 20px;" multiple v-model="nextSafeManageArea"
-                placeholder="请选择下级区域">
+            <el-select style="width: 150px;margin-right: 20px;" multiple v-model="nextSafeManageArea" placeholder="请选择下级区域">
                 <el-option v-for="item in manageAreaList" :key="item.id" :label="item.value" :value="item.id" />
             </el-select>
         </el-form-item>
@@ -72,7 +71,7 @@ import MyImg from '@/components/ImaPreview.vue'
 import Table from './components/Table.vue'
 import { selectSafetylicense, selectProjectUser } from '@/api/user'
 import { cancelSafeEdu, addSafeEdu } from '@/api/safety'
-import {deleteProject} from '@/api/safety'
+import { deleteProject } from '@/api/safety'
 import { EiInfo, selectSafe } from '@/types';
 import { uplodUrl } from '@/utils/url'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus';
@@ -94,7 +93,7 @@ const tableDataUser = ref([]);
 const base64img: any = ref([])
 const qrImgB64: any = ref([])
 const dialogVisible2 = ref(false)
-const dialog=ref(false)
+const dialog = ref(false)
 const qrImgDialog = ref(false)
 const quer = reactive(new selectSafe)
 const dialogVisible = ref(false)
@@ -103,15 +102,15 @@ eilnfo.parameter = quer
 const dataCount = ref(0)
 const dataCount2 = ref(0)
 const hide = ref(false)
-const manageAreaList:any =ref([])
+const manageAreaList: any = ref([])
 const hide2 = ref(false)
 const filePic: any = ref([])
 const tableData = ref([])
 const nextSafeManageArea = ref([])
-const projectId=ref()
-const safeLevel=ref()
-const safeId=ref ()
-onMounted(()=>{
+const projectId = ref()
+const safeLevel = ref()
+const safeId = ref()
+onMounted(() => {
     var date = new Date;
     year.value = date.getFullYear();
 })
@@ -154,6 +153,9 @@ const submitApproval = () => {
 }
 const selectUserList = () => {
     loading.value = true
+    eilnfo.userInfo = {
+        id: store.userInfo.id,
+    }
     selectSafetylicense(eilnfo).then((res: any) => {
         loading.value = false
         //将用户信息列表数据传入子组件
@@ -165,11 +167,12 @@ const selectUserList = () => {
     })
 }
 const getQrCode = (i: number, row: any) => {
-    qrImgB64.value=[];
+    qrImgB64.value = [];
     const eiInfo = new EiInfo();
     eiInfo.parameter = {
         projectId: row.projectId,
         pageNum: -1,
+        qrCode: 1
     };
     const loading = ElLoading.service({
         lock: true,
@@ -202,7 +205,7 @@ const getQrCode = (i: number, row: any) => {
 
 }
 const loading = ref(false)
-const licenseEdit = (i: number, row: any, type: number, rowx:any,leve:any) => {
+const licenseEdit = (i: number, row: any, type: number, rowx: any, leve: any) => {
     let eiInfo = new EiInfo();
     switch (type) {
         case 1:
@@ -252,76 +255,76 @@ const licenseEdit = (i: number, row: any, type: number, rowx:any,leve:any) => {
             break;
         case 6:
             console.log(row);
-            eiInfo.parameter={
-                projectId:row.projectId
+            eiInfo.parameter = {
+                projectId: row.projectId
             }
-            eiInfo.userInfo={
-                id:store.userInfo.id
+            eiInfo.userInfo = {
+                id: store.userInfo.id
             }
             ElMessageBox.confirm(
                 '确定删除该项目？',
-                    {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning',
+                {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                }
+            ).then(() => {
+                deleteProject(eiInfo).then((res: any) => {
+                    console.log(res);
+                    if (res.sys.status != -1) {
+                        ElMessage({
+                            type: 'success',
+                            message: '删除成功',
+                        })
+                        selectUserList();
+                        store.countVerifySafeEduExternal = res.result.countVerifySafeEduExternal;
                     }
-                ).then(() => {
-                    deleteProject(eiInfo).then((res:any)=>{
-                        console.log(res);
-                        if(res.sys.status!=-1){
-                            ElMessage({
-                                type: 'success',
-                                message: '删除成功',
-                            })
-                            selectUserList();
-                            store.countVerifySafeEduExternal=res.result.countVerifySafeEduExternal;
-                        }
-                    })
-                }).catch(() => {
-                   
                 })
-        break;
+            }).catch(() => {
+
+            })
+            break;
         case 7:
-        console.log(row);
+            console.log(row);
             console.log(rowx);
-        eiInfo.parameter={
-            projectId:rowx.projectId,
-            safeId:row.id
-        }
-        eiInfo.userInfo={
-            id:store.userInfo.id
-        }
-        ElMessageBox.confirm(
+            eiInfo.parameter = {
+                projectId: rowx.projectId,
+                safeId: row.id
+            }
+            eiInfo.userInfo = {
+                id: store.userInfo.id
+            }
+            ElMessageBox.confirm(
                 '确定撤销该安全教育？',
-                    {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning',
+                {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                }
+            ).then(() => {
+                cancelSafeEdu(eiInfo).then((res: any) => {
+                    console.log(res);
+                    if (res.sys.status != -1) {
+                        ElMessage({
+                            type: 'success',
+                            message: '撤销安全教育成功',
+                        })
+                        selectUserList();
+
                     }
-                ).then(() => {
-                    cancelSafeEdu(eiInfo).then((res:any)=>{
-                        console.log(res);
-                        if(res.sys.status!=-1){
-                            ElMessage({
-                                type: 'success',
-                                message: '撤销安全教育成功',
-                            })
-                            selectUserList();
-                            
-                        }
-                    })
-                }).catch(() => {
-                   
                 })
-            
-                
-        break;
+            }).catch(() => {
+
+            })
+
+
+            break;
         case 8:
             console.log(row);
-            nextSafeManageArea.value=[]
-            projectId.value=rowx.projectId
-            safeLevel.value=leve
-            safeId.value=row.id
+            nextSafeManageArea.value = []
+            projectId.value = rowx.projectId
+            safeLevel.value = leve
+            safeId.value = row.id
             eiInfo.parameter = {
                 previousKey: row.manageAreaId,
                 manageAreaType: leve
@@ -329,8 +332,8 @@ const licenseEdit = (i: number, row: any, type: number, rowx:any,leve:any) => {
             selectAddress(eiInfo).then((res: any) => {
                 manageAreaList.value = res.result.manageArea
             })
-            dialog.value=true;
-        break;
+            dialog.value = true;
+            break;
     }
 
 }
@@ -398,9 +401,11 @@ const handleClose2 = () => {
     padding-bottom: 20px;
     margin-bottom: 30px;
 }
-h2{
+
+h2 {
     margin: 0;
 }
+
 .qrText {
     width: 70px;
     text-align: center;

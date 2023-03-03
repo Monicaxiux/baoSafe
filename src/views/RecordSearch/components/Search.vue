@@ -1,6 +1,6 @@
 <template>
     <el-form :model="data.parameter" status-icon class="demo-ruleForm from">
-        <el-form-item label="所在区域">
+        <el-form-item v-if="userType != 3 && userType != 1" label="所在区域">
             <el-select class="select" @change="change1" v-model="data.parameter.areaId" placeholder="所在区域">
                 <el-option v-for="item in manageArea1List" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
@@ -28,8 +28,8 @@
             <el-input class="input" v-model="data.parameter.username" clearable placeholder="请输入员工姓名" />
         </el-form-item>
         <el-form-item v-if="userType != 3" style="width:300px;margin-right: 20px;" label="时间" prop="projectCycle">
-            <el-date-picker v-model="data.parameter.time" @change="changeTime" value-format="YYYY-MM-DD"
-                type="daterange" range-separator="-" start-placeholder="起始日期" end-placeholder="结束日期" size="default" />
+            <el-date-picker v-model="data.parameter.time" @change="changeTime" value-format="YYYY-MM-DD" type="daterange"
+                range-separator="-" start-placeholder="起始日期" end-placeholder="结束日期" size="default" />
         </el-form-item>
         <el-button type="primary" class="button" @click="(data.parameter.pageNum = 1), select(data)">
             <el-icon class="i">

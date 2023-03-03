@@ -29,7 +29,7 @@
             <el-table-column fixed="right" label="操作" width="160">
                 <template #default="scope">
                     <el-button size="small"
-                        :disabled="scope.row.userType == '常驻外协用户' || scope.row.username == 'admin0' || scope.row.username == 'admin1' || scope.row.username == 'admin2' || scope.row.username == 'admin3'"
+                        :disabled="scope.row.username == 'admin0' || scope.row.username == 'admin1' || scope.row.username == 'admin2' || scope.row.username == 'admin3'"
                         type="primary" @click="handleEdit(scope.$index, scope.row)">
                         <el-icon>
                             <EditPen />
@@ -64,6 +64,4 @@ type Props = {
 // 使用defineProps接收父组件的传递值
 const props = defineProps<Props>()
 </script>
-<style scoped src="@/assets/css/table.css">
-
-</style>
+<style scoped src="@/assets/css/table.css"></style>
